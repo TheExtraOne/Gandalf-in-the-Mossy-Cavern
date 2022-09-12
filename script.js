@@ -1,9 +1,7 @@
 'use strict'
-import stage from '../img/MediumPlatform.png';
-console.log(stage);
 
 const canvas = document.querySelector('canvas');
-canvas.width = 800;
+canvas.width = 1024;
 canvas.height = 600;
 const ctx = canvas.getContext('2d');
 
@@ -14,7 +12,19 @@ const gandalfJump = 15;
 let isRightPressed = false;
 let isLeftPressed = false;
 
-let scrollOffset = 0;
+//let scrollOffset = 0;
+
+let platform = new Image();
+platform.src = "img/platform.png";
+
+let stage = new Image();
+stage.src = 'img/MediumStage1.png';
+
+let background = new Image();
+background.src = 'img/Background.jpg';
+
+let mossSlopes = new Image();
+mossSlopes.src = 'img/mossySlopes.png';
 
 document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
@@ -45,23 +55,47 @@ class Wizzard {
 }
 
 class Stage {
-    constructor(x, y) {
+    constructor(x, y, image, imageWigth, imageHeight) {
         this.positionX = x;
         this.positionY = y;
-        this.width = 200;
-        this.height = 20;
+        this.width = imageWigth;
+        this.height = imageHeight;
+        this.image = image;
     }
-    drawStage() {
-        ctx.fillStyle = 'green';
-        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
+    drawStage() {  
+        ctx.drawImage(this.image, this.positionX, this.positionY);
     }
 }
 
+class Background {
+    constructor(x, y, image, imageWigth, imageHeight) {
+        this.positionX = x;
+        this.positionY = y;
+        this.width = imageWigth;
+        this.height = imageHeight;
+        this.image = image;
+    }
+    drawBackground() {  
+        ctx.drawImage(this.image, this.positionX, this.positionY);
+    }
+}
+
+/*let stage = new Image();
+stage.onload = function() {
+	ctx.drawImage(stage, 10, 10);
+};
+stage.src = "img/MediumPlatform.png";*/
+
 const gandalf = new Wizzard();
 const stages = [
-    new Stage(200, 100),
-    new Stage(500, 200),
+    new Stage(200, 100, platform, 273, 120),
+    new Stage(500, 200, platform, 273, 120),
+    new Stage(0, 540, stage, 231, 120),
+    new Stage(230, 540, stage, 231, 120),
 ];
+const backgroundObjects = [
+    new Background(0, 0, mossSlopes, 13023, 647),
+]
 requestAnimationFrame(tick);
 
 function tick() { 
@@ -78,13 +112,13 @@ function tick() {
     }
 
     //для перемещения фона во время движения игрока
-    //подсмотрен такой трюк в интернете
+    //трюк подсмотрен в интернете
     if (isRightPressed && gandalf.speedX === 0) {
-        scrollOffset += gandalfStep;
+        //scrollOffset += gandalfStep;
         stages.forEach(stage => {stage.positionX -= gandalfStep});
     }
     if (isLeftPressed && gandalf.speedX === 0) {
-        scrollOffset -= gandalfStep;
+        //scrollOffset -= gandalfStep;
         stages.forEach(stage => {stage.positionX += gandalfStep});
     }
 
@@ -99,13 +133,13 @@ function tick() {
         }}
     );
 
-    //условия победы
-    if (scrollOffset > 1000) {
+    /*
+    if (//условия победы) {
         console.log('you win');
-    }
-
-    gandalf.drawNewPosition();
+    }*/
+    backgroundObjects.forEach(backgroundObject => {backgroundObject.drawBackground()});
     stages.forEach(stage => {stage.drawStage()});
+    gandalf.drawNewPosition();
     
     requestAnimationFrame(tick);
 }
@@ -124,10 +158,6 @@ function startMove(event) {
     if (event.code === 'KeyW') {
         gandalf.speedY -= gandalfJump;
     }
-    /*//клавиша S
-    if (event.code === 'KeyS') {
-        console.log('KeyS');
-    }*/
 }
 
 function finishMove(event) {
@@ -144,8 +174,4 @@ function finishMove(event) {
     if (event.code === 'KeyW') {
         gandalf.speedY -= gandalfJump;
     }
-    /*//клавиша S
-    if (event.code === 'KeyS') {
-        console.log('KeyS');
-    }*/
 }
