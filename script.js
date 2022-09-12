@@ -18,6 +18,9 @@ let  gandalfDistanceTraveled;
 let isRightPressed = false;
 let isLeftPressed = false;
 
+let stayRight = new Image();
+stayRight.src = "img/StayRightMedium.png";
+
 let platform = new Image();
 platform.src = "img/platform.png";
 
@@ -40,14 +43,15 @@ document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 
 class Wizzard {
-    constructor() {
+    constructor(image, imageWigth, imageHeight) {
         this.positionX = 100;
         this.positionY = 100;
-        this.width = 30;
-        this.height = 30;
+        this.width = 80;
+        this.height = 150;
         this.speedX = 0;
         this.speedY = 0;
         this.accelY = gandalfAccelY;
+        this.image = image;
     }
     drawNewPosition() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
@@ -57,8 +61,9 @@ class Wizzard {
         this.positionX += this.speedX;
         this.positionY += this.speedY;
 
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
+        ctx.drawImage(this.image, 0, 0, 100, 127, this.positionX, this.positionY, this.width, this.height);
+        /*ctx.fillStyle = 'blue';
+        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);*/
     }
 }
 
@@ -167,7 +172,7 @@ function finishMove(event) {
 }
 
 function reset() {
-    gandalf = new Wizzard();
+    gandalf = new Wizzard(stayRight, 3290, 165);
     gandalfDistanceTraveled = 0;
     stages = [
         new Background(200, 200, platform, 273, 120),
