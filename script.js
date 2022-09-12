@@ -9,10 +9,12 @@ const gandalfAccelY = 0.5;
 const gandalfStep = 5;
 const gandalfJump = 15;
 
+let gandalf;
+let stages;
+let backgroundObjects;
+
 let isRightPressed = false;
 let isLeftPressed = false;
-
-//let scrollOffset = 0;
 
 let platform = new Image();
 platform.src = "img/platform.png";
@@ -45,8 +47,6 @@ class Wizzard {
     drawNewPosition() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
             this.speedY += this.accelY;
-        } else {
-            this.speedY = 0;
         }
 
         this.positionX += this.speedX;
@@ -83,19 +83,7 @@ class Background {
     }
 }
 
-const gandalf = new Wizzard();
-const stages = [
-    new Stage(200, 100, platform, 273, 120),
-    new Stage(500, 200, platform, 273, 120),
-    new Stage(0, 540, stage, 231, 120),
-    new Stage(230, 540, stage, 231, 120),
-];
-const backgroundObjects = [
-    new Background(0, 0, background, 769, 610),
-    new Background(769, 0, sideBackground, 769, 610),
-    //new Background(0, 0, mossSlopes, 13023, 647),   
-]
-
+reset();
 requestAnimationFrame(tick);
 
 function tick() { 
@@ -115,10 +103,12 @@ function tick() {
     //трюк подсмотрен в интернете
     if (isRightPressed && gandalf.speedX === 0) {
         //scrollOffset += gandalfStep;
+        backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX -= 0.75 * gandalfStep});
         stages.forEach(stage => {stage.positionX -= gandalfStep});
     }
     if (isLeftPressed && gandalf.speedX === 0) {
         //scrollOffset -= gandalfStep;
+        backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX += 0.75 * gandalfStep});
         stages.forEach(stage => {stage.positionX += gandalfStep});
     }
 
@@ -134,9 +124,15 @@ function tick() {
     );
 
     /*
-    if (//условия победы) {
+    if (//условие победы: дойти до конца) {
         console.log('you win');
     }*/
+
+    //условие проигрыша: если игрок упал - ресет
+    if (gandalf.positionY > canvas.height) {
+        reset();
+    }
+
     backgroundObjects.forEach(backgroundObject => backgroundObject.drawBackground());
     stages.forEach(stage => stage.drawStage());
     gandalf.drawNewPosition();
@@ -174,4 +170,22 @@ function finishMove(event) {
     if (event.code === 'KeyW') {
         gandalf.speedY -= gandalfJump;
     }
+}
+
+function reset() {
+    gandalf = new Wizzard();
+    stages = [
+        new Stage(200, 100, platform, 273, 120),
+        new Stage(500, 200, platform, 273, 120),
+        new Stage(0, 540, stage, 231, 120),
+        new Stage(230, 540, stage, 231, 120),
+        new Stage(550, 540, stage, 231, 120),
+        new Stage(781, 540, stage, 231, 120),
+    ];
+    backgroundObjects = [
+        new Background(0, 0, background, 769, 610),
+        new Background(769, 0, sideBackground, 769, 610),
+        new Background(-20, 400, mossSlopes, 7163, 371),   
+    ];
+    //let scrollOffset = 0;
 }
