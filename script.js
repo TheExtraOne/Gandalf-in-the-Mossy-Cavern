@@ -21,7 +21,10 @@ let stage = new Image();
 stage.src = 'img/MediumStage1.png';
 
 let background = new Image();
-background.src = 'img/Background.jpg';
+background.src = 'img/Background1.jpg';
+
+let sideBackground = new Image();
+sideBackground.src = 'img/Background2.jpg';
 
 let mossSlopes = new Image();
 mossSlopes.src = 'img/mossySlopes.png';
@@ -80,12 +83,6 @@ class Background {
     }
 }
 
-/*let stage = new Image();
-stage.onload = function() {
-	ctx.drawImage(stage, 10, 10);
-};
-stage.src = "img/MediumPlatform.png";*/
-
 const gandalf = new Wizzard();
 const stages = [
     new Stage(200, 100, platform, 273, 120),
@@ -94,8 +91,11 @@ const stages = [
     new Stage(230, 540, stage, 231, 120),
 ];
 const backgroundObjects = [
-    new Background(0, 0, mossSlopes, 13023, 647),
+    new Background(0, 0, background, 769, 610),
+    new Background(769, 0, sideBackground, 769, 610),
+    //new Background(0, 0, mossSlopes, 13023, 647),   
 ]
+
 requestAnimationFrame(tick);
 
 function tick() { 
@@ -137,8 +137,8 @@ function tick() {
     if (//условия победы) {
         console.log('you win');
     }*/
-    backgroundObjects.forEach(backgroundObject => {backgroundObject.drawBackground()});
-    stages.forEach(stage => {stage.drawStage()});
+    backgroundObjects.forEach(backgroundObject => backgroundObject.drawBackground());
+    stages.forEach(stage => stage.drawStage());
     gandalf.drawNewPosition();
     
     requestAnimationFrame(tick);
