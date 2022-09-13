@@ -21,7 +21,7 @@ let isRightPressed = false;
 let isLeftPressed = false;
 
 let stayRight = new Image();
-stayRight.src = "img/StayRightTight.png";
+stayRight.src = "img/StayRightTight4.png";
 
 let platform = new Image();
 platform.src = "img/platform.png";
