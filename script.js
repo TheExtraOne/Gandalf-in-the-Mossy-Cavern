@@ -8,6 +8,8 @@ const ctx = canvas.getContext('2d');
 const gandalfAccelY = 0.5;
 const gandalfStep = 5;
 const gandalfJump = 16;
+const howDeepInMoss = 15;
+const howCloseToPit = 20;
 
 let gandalf;
 let stages;
@@ -19,7 +21,7 @@ let isRightPressed = false;
 let isLeftPressed = false;
 
 let stayRight = new Image();
-stayRight.src = "img/StayRightMedium.png";
+stayRight.src = "img/StayRightTight.png";
 
 let platform = new Image();
 platform.src = "img/platform.png";
@@ -43,14 +45,15 @@ document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 
 class Wizzard {
-    constructor(image, imageWigth, imageHeight) {
+    constructor(image) {
         this.positionX = 100;
         this.positionY = 100;
-        this.width = 80;
-        this.height = 150;
+        this.width = 65;
+        this.height = 145;
         this.speedX = 0;
         this.speedY = 0;
         this.accelY = gandalfAccelY;
+        this.cadre = 0;
         this.image = image;
     }
     drawNewPosition() {
@@ -61,9 +64,11 @@ class Wizzard {
         this.positionX += this.speedX;
         this.positionY += this.speedY;
 
-        ctx.drawImage(this.image, 0, 0, 100, 127, this.positionX, this.positionY, this.width, this.height);
-        /*ctx.fillStyle = 'blue';
-        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);*/
+        ctx.drawImage(this.image, 165 * this.cadre, 0, 165, 277, this.positionX, this.positionY, this.width, this.height);
+        this.cadre++;
+        if (this.cadre > 20) {
+            this.cadre = 0;
+        }
     }
 }
 
@@ -100,22 +105,22 @@ function tick() {
     //для перемещения фона во время движения игрока
     //трюк подсмотрен в интернете
     if (isRightPressed && gandalf.speedX === 0) {
-        backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX -= 0.60 * gandalfStep});
+        backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX -= 0.6 * gandalfStep});
         stages.forEach(stage => {stage.positionX -= gandalfStep});
         gandalfDistanceTraveled += gandalfStep;
     }
     if (isLeftPressed && gandalf.speedX === 0 && gandalfDistanceTraveled > 0) {
         gandalfDistanceTraveled -= gandalfStep;
-        backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX += 0.60 * gandalfStep});
+        backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX += 0.6 * gandalfStep});
         stages.forEach(stage => {stage.positionX += gandalfStep});
     }
 
     //если игрок находится в пределах платформы
     stages.forEach(stage => {
-        if (gandalf.positionY + gandalf.height <= stage.positionY &&
-            gandalf.positionY + gandalf.height + gandalf.speedY >= stage.positionY &&
-            gandalf.positionX + gandalf.width >= stage.positionX &&
-            gandalf.positionX <= stage.positionX + stage.width) {
+        if (gandalf.positionY + gandalf.height - howDeepInMoss <= stage.positionY &&
+            gandalf.positionY + gandalf.height + gandalf.speedY - howDeepInMoss >= stage.positionY &&
+            gandalf.positionX + gandalf.width - howCloseToPit >= stage.positionX &&
+            gandalf.positionX + howCloseToPit <= stage.positionX + stage.width) {
             gandalf.accelY = 0;
             gandalf.speedY = 0;
         }}
@@ -133,8 +138,8 @@ function tick() {
 
     backgroundImg.forEach(backgroundstep => backgroundstep.drawBackground());
     backgroundObjects.forEach(backgroundObject => backgroundObject.drawBackground());
-    stages.forEach(stage => stage.drawBackground());
     gandalf.drawNewPosition();
+    stages.forEach(stage => stage.drawBackground());
     
     requestAnimationFrame(tick);
 }
@@ -165,14 +170,10 @@ function finishMove(event) {
     if (event.code === 'KeyA') {
         isLeftPressed = false;
     }
-    //прыжок
-    /*if (event.code === 'KeyW') {
-        
-    }*/
 }
 
 function reset() {
-    gandalf = new Wizzard(stayRight, 3290, 165);
+    gandalf = new Wizzard(stayRight);
     gandalfDistanceTraveled = 0;
     stages = [
         new Background(200, 200, platform, 273, 120),
@@ -182,7 +183,6 @@ function reset() {
         new Background(550, 540, stage, 231, 120),
         new Background(781, 540, stage, 231, 120),
         new Background(1143, 300, smallPlatform, 123, 122),
-        //new Background(1300, 300, smallPlatform, 123, 122),
         new Background(1512, 540, stage, 231, 120),
         new Background(1743, 540, stage, 231, 120),
     ];
