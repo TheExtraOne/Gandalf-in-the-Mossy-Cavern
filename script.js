@@ -21,7 +21,16 @@ let isRightPressed = false;
 let isLeftPressed = false;
 
 let stayRight = new Image();
-stayRight.src = "img/StayRightTight4.png";
+stayRight.src = "img/StayRight.png";
+
+let stayLeft = new Image();
+stayLeft.src = "img/StayLeft.png";
+
+let runRight = new Image();
+runRight.src = "img/RunRight.png";
+
+let runLeft = new Image();
+runLeft.src = "img/RunLeft.png";
 
 let platform = new Image();
 platform.src = "img/platform.png";
@@ -45,7 +54,7 @@ document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 
 class Wizzard {
-    constructor(image) {
+    constructor(stayRight, stayLeft, runRight, runLeft) {
         this.positionX = 100;
         this.positionY = 100;
         this.width = 65;
@@ -54,7 +63,11 @@ class Wizzard {
         this.speedY = 0;
         this.accelY = gandalfAccelY;
         this.cadre = 0;
-        this.image = image;
+        this.standRight = stayRight;
+        this.standLeft = stayLeft,
+        this.runRight = runRight,
+        this.runLeft = runLeft,
+        this.currentState = this.standRight;
     }
     drawNewPosition() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
@@ -64,9 +77,9 @@ class Wizzard {
         this.positionX += this.speedX;
         this.positionY += this.speedY;
 
-        ctx.drawImage(this.image, 165 * this.cadre, 0, 165, 277, this.positionX, this.positionY, this.width, this.height);
+        ctx.drawImage(this.currentState, 165 * this.cadre, 0, 165, 277, this.positionX, this.positionY, this.width, this.height);
         this.cadre++;
-        if (this.cadre > 20) {
+        if (this.cadre > 79) {
             this.cadre = 0;
         }
     }
@@ -143,10 +156,12 @@ function startMove(event) {
     event = event || window.event;
     //вперед
     if (event.code === 'KeyD') {
+        gandalf.currentState = gandalf.runRight;
         isRightPressed = true;
     }
     //назад
     if (event.code === 'KeyA') {
+        gandalf.currentState = gandalf.runLeft;
         isLeftPressed = true;
     }
     //прыжок
@@ -159,16 +174,18 @@ function finishMove(event) {
     event = event || window.event;
     //вперед
     if (event.code === 'KeyD') {
+        gandalf.currentState = gandalf.standRight;
         isRightPressed = false;
     }
     //назад
     if (event.code === 'KeyA') {
+        gandalf.currentState = gandalf.standLeft;
         isLeftPressed = false;
     }
 }
 
 function reset() {
-    gandalf = new Wizzard(stayRight);
+    gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
     gandalfDistanceTraveled = 0;
     stages = [
         new Background(200, 200, platform, 273, 120),
