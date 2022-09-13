@@ -15,7 +15,7 @@ let gandalf;
 let stages;
 let backgroundObjects;
 let backgroundImg;
-let  gandalfDistanceTraveled;
+let gandalfDistanceTraveled;
 
 let isRightPressed = false;
 let isLeftPressed = false;
@@ -125,11 +125,6 @@ function tick() {
             gandalf.speedY = 0;
         }}
     );
-
-    /*
-    if (//условие победы: дойти до конца) {
-        //Вывести что-нибудь радостное на экран
-    }*/
 
     //условие проигрыша: если игрок упал - ресет
     if (gandalf.positionY > canvas.height) {
