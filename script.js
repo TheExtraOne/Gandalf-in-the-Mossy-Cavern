@@ -13,6 +13,7 @@ const howCloseToPit = 20;
 
 let gandalf;
 let stages;
+let slimes;
 let backgroundObjects;
 let backgroundImg;
 let gandalfDistanceTraveled;
@@ -53,6 +54,20 @@ mossSlopes.src = 'img/mossySlopes.png';
 document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 
+//проверяю, находится ли игрок или его паротивник на платформе
+function doesToutchThePlatform({obj, platform}) {
+    return (obj.positionY + obj.height - howDeepInMoss <= platform.positionY &&
+        obj.positionY + obj.height + obj.speedY - howDeepInMoss >= platform.positionY &&
+        obj.positionX + obj.width - howCloseToPit >= platform.positionX &&
+        obj.positionX + howCloseToPit <= platform.positionX + platform.width);
+}
+function doesHeroJumpOnTheEnemy({hero, enemy}) {
+    return (hero.positionY + hero.height - howDeepInMoss <= enemy.positionY &&
+        hero.positionY + hero.height + hero.speedY - howDeepInMoss >= enemy.positionY &&
+        hero.positionX + hero.width - howCloseToPit >= enemy.positionX &&
+        hero.positionX + howCloseToPit <= enemy.positionX + enemy.width);
+}
+
 class Wizzard {
     constructor(stayRight, stayLeft, runRight, runLeft) {
         this.positionX = 100;
@@ -82,6 +97,29 @@ class Wizzard {
         if (this.cadre > 79) {
             this.cadre = 0;
         }
+    }
+}
+
+class Enemy {
+    constructor(x, y, speedX, speedY) {
+        this.positionX = x;
+        this.positionY = y;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.accelY = gandalfAccelY;
+        this.width = 50;
+        this.height = 50;
+    }
+    drawEnemy() {
+        if (this.positionY + this.height + this.speedY < canvas.height) {
+            this.speedY += this.accelY;
+        }
+
+        this.positionX += this.speedX;
+        this.positionY += this.speedY;
+
+        ctx.fillStyle = 'red';
+        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
     }
 }
 
@@ -121,23 +159,28 @@ function tick() {
         backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX -= 0.6 * gandalfStep});
         stages.forEach(stage => {stage.positionX -= gandalfStep});
         gandalfDistanceTraveled += gandalfStep;
+        slimes.forEach(slime => {slime.positionX -= gandalfStep});
     }
     if (isLeftPressed && gandalf.speedX === 0 && gandalfDistanceTraveled > 0) {
         gandalfDistanceTraveled -= gandalfStep;
         backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX += 0.6 * gandalfStep});
         stages.forEach(stage => {stage.positionX += gandalfStep});
+        slimes.forEach(slime => {slime.positionX += gandalfStep});
     }
 
     //если игрок находится в пределах платформы
     stages.forEach(stage => {
-        if (gandalf.positionY + gandalf.height - howDeepInMoss <= stage.positionY &&
-            gandalf.positionY + gandalf.height + gandalf.speedY - howDeepInMoss >= stage.positionY &&
-            gandalf.positionX + gandalf.width - howCloseToPit >= stage.positionX &&
-            gandalf.positionX + howCloseToPit <= stage.positionX + stage.width) {
+        if (doesToutchThePlatform({obj:gandalf, platform: stage})) {
             gandalf.accelY = 0;
             gandalf.speedY = 0;
-        }}
-    );
+        }
+        slimes.forEach(slime => {
+            if (doesToutchThePlatform({obj: slime, platform: stage})) {
+                slime.accelY = 0;
+                slime.speedY = 0;
+            }
+        })
+    });
 
     //условие проигрыша: если игрок упал - ресет
     if (gandalf.positionY > canvas.height) {
@@ -147,6 +190,21 @@ function tick() {
     backgroundImg.forEach(backgroundstep => backgroundstep.drawBackground());
     backgroundObjects.forEach(backgroundObject => backgroundObject.drawBackground());
     gandalf.drawNewPosition();
+    slimes.forEach((slime, i) => 
+        {slime.drawEnemy()
+        //при прыжке на врага, игрока подбрасывает вверх, а враг исчезает. Можно использовать как трамплин
+        if (doesHeroJumpOnTheEnemy({hero: gandalf, enemy: slime})) {
+            gandalf.speedY -= 30;
+            //setTimeout(() => {
+                slimes.splice(i, 1);
+            //}, 0);  
+            //если игрок соприкоснулся с врагом - ресет
+        } else if (gandalf.positionX + gandalf.width >= slime.positionX &&
+                gandalf.positionY + gandalf.height > slime.positionY &&
+                gandalf.positionX <= slime.positionX + slime.width) {
+            reset();
+        }
+    });
     stages.forEach(stage => stage.drawBackground());
     
     requestAnimationFrame(tick);
@@ -187,6 +245,7 @@ function finishMove(event) {
 function reset() {
     gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
     gandalfDistanceTraveled = 0;
+    slimes = [new Enemy(800, 100, -0.3, 0)];
     stages = [
         new Background(200, 200, platform, 273, 120),
         new Background(500, 300, platform, 273, 120),
