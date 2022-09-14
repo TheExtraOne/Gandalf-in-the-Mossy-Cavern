@@ -8,7 +8,7 @@ const ctx = canvas.getContext('2d');
 const gandalfAccelY = 0.5;
 const gandalfStep = 5;
 const gandalfJump = 16;
-const howDeepInMoss = 15;
+const howDeepInMoss = 21;
 const howCloseToPit = 20;
 
 let gandalf;
@@ -32,6 +32,9 @@ runRight.src = "img/RunRight.png";
 
 let runLeft = new Image();
 runLeft.src = "img/RunLeft.png";
+
+let greenSlime = new Image();
+greenSlime.src = "img/GreenSlimeTight.png";
 
 let platform = new Image();
 platform.src = "img/platform.png";
@@ -61,9 +64,10 @@ function doesToutchThePlatform({obj, platform}) {
         obj.positionX + obj.width - howCloseToPit >= platform.positionX &&
         obj.positionX + howCloseToPit <= platform.positionX + platform.width);
 }
+//проверяю, запрыгнул ли герой на врага
 function doesHeroJumpOnTheEnemy({hero, enemy}) {
-    return (hero.positionY + hero.height - howDeepInMoss <= enemy.positionY &&
-        hero.positionY + hero.height + hero.speedY - howDeepInMoss >= enemy.positionY &&
+    return (hero.positionY + hero.height <= enemy.positionY &&
+        hero.positionY + hero.height + hero.speedY  >= enemy.positionY &&
         hero.positionX + hero.width - howCloseToPit >= enemy.positionX &&
         hero.positionX + howCloseToPit <= enemy.positionX + enemy.width);
 }
@@ -101,14 +105,16 @@ class Wizzard {
 }
 
 class Enemy {
-    constructor(x, y, speedX, speedY) {
+    constructor(imageSlime, x, y, speedX, speedY) {
         this.positionX = x;
         this.positionY = y;
         this.speedX = speedX;
         this.speedY = speedY;
         this.accelY = gandalfAccelY;
-        this.width = 50;
-        this.height = 50;
+        this.image = imageSlime;
+        this.width = 100;
+        this.height = 90;
+        this.cadre = 0;
     }
     drawEnemy() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
@@ -118,8 +124,11 @@ class Enemy {
         this.positionX += this.speedX;
         this.positionY += this.speedY;
 
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
+        ctx.drawImage(this.image, 302 * this.cadre, 0, 302, 207, this.positionX, this.positionY, this.width, this.height);
+        this.cadre++;
+        if (this.cadre > 79) {
+            this.cadre = 0;
+        }
     }
 }
 
@@ -245,7 +254,7 @@ function finishMove(event) {
 function reset() {
     gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
     gandalfDistanceTraveled = 0;
-    slimes = [new Enemy(800, 100, -0.3, 0)];
+    slimes = [new Enemy(greenSlime, 800, 100, -0.3, 0)];
     stages = [
         new Background(200, 200, platform, 273, 120),
         new Background(500, 300, platform, 273, 120),
