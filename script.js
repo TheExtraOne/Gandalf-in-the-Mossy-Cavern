@@ -60,7 +60,7 @@ mossSlopes.src = 'img/mossySlopes.png';
 document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 
-//проверяю, находится ли игрок или его паротивник на платформе
+//проверяю, находится ли игрок или его противник на платформе
 function doesToutchThePlatform({obj, platform}) {
     return (obj.positionY + obj.height - howDeepInMoss <= platform.positionY &&
         obj.positionY + obj.height + obj.speedY - howDeepInMoss >= platform.positionY &&
@@ -74,11 +74,17 @@ function doesHeroJumpOnTheEnemy({hero, enemy}) {
         hero.positionX + hero.width - howCloseToPit >= enemy.positionX &&
         hero.positionX + howCloseToPit <= enemy.positionX + enemy.width);
 }
-//проверка на соприкосновение с блоком
+//проверка на соприкосновение с дном блока
 function doesHeroToutchTheBlock({hero, block}) {
     return (hero.positionY < block.positionY + block.height &&
         hero.positionX + hero.width > block.positionX &&
         hero.positionX < block.positionX + block.width);
+}
+//проверка на соприкосновение со сторонами блока
+function doesHeroToutchTheSideOfBlock ({hero, block}) {
+    return (hero.positionX + hero.width + hero.speedX > block.positionX &&
+        hero.positionX + hero.speedX < block.positionX + block.width &&
+        hero.positionY < block.positionY + block.height);
 }
 
 class Wizzard {
@@ -86,7 +92,7 @@ class Wizzard {
         this.positionX = 100;
         this.positionY = 100;
         this.width = 65;
-        this.height = 145;
+        this.height = 135;
         this.speedX = 0;
         this.speedY = 0;
         this.accelY = gandalfAccelY;
@@ -105,6 +111,8 @@ class Wizzard {
         this.positionX += this.speedX;
         this.positionY += this.speedY;
 
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
         ctx.drawImage(this.currentState, 165 * this.cadre, 0, 165, 277, this.positionX, this.positionY, this.width, this.height);
         this.cadre++;
         if (this.cadre > 79) {
@@ -202,8 +210,10 @@ function tick() {
             gandalf.speedY = 0;
         }
         if (stage.block && doesHeroToutchTheBlock({hero:gandalf, block:stage})) {
-            gandalf.accelY = 0;
             gandalf.speedY = 0;
+        }
+        if (stage.block && doesHeroToutchTheSideOfBlock({hero:gandalf, block:stage})) {
+            gandalf.speedX = 0;
         }
         slimes.forEach(slime => {
             if (doesToutchThePlatform({obj: slime, platform: stage})) {
@@ -281,12 +291,13 @@ function reset() {
     gandalfDistanceTraveled = 0;
     slimes = [
         new Enemy(greenSlime, 800, 100, -0.3, 0, 150),
-        new Enemy(greenSlime, 1720, 100, -0.3, 0, 150),
+        new Enemy(greenSlime, 2500, 400, -0.3, 0, 150),
+        new Enemy(greenSlime, 4170, 100, -0.3, 0, 20),
     ];
     stages = [
         new Background(200, 230, platform, 273, 120),
         new Background(500, 300, platform, 273, 120),
-        new Background(250, 300, block, 119, 119, true),
+        //new Background(250, 300, block, 119, 119, true),
         new Background(0, 540, stage, 231, 120),
         new Background(230, 540, stage, 231, 120),
         new Background(550, 540, stage, 231, 120),
@@ -294,13 +305,20 @@ function reset() {
         new Background(1143, 300, smallPlatform, 123, 122),
         new Background(1512, 540, stage, 231, 120),
         new Background(1743, 540, stage, 231, 120),
-        new Background(1800, 300, block, 119, 119, true),
-        new Background(2000, 170, smallPlatform, 123, 122),
+        new Background(1700, 250, smallPlatform, 123, 122),
+        new Background(2100, 190, smallPlatform, 123, 122),
         new Background(2174, 540, stage, 231, 120),
         new Background(2400, 230, smallPlatform, 123, 122),
         new Background(2405, 540, stage, 231, 120),
-        new Background(2750, 300, smallPlatform, 123, 122),
+        new Background(2700, 450, smallPlatform, 123, 122),
         new Background(2900, 540, stage, 231, 120),
+        new Background(3150, 400, platform, 273, 120),
+        new Background(3400, 300, platform, 273, 120),
+        new Background(3700, 250, platform, 273, 120),
+        new Background(3900, 10, block, 119, 119, true),
+        new Background(4000, 450, smallPlatform, 123, 122),
+        new Background(4150, 400, smallPlatform, 123, 122),
+        new Background(4500, 300, platform, 273, 120),
     ];
     backgroundObjects = [
         new Background(-20, 400, mossSlopes, 7163, 371),   
