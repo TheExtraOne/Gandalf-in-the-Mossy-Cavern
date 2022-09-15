@@ -45,6 +45,9 @@ smallPlatform.src = "img/SmallPlatform.png";
 let stage = new Image();
 stage.src = 'img/MediumStage1.png';
 
+let block = new Image();
+block.src = 'img/SmallBlock.png';
+
 let background = new Image();
 background.src = 'img/Background1.jpg';
 
@@ -70,6 +73,12 @@ function doesHeroJumpOnTheEnemy({hero, enemy}) {
         hero.positionY + hero.height + hero.speedY  >= enemy.positionY &&
         hero.positionX + hero.width - howCloseToPit >= enemy.positionX &&
         hero.positionX + howCloseToPit <= enemy.positionX + enemy.width);
+}
+//проверка на соприкосновение с блоком
+function doesHeroToutchTheBlock({hero, block}) {
+    return (hero.positionY < block.positionY + block.height &&
+        hero.positionX + hero.width > block.positionX &&
+        hero.positionX < block.positionX + block.width);
 }
 
 class Wizzard {
@@ -141,12 +150,13 @@ class Enemy {
 }
 
 class Background {
-    constructor(x, y, image, imageWigth, imageHeight) {
+    constructor(x, y, image, imageWigth, imageHeight, block = false) {
         this.positionX = x;
         this.positionY = y;
         this.width = imageWigth;
         this.height = imageHeight;
         this.image = image;
+        this.block = block;
     }
     drawBackground() {  
         ctx.drawImage(this.image, this.positionX, this.positionY);
@@ -163,7 +173,7 @@ function tick() {
 
     if (isRightPressed && gandalf.positionX < 500) {
         gandalf.speedX = gandalfStep;
-    } else if ((isLeftPressed && gandalf.positionX > 200) ||
+    } else if ((isLeftPressed && gandalf.positionX > 300) ||
         (isLeftPressed && gandalfDistanceTraveled === 0 && gandalf.positionX > 0)) {
         gandalf.speedX = -gandalfStep;
     } else {
@@ -188,6 +198,10 @@ function tick() {
     //если игрок находится в пределах платформы
     stages.forEach(stage => {
         if (doesToutchThePlatform({obj:gandalf, platform: stage})) {
+            gandalf.accelY = 0;
+            gandalf.speedY = 0;
+        }
+        if (stage.block && doesHeroToutchTheBlock({hero:gandalf, block:stage})) {
             gandalf.accelY = 0;
             gandalf.speedY = 0;
         }
@@ -243,9 +257,8 @@ function startMove(event) {
     if (event.code === 'KeyW') {
         if (gandalf.speedY === 0) {
             gandalf.speedY = -gandalfJump;
-        } /*else {
-        gandalf.speedY -= gandalfJump;
-        }*/
+        } 
+        //gandalf.speedY -= gandalfJump;
     }
 }
 
@@ -268,11 +281,12 @@ function reset() {
     gandalfDistanceTraveled = 0;
     slimes = [
         new Enemy(greenSlime, 800, 100, -0.3, 0, 150),
-        new Enemy(greenSlime, 1800, 100, -0.3, 0, 200),
+        new Enemy(greenSlime, 1720, 100, -0.3, 0, 150),
     ];
     stages = [
-        new Background(200, 200, platform, 273, 120),
+        new Background(200, 230, platform, 273, 120),
         new Background(500, 300, platform, 273, 120),
+        new Background(250, 300, block, 119, 119, true),
         new Background(0, 540, stage, 231, 120),
         new Background(230, 540, stage, 231, 120),
         new Background(550, 540, stage, 231, 120),
@@ -280,6 +294,13 @@ function reset() {
         new Background(1143, 300, smallPlatform, 123, 122),
         new Background(1512, 540, stage, 231, 120),
         new Background(1743, 540, stage, 231, 120),
+        new Background(1800, 300, block, 119, 119, true),
+        new Background(2000, 170, smallPlatform, 123, 122),
+        new Background(2174, 540, stage, 231, 120),
+        new Background(2400, 230, smallPlatform, 123, 122),
+        new Background(2405, 540, stage, 231, 120),
+        new Background(2750, 300, smallPlatform, 123, 122),
+        new Background(2900, 540, stage, 231, 120),
     ];
     backgroundObjects = [
         new Background(-20, 400, mossSlopes, 7163, 371),   
