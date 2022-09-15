@@ -111,8 +111,8 @@ class Wizzard {
         this.positionX += this.speedX;
         this.positionY += this.speedY;
 
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
-        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
+        //ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+        //ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
         ctx.drawImage(this.currentState, 165 * this.cadre, 0, 165, 277, this.positionX, this.positionY, this.width, this.height);
         this.cadre++;
         if (this.cadre > 79) {
