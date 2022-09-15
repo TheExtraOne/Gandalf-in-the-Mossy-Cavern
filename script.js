@@ -105,7 +105,7 @@ class Wizzard {
 }
 
 class Enemy {
-    constructor(imageSlime, x, y, speedX, speedY) {
+    constructor(imageSlime, x, y, speedX, speedY, limit) {
         this.positionX = x;
         this.positionY = y;
         this.speedX = speedX;
@@ -115,10 +115,18 @@ class Enemy {
         this.width = 100;
         this.height = 90;
         this.cadre = 0;
+        this.limit = limit;
+        this.distance = 0;
     }
     drawEnemy() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
             this.speedY += this.accelY;
+        }
+
+        this.distance += this.speedX;
+        if(Math.abs(this.distance) > this.limit) {
+            this.distance = 0;
+            this.speedX = -this.speedX;
         }
 
         this.positionX += this.speedX;
@@ -254,7 +262,10 @@ function finishMove(event) {
 function reset() {
     gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
     gandalfDistanceTraveled = 0;
-    slimes = [new Enemy(greenSlime, 800, 100, -0.3, 0)];
+    slimes = [
+        new Enemy(greenSlime, 800, 100, -0.3, 0, 150),
+        new Enemy(greenSlime, 1800, 100, -0.3, 0, 200),
+    ];
     stages = [
         new Background(200, 200, platform, 273, 120),
         new Background(500, 300, platform, 273, 120),
