@@ -241,7 +241,11 @@ function startMove(event) {
     }
     //прыжок
     if (event.code === 'KeyW') {
+        if (gandalf.speedY === 0) {
+            gandalf.speedY = -gandalfJump;
+        } /*else {
         gandalf.speedY -= gandalfJump;
+        }*/
     }
 }
 
