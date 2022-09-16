@@ -338,7 +338,7 @@ function reset() {
         new Enemy(greenSlime, 100, 90, 302, 207, 4160, 100, -0.3, 0),
         //new Enemy(greenSlime, 100, 90, 302, 207, 5200, 400, -0.3, 0),
         new Enemy(greenSlime, 100, 90, 302, 207, 5600, 400, -0.3, 150),
-        new Enemy(orangeSlime, 120, 120, 512, 345, 5800, 100, -0.3, 150),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 5800, 100, -0.3, 150),
     ];
     stages = [
         new Background(200, 230, platform, 273, 120),
@@ -370,8 +370,15 @@ function reset() {
         new Background(5200, 300, block, 119, 119, true),
         new Background(5335, 540, stage, 231, 120),
         new Background(5566, 540, stage, 231, 120),
-        new Background(5650, 300, platform, 273, 120),
+        new Background(5650, 400, platform, 273, 120),
         new Background(5797, 540, stage, 231, 120),
+        new Background(5650, 150, smallPlatform, 123, 122),
+        new Background(6100, 250, platform, 273, 120),
+        new Background(6300, 500, smallPlatform, 123, 122),
+        new Background(6450, 450, platform, 273, 120),
+        new Background(6800, 390, platform, 273, 120),
+        new Background(6450, 200, platform, 273, 120),
+        new Background(6800, 110, smallPlatform, 123, 122),
     ];
     backgroundObjects = [
         new Background(-20, 400, mossSlopes, 7163, 371),   
