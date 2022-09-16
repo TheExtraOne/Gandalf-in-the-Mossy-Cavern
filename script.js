@@ -192,7 +192,7 @@ function tick() {
     }
 
     //для перемещения фона во время движения игрока
-    //трюк взят из интернета
+    //трюк взят из интернета, МАГИЯ, не трогать!
     let hitSide = false;
     if (isRightPressed && gandalf.speedX === 0) {
         for (let i = 0; i < stages.length; i++){
@@ -207,7 +207,6 @@ function tick() {
         if (!hitSide) {
             gandalfDistanceTraveled += gandalfStep;
             backgroundObjects.forEach(backgroundObject => {backgroundObject.speedX = -0.6 * gandalfStep});
-            //stages.forEach(stage => {stage.speedX = -gandalfStep});
             slimes.forEach(slime => {slime.positionX -= gandalfStep});
         }
     }
@@ -337,7 +336,6 @@ function reset() {
     stages = [
         new Background(200, 230, platform, 273, 120),
         new Background(500, 300, platform, 273, 120),
-        //new Background(250, 300, block, 119, 119, true),
         new Background(0, 540, stage, 231, 120),
         new Background(230, 540, stage, 231, 120),
         new Background(550, 540, stage, 231, 120),
