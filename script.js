@@ -36,6 +36,8 @@ runLeft.src = "img/RunLeft.png";
 
 let greenSlime = new Image();
 greenSlime.src = "img/GreenSlimeTight.png";
+let orangeSlime = new Image();
+orangeSlime.src = "img/OrangeSlimeTight.png";
 
 let platform = new Image();
 platform.src = "img/platform.png";
@@ -112,8 +114,6 @@ class Wizzard {
         this.positionX += this.speedX;
         this.positionY += this.speedY;
 
-        //ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
-        //ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
         ctx.drawImage(this.currentState, 165 * this.cadre, 0, 165, 277, this.positionX, this.positionY, this.width, this.height);
         this.cadre++;
         if (this.cadre > 79) {
@@ -123,18 +123,20 @@ class Wizzard {
 }
 
 class Enemy {
-    constructor(imageSlime, x, y, speedX, speedY, limit) {
+    constructor(imageSlime, width, height, cropwidth, cropHeight, x, y, speedX, limit) {
         this.positionX = x;
         this.positionY = y;
         this.speedX = speedX;
-        this.speedY = speedY;
+        this.speedY = 0;
         this.accelY = gandalfAccelY;
         this.image = imageSlime;
-        this.width = 100;
-        this.height = 90;
+        this.width = width;
+        this.height = height;
         this.cadre = 0;
         this.limit = limit;
         this.distance = 0;
+        this.cropwidth = cropwidth;
+        this.cropHeight = cropHeight;
     }
     drawEnemy() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
@@ -150,7 +152,7 @@ class Enemy {
         this.positionX += this.speedX;
         this.positionY += this.speedY;
 
-        ctx.drawImage(this.image, 302 * this.cadre, 0, 302, 207, this.positionX, this.positionY, this.width, this.height);
+        ctx.drawImage(this.image, this.cropwidth * this.cadre, 0, this.cropwidth, this.cropHeight, this.positionX, this.positionY, this.width, this.height);
         this.cadre++;
         if (this.cadre > 79) {
             this.cadre = 0;
@@ -266,12 +268,12 @@ function tick() {
         //при прыжке на врага, игрока подбрасывает вверх, а враг исчезает. Можно использовать как трамплин
         if (doesHeroJumpOnTheEnemy({hero: gandalf, enemy: slime})) {
             gandalf.speedY -= 30;
-            //setTimeout(() => {
-                slimes.splice(i, 1);
-            //}, 0);  
-            //если игрок соприкоснулся с врагом - ресет
+            slimes.splice(i, 1); 
+        //если игрок соприкоснулся с врагом - ресет
         } else if (gandalf.positionX + gandalf.width >= slime.positionX &&
-                gandalf.positionY + gandalf.height > slime.positionY &&
+                //gandalf.positionY + gandalf.height > slime.positionY &&
+                gandalf.positionY + gandalf.height / 2 > slime.positionY &&
+                gandalf.positionY + gandalf.height / 2 < slime.positionY + slime.height &&
                 gandalf.positionX <= slime.positionX + slime.width) {
             reset();
         }
@@ -329,11 +331,14 @@ function reset() {
     gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
     gandalfDistanceTraveled = 0;
     slimes = [
-        new Enemy(greenSlime, 800, 100, -0.3, 0, 150),
-        new Enemy(greenSlime, 2500, 400, -0.3, 0, 150),
-        new Enemy(greenSlime, 3580, 100, -0.3, 0, 170),
-        new Enemy(greenSlime, 4160, 100, -0.3, 0, 0),
-        new Enemy(greenSlime, 5200, 400, -0.3, 0, 0),
+        new Enemy(greenSlime, 100, 90, 302, 207, 800, 100, -0.3, 150),
+        new Enemy(greenSlime, 100, 90, 302, 207, 2500, 400, -0.3, 150),
+        //new Enemy(greenSlime, 100, 90, 302, 207, 3580, 100, -0.3, 170),
+        //new Enemy(greenSlime, 100, 90, 302, 207, 3850, 100, -0.3, 170),
+        new Enemy(greenSlime, 100, 90, 302, 207, 4160, 100, -0.3, 0),
+        //new Enemy(greenSlime, 100, 90, 302, 207, 5200, 400, -0.3, 0),
+        new Enemy(greenSlime, 100, 90, 302, 207, 5600, 400, -0.3, 150),
+        new Enemy(orangeSlime, 120, 120, 512, 345, 5800, 100, -0.3, 150),
     ];
     stages = [
         new Background(200, 230, platform, 273, 120),
@@ -364,6 +369,9 @@ function reset() {
         new Background(5104, 540, stage, 231, 120),
         new Background(5200, 300, block, 119, 119, true),
         new Background(5335, 540, stage, 231, 120),
+        new Background(5566, 540, stage, 231, 120),
+        new Background(5650, 300, platform, 273, 120),
+        new Background(5797, 540, stage, 231, 120),
     ];
     backgroundObjects = [
         new Background(-20, 400, mossSlopes, 7163, 371),   
