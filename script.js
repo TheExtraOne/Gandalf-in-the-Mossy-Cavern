@@ -83,7 +83,7 @@ function doesHeroToutchTheBlock({hero, block}) {
 }
 //проверка на соприкосновение со сторонами блока
 function doesHeroToutchTheSideOfBlock ({hero, block}) {
-    return (hero.positionX + hero.width + hero.speedX > block.positionX &&
+    return (hero.positionX + hero.width + hero.speedX - block.speedX > block.positionX &&
         hero.positionX + hero.speedX < block.positionX + block.width &&
         hero.positionY < block.positionY + block.height);
 }
@@ -162,12 +162,14 @@ class Background {
     constructor(x, y, image, imageWigth, imageHeight, block = false) {
         this.positionX = x;
         this.positionY = y;
+        this.speedX = 0;
         this.width = imageWigth;
         this.height = imageHeight;
         this.image = image;
         this.block = block;
     }
     drawBackground() {  
+        this.positionX += this.speedX;
         ctx.drawImage(this.image, this.positionX, this.positionY);
     }
 }
@@ -190,18 +192,40 @@ function tick() {
     }
 
     //для перемещения фона во время движения игрока
-    //трюк подсмотрен в интернете
+    //трюк взят из интернета
+    let hitSide = false;
     if (isRightPressed && gandalf.speedX === 0) {
-        backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX -= 0.6 * gandalfStep});
-        stages.forEach(stage => {stage.positionX -= gandalfStep});
-        gandalfDistanceTraveled += gandalfStep;
-        slimes.forEach(slime => {slime.positionX -= gandalfStep});
+        for (let i = 0; i < stages.length; i++){
+            let stage = stages[i];
+            stage.speedX = -gandalfStep;
+            if (stage.block && doesHeroToutchTheSideOfBlock({hero:gandalf, block:stage})) {
+                stages.forEach(stage => {stage.speedX = 0});
+                hitSide = true;
+                break;
+            }
+        }
+        if (!hitSide) {
+            gandalfDistanceTraveled += gandalfStep;
+            backgroundObjects.forEach(backgroundObject => {backgroundObject.speedX = -0.6 * gandalfStep});
+            //stages.forEach(stage => {stage.speedX = -gandalfStep});
+            slimes.forEach(slime => {slime.positionX -= gandalfStep});
+        }
     }
     if (isLeftPressed && gandalf.speedX === 0 && gandalfDistanceTraveled > 0) {
-        gandalfDistanceTraveled -= gandalfStep;
-        backgroundObjects.forEach(backgroundObject => {backgroundObject.positionX += 0.6 * gandalfStep});
-        stages.forEach(stage => {stage.positionX += gandalfStep});
-        slimes.forEach(slime => {slime.positionX += gandalfStep});
+        for (let i = 0; i < stages.length; i++){
+            let stage = stages[i];
+            stage.speedX = gandalfStep;
+            if (stage.block && doesHeroToutchTheSideOfBlock({hero:gandalf, block:stage})) {
+                stages.forEach(stage => {stage.speedX = 0});
+                hitSide = true;
+                break;
+            }
+        }
+        if (!hitSide) {
+            gandalfDistanceTraveled -= gandalfStep;
+            backgroundObjects.forEach(backgroundObject => {backgroundObject.speedX = 0.6 * gandalfStep});
+            slimes.forEach(slime => {slime.positionX += gandalfStep});
+        }
     }
 
     //если игрок находится в пределах платформы
@@ -229,8 +253,14 @@ function tick() {
         reset();
     }
 
-    backgroundImg.forEach(backgroundstep => backgroundstep.drawBackground());
-    backgroundObjects.forEach(backgroundObject => backgroundObject.drawBackground());
+    backgroundImg.forEach(backgroundstep => {
+        backgroundstep.drawBackground();
+        backgroundstep.speedX = 0;
+    });
+    backgroundObjects.forEach(backgroundObject => {
+        backgroundObject.drawBackground();
+        backgroundObject.speedX = 0;
+    });
     gandalf.drawNewPosition();
     slimes.forEach((slime, i) => 
         {slime.drawEnemy()
@@ -247,7 +277,10 @@ function tick() {
             reset();
         }
     });
-    stages.forEach(stage => stage.drawBackground());
+    stages.forEach(stage => {
+        stage.drawBackground();
+        stage.speedX = 0;
+    });
     
     requestAnimationFrame(tick);
 }
@@ -299,7 +332,7 @@ function reset() {
     slimes = [
         new Enemy(greenSlime, 800, 100, -0.3, 0, 150),
         new Enemy(greenSlime, 2500, 400, -0.3, 0, 150),
-        new Enemy(greenSlime, 4170, 100, -0.3, 0, 20),
+        new Enemy(greenSlime, 4160, 100, -0.3, 0, 0),
     ];
     stages = [
         new Background(200, 230, platform, 273, 120),
@@ -323,9 +356,9 @@ function reset() {
         new Background(3400, 300, platform, 273, 120),
         new Background(3700, 250, platform, 273, 120),
         new Background(3900, 10, block, 119, 119, true),
-        new Background(4000, 450, smallPlatform, 123, 122),
+        new Background(4000, 490, smallPlatform, 123, 122),
         new Background(4150, 400, smallPlatform, 123, 122),
-        new Background(4500, 300, platform, 273, 120),
+        new Background(4600, 300, platform, 273, 120),
     ];
     backgroundObjects = [
         new Background(-20, 400, mossSlopes, 7163, 371),   
