@@ -20,6 +20,7 @@ let gandalfDistanceTraveled;
 
 let isRightPressed = false;
 let isLeftPressed = false;
+let isJumpPressed = false;
 
 let stayRight = new Image();
 stayRight.src = "img/StayRight.png";
@@ -265,10 +266,13 @@ function startMove(event) {
     }
     //прыжок
     if (event.code === 'KeyW') {
-        if (gandalf.speedY === 0) {
+        if (isJumpPressed) {
+            return;
+        }
+        else if (gandalf.speedY === 0 && !isJumpPressed) {
             gandalf.speedY = -gandalfJump;
+            isJumpPressed = true;
         } 
-        //gandalf.speedY -= gandalfJump;
     }
 }
 
@@ -283,6 +287,9 @@ function finishMove(event) {
     if (event.code === 'KeyA') {
         gandalf.currentState = gandalf.standLeft;
         isLeftPressed = false;
+    }
+    if (event.code === 'KeyW') {
+        isJumpPressed = false;
     }
 }
 
