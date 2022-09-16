@@ -331,7 +331,9 @@ function reset() {
     slimes = [
         new Enemy(greenSlime, 800, 100, -0.3, 0, 150),
         new Enemy(greenSlime, 2500, 400, -0.3, 0, 150),
+        new Enemy(greenSlime, 3580, 100, -0.3, 0, 170),
         new Enemy(greenSlime, 4160, 100, -0.3, 0, 0),
+        new Enemy(greenSlime, 5200, 400, -0.3, 0, 0),
     ];
     stages = [
         new Background(200, 230, platform, 273, 120),
@@ -350,13 +352,18 @@ function reset() {
         new Background(2405, 540, stage, 231, 120),
         new Background(2700, 450, smallPlatform, 123, 122),
         new Background(2900, 540, stage, 231, 120),
+        new Background(2950, 200, smallPlatform, 123, 122),
         new Background(3150, 400, platform, 273, 120),
         new Background(3400, 300, platform, 273, 120),
         new Background(3700, 250, platform, 273, 120),
         new Background(3900, 10, block, 119, 119, true),
         new Background(4000, 490, smallPlatform, 123, 122),
-        new Background(4150, 400, smallPlatform, 123, 122),
+        new Background(4150, 450, smallPlatform, 123, 122),
         new Background(4600, 300, platform, 273, 120),
+        new Background(4873, 540, stage, 231, 120),
+        new Background(5104, 540, stage, 231, 120),
+        new Background(5200, 300, block, 119, 119, true),
+        new Background(5335, 540, stage, 231, 120),
     ];
     backgroundObjects = [
         new Background(-20, 400, mossSlopes, 7163, 371),   
