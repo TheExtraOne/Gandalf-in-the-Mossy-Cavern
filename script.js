@@ -89,10 +89,17 @@ function doesHeroToutchTheBlock({hero, block}) {
         hero.positionX < block.positionX + block.width);
 }
 //проверка на соприкосновение со сторонами блока
-function doesHeroToutchTheSideOfBlock ({hero, block}) {
+function doesHeroToutchTheSideOfBlock({hero, block}) {
     return (hero.positionX + hero.width + hero.speedX - block.speedX > block.positionX &&
         hero.positionX + hero.speedX < block.positionX + block.width &&
         hero.positionY < block.positionY + block.height);
+}
+//проверка на соприкосновение со маной
+function doesHeroToutchMana({hero, mana}) {
+    return (hero.positionX + hero.width > mana.positionX &&
+        hero.positionX < mana.positionX + mana.width &&
+        hero.positionY + hero.height > mana.positionY &&
+        hero.positionY < mana.positionY + mana.height);
 }
 
 class Wizzard {
@@ -243,6 +250,7 @@ function tick() {
             gandalfDistanceTraveled += gandalfStep;
             backgroundObjects.forEach(backgroundObject => {backgroundObject.speedX = -0.6 * gandalfStep});
             slimes.forEach(slime => {slime.positionX -= gandalfStep});
+            mana.forEach(flower => {flower.positionX -= gandalfStep});
         }
     }
     if (isLeftPressed && gandalf.speedX === 0 && gandalfDistanceTraveled > 0) {
@@ -259,6 +267,7 @@ function tick() {
             gandalfDistanceTraveled -= gandalfStep;
             backgroundObjects.forEach(backgroundObject => {backgroundObject.speedX = 0.6 * gandalfStep});
             slimes.forEach(slime => {slime.positionX += gandalfStep});
+            mana.forEach(flower => {flower.positionX += gandalfStep});
         }
     }
 
@@ -302,7 +311,10 @@ function tick() {
         backgroundObject.drawBackground();
         backgroundObject.speedX = 0;
     });
-    mana.forEach(flower => {
+    mana.forEach((flower, i) => {
+        if (doesHeroToutchMana({hero:gandalf, mana:flower})) {
+            mana.splice(i, 1); 
+        }
         flower.drawFlower();
     });
     gandalf.drawNewPosition();
@@ -374,7 +386,7 @@ function reset() {
     gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
     gandalfDistanceTraveled = 0;
     mana = [
-        new Flower(manaFlower, 100, 90, 338.8, 339, 300, 400),
+        new Flower(manaFlower, 100, 90, 338.8, 339, 200, 400),
     ];
     slimes = [
         new Enemy(greenSlime, 100, 90, 302, 207, 800, 100, -0.3, 150),
