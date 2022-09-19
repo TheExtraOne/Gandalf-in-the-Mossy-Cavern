@@ -24,6 +24,7 @@ let lastKey;
 let isRightPressed = false;
 let isLeftPressed = false;
 let isJumpPressed = false;
+let isSpacePressed = false;
 
 let stayRight = new Image();
 stayRight.src = "img/StayRight.png";
@@ -337,16 +338,24 @@ function tick() {
         if (doesHeroToutchMana({hero:gandalf, mana:flower})) {
             mana.splice(i, 1);
             gandalf.count++;
-            if (gandalf.count > 0) {
+            if (gandalf.count > 5) {
                 gandalf.hasPower = true;
             }
         }
         flower.drawFlower();
     });
     gandalf.drawNewPosition();
-    fireballs.forEach(fireball => {fireball.draw()});
-    slimes.forEach((slime, i) => 
-        {slime.drawEnemy()
+    slimes.forEach((slime, i) => {
+        fireballs.forEach((fireball, index) => {
+            if (fireball.positionX + fireball.radius > slime.positionX + gandalfJump &&
+                fireball.positionX - fireball.radius < slime.positionX + slime.width - gandalfJump &&
+                fireball.positionY - fireball.radius < slime.positionY + slime.height &&
+                fireball.positionY + fireball.radius > slime.positionY) {
+                slimes.splice(i, 1);
+                fireballs.splice(index, 1);
+            }
+        });
+        slime.drawEnemy();
         //при прыжке на врага, игрока подбрасывает вверх, а враг исчезает. Можно использовать как трамплин
         if (doesHeroJumpOnTheEnemy({hero: gandalf, enemy: slime})) {
             gandalf.speedY -= 30;
@@ -359,6 +368,13 @@ function tick() {
                 gandalf.positionX <= slime.positionX + slime.width) {
             reset();
         }
+    });
+    fireballs.forEach((fireball, i) => {
+        if (fireball.positionX - fireball.radius > canvas.width ||
+            fireball.positionX + fireball.radius < 0) {
+            fireballs.splice(i, 1);
+        }
+        fireball.draw();
     });
     stages.forEach(stage => {
         stage.drawBackground();
@@ -394,10 +410,15 @@ function startMove(event) {
     }
     //каст фаербола
     if (event.code === 'Space' && gandalf.hasPower) {
+        if(isSpacePressed) {
+            return;
+        }
         if (lastKey === 'KeyD') {
+            isSpacePressed = true;
             fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), 10));
         }
         if (lastKey === 'KeyA') {
+            isSpacePressed = true;
             fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), -10));
         }
     }
@@ -418,13 +439,23 @@ function finishMove(event) {
     if (event.code === 'KeyW') {
         isJumpPressed = false;
     }
+    if (event.code === 'Space' && gandalf.hasPower) {
+        isSpacePressed = false;
+    }
 }
 
 function reset() {
     gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
     gandalfDistanceTraveled = 0;
     mana = [
-        new Flower(manaFlower, 100, 90, 338.8, 339, 200, 400),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 200, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 1690, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 2090, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 2900, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 3800, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 4650, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 5650, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 6300, 400),
     ];
     fireballs = [];
     slimes = [
@@ -433,7 +464,7 @@ function reset() {
         new Enemy(greenSlime, 100, 90, 302, 207, 3580, 100, -0.3, 170),
         new Enemy(greenSlime, 100, 90, 302, 207, 3850, 100, -0.3, 170),
         new Enemy(greenSlime, 100, 90, 302, 207, 4160, 100, -0.3, 0),
-        //new Enemy(greenSlime, 100, 90, 302, 207, 5200, 400, -0.3, 0),
+        new Enemy(greenSlime, 100, 90, 302, 207, 5200, 400, -0.3, 0),
         new Enemy(greenSlime, 100, 90, 302, 207, 5600, 400, -0.3, 150),
         new Enemy(orangeSlime, 120, 120, 512, 340, 5800, 100, -0.3, 150),
     ];
@@ -447,8 +478,8 @@ function reset() {
         new Background(1143, 300, smallPlatform, 123, 122),
         new Background(1512, 540, stage, 231, 120),
         new Background(1743, 540, stage, 231, 120),
-        new Background(1700, 250, smallPlatform, 123, 122),
-        new Background(2100, 190, smallPlatform, 123, 122),
+        new Background(1700, 150, smallPlatform, 123, 122),
+        new Background(2100, 150, smallPlatform, 123, 122),
         new Background(2174, 540, stage, 231, 120),
         new Background(2400, 230, smallPlatform, 123, 122),
         new Background(2405, 540, stage, 231, 120),
