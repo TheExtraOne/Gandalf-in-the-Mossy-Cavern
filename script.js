@@ -15,6 +15,7 @@ let gandalf;
 let stages;
 let slimes;
 let mana;
+let fireballs;
 let backgroundObjects;
 let backgroundImg;
 let gandalfDistanceTraveled;
@@ -117,6 +118,8 @@ class Wizzard {
         this.runRight = runRight,
         this.runLeft = runLeft,
         this.currentState = this.standRight;
+        this.hasPower = false;
+        this.count = 0;
     }
     drawNewPosition() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
@@ -213,6 +216,24 @@ class Background {
     drawBackground() {  
         this.positionX += this.speedX;
         ctx.drawImage(this.image, this.positionX, this.positionY);
+    }
+}
+class FireBall {
+    constructor(x, y, spedX) {
+        this.positionX = x;
+        this.positionY = y;
+        this.spedX = spedX;
+        this.radius = 8;
+        this.color = '#56bfac';
+    }
+    draw() {
+        this.positionX += this.spedX;
+
+        ctx.beginPath();
+        ctx.arc(this.positionX, this.positionY, this.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
     }
 }
 
@@ -313,11 +334,16 @@ function tick() {
     });
     mana.forEach((flower, i) => {
         if (doesHeroToutchMana({hero:gandalf, mana:flower})) {
-            mana.splice(i, 1); 
+            mana.splice(i, 1);
+            gandalf.count++;
+            if (gandalf.count > 0) {
+                gandalf.hasPower = true;
+            }
         }
         flower.drawFlower();
     });
     gandalf.drawNewPosition();
+    fireballs.forEach(fireball => {fireball.draw()});
     slimes.forEach((slime, i) => 
         {slime.drawEnemy()
         //при прыжке на врага, игрока подбрасывает вверх, а враг исчезает. Можно использовать как трамплин
@@ -363,6 +389,10 @@ function startMove(event) {
             isJumpPressed = true;
         } 
     }
+    //каст фаербола
+    if (event.code === 'Space' && gandalf.hasPower) {
+        fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), 10));
+    }
 }
 
 function finishMove(event) {
@@ -388,6 +418,7 @@ function reset() {
     mana = [
         new Flower(manaFlower, 100, 90, 338.8, 339, 200, 400),
     ];
+    fireballs = [];
     slimes = [
         new Enemy(greenSlime, 100, 90, 302, 207, 800, 100, -0.3, 150),
         new Enemy(greenSlime, 100, 90, 302, 207, 2500, 400, -0.3, 150),
