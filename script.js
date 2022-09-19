@@ -320,11 +320,15 @@ function tick() {
         })
     });
 
-    //условие проигрыша: если игрок упал - ресет
+    //условие проигрыша: 1)если игрок упал 2)прикоснулся к слизи
     if (gandalf.positionY > canvas.height) {
         reset();
     }
 
+    //условия победы: добраться до конца
+    if (gandalfDistanceTraveled > 8900) {
+        console.log('win');
+    }
     //отрисовка
     backgroundImg.forEach(backgroundstep => {
         backgroundstep.drawBackground();
@@ -532,7 +536,7 @@ function reset() {
         new Background(8600, 490, platform, 273, 120),
         new Background(8950, 100, smallPlatform, 123, 122),
         new Background(9250, 540, stage, 231, 120),
-        new Background(9581, 540, stage, 231, 120),
+        new Background(9481, 540, stage, 231, 120),
     ];
     backgroundObjects = [
         new Background(-20, 400, mossSlopes, 7163, 371),
