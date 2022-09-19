@@ -449,6 +449,7 @@ function reset() {
     gandalfDistanceTraveled = 0;
     mana = [
         new Flower(manaFlower, 100, 70, 338.8, 339, 200, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 600, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 1690, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 2090, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 2900, 100),
@@ -456,6 +457,10 @@ function reset() {
         new Flower(manaFlower, 100, 70, 338.8, 339, 4650, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 5650, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 6300, 400),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 7400, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 8040, 100),
+        new Flower(manaFlower, 100, 70, 338.8, 339, 8960, 10),
+        
     ];
     fireballs = [];
     slimes = [
@@ -467,6 +472,13 @@ function reset() {
         new Enemy(greenSlime, 100, 90, 302, 207, 5200, 400, -0.3, 0),
         new Enemy(greenSlime, 100, 90, 302, 207, 5600, 400, -0.3, 150),
         new Enemy(orangeSlime, 120, 120, 512, 340, 5800, 100, -0.3, 150),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 6600, 100, -0.3, 150),
+        new Enemy(greenSlime, 100, 90, 302, 207, 6970, 300, -0.3, 100),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 7200, 100, -0.3, 150),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 7700, 10, -0.3, 100),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 7850, 300, -0.3, 0),
+        new Enemy(greenSlime, 100, 90, 302, 207, 8300, 300, -0.3, 0),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 8780, 300, -0.3, 150),
     ];
     stages = [
         new Background(200, 230, platform, 273, 120),
@@ -507,6 +519,20 @@ function reset() {
         new Background(6800, 390, platform, 273, 120),
         new Background(6450, 200, platform, 273, 120),
         new Background(6800, 110, smallPlatform, 123, 122),
+        new Background(7100, 150, platform, 273, 120),
+        new Background(7500, 150, platform, 273, 120),
+        new Background(7730, 150, platform, 273, 120),
+        new Background(7930, 150, platform, 273, 120),
+        new Background(7920, 30, block, 119, 119, true),
+        new Background(7400, 540, smallPlatform, 123, 122),
+        new Background(7650, 540, smallPlatform, 123, 122),
+        new Background(7850, 540, smallPlatform, 123, 122),
+        new Background(8050, 540, smallPlatform, 123, 122),
+        new Background(8300, 540, smallPlatform, 123, 122),
+        new Background(8600, 490, platform, 273, 120),
+        new Background(8950, 100, smallPlatform, 123, 122),
+        new Background(9250, 540, stage, 231, 120),
+        new Background(9581, 540, stage, 231, 120),
     ];
     backgroundObjects = [
         new Background(-20, 400, mossSlopes, 7163, 371),
