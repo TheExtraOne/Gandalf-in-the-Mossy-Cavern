@@ -14,6 +14,7 @@ const howCloseToPit = 20;
 let gandalf;
 let stages;
 let slimes;
+let mana;
 let backgroundObjects;
 let backgroundImg;
 let gandalfDistanceTraveled;
@@ -34,8 +35,12 @@ runRight.src = "img/RunRight.png";
 let runLeft = new Image();
 runLeft.src = "img/RunLeft.png";
 
+let manaFlower = new Image();
+manaFlower.src = "img/ManaFlower.png";
+
 let greenSlime = new Image();
 greenSlime.src = "img/GreenSlimeTight.png";
+
 let orangeSlime = new Image();
 orangeSlime.src = "img/OrangeSlimeTight.png";
 
@@ -160,6 +165,34 @@ class Enemy {
     }
 }
 
+class Flower {
+    constructor(imageFlower, width, height, cropwidth, cropHeight, x, y) {
+        this.positionX = x;
+        this.positionY = y;
+        this.speedY = 0;
+        this.accelY = gandalfAccelY;
+        this.image = imageFlower;
+        this.width = width;
+        this.height = height;
+        this.cadre = 0;
+        this.cropwidth = cropwidth;
+        this.cropHeight = cropHeight;
+    }
+    drawFlower() {
+        if (this.positionY + this.height + this.speedY < canvas.height) {
+            this.speedY += this.accelY;
+        }
+
+        this.positionY += this.speedY;
+
+        ctx.drawImage(this.image, this.cropwidth * this.cadre, 0, this.cropwidth, this.cropHeight, this.positionX, this.positionY, this.width, this.height);
+        this.cadre++;
+        if (this.cadre > 79) {
+            this.cadre = 0;
+        }
+    }
+}
+
 class Background {
     constructor(x, y, image, imageWigth, imageHeight, block = false) {
         this.positionX = x;
@@ -247,6 +280,12 @@ function tick() {
                 slime.speedY = 0;
             }
         })
+        mana.forEach(flower => {
+            if (doesToutchThePlatform({obj: flower, platform: stage})) {
+                flower.accelY = 0;
+                flower.speedY = 0;
+            }
+        })
     });
 
     //условие проигрыша: если игрок упал - ресет
@@ -254,6 +293,7 @@ function tick() {
         reset();
     }
 
+    //отрисовка
     backgroundImg.forEach(backgroundstep => {
         backgroundstep.drawBackground();
         backgroundstep.speedX = 0;
@@ -261,6 +301,9 @@ function tick() {
     backgroundObjects.forEach(backgroundObject => {
         backgroundObject.drawBackground();
         backgroundObject.speedX = 0;
+    });
+    mana.forEach(flower => {
+        flower.drawFlower();
     });
     gandalf.drawNewPosition();
     slimes.forEach((slime, i) => 
@@ -330,6 +373,9 @@ function finishMove(event) {
 function reset() {
     gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
     gandalfDistanceTraveled = 0;
+    mana = [
+        new Flower(manaFlower, 100, 90, 338.8, 339, 300, 400),
+    ];
     slimes = [
         new Enemy(greenSlime, 100, 90, 302, 207, 800, 100, -0.3, 150),
         new Enemy(greenSlime, 100, 90, 302, 207, 2500, 400, -0.3, 150),
