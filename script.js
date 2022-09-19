@@ -19,6 +19,7 @@ let fireballs;
 let backgroundObjects;
 let backgroundImg;
 let gandalfDistanceTraveled;
+let lastKey;
 
 let isRightPressed = false;
 let isLeftPressed = false;
@@ -224,7 +225,7 @@ class FireBall {
         this.positionY = y;
         this.spedX = spedX;
         this.radius = 8;
-        this.color = '#56bfac';
+        this.color = '#79d9c7';
     }
     draw() {
         this.positionX += this.spedX;
@@ -373,11 +374,13 @@ function startMove(event) {
     if (event.code === 'KeyD') {
         gandalf.currentState = gandalf.runRight;
         isRightPressed = true;
+        lastKey = 'KeyD';
     }
     //назад
     if (event.code === 'KeyA') {
         gandalf.currentState = gandalf.runLeft;
         isLeftPressed = true;
+        lastKey = 'KeyA';
     }
     //прыжок
     if (event.code === 'KeyW') {
@@ -391,7 +394,12 @@ function startMove(event) {
     }
     //каст фаербола
     if (event.code === 'Space' && gandalf.hasPower) {
-        fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), 10));
+        if (lastKey === 'KeyD') {
+            fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), 10));
+        }
+        if (lastKey === 'KeyA') {
+            fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), -10));
+        }
     }
 }
 
@@ -476,5 +484,5 @@ function reset() {
     backgroundImg = [
         new Background(0, 0, background, 769, 610),
         new Background(769, 0, sideBackground, 769, 610),
-    ]
+    ];
 }
