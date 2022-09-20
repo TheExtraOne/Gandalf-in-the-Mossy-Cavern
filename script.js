@@ -340,7 +340,9 @@ function tick() {
     });
     mana.forEach((flower, i) => {
         if (doesHeroToutchMana({hero:gandalf, mana:flower})) {
-            mana.splice(i, 1);
+            setTimeout(() => {
+                mana.splice(i, 1);
+            })
             gandalf.count++;
             if (gandalf.count > 5) {
                 gandalf.hasPower = true;
@@ -355,15 +357,20 @@ function tick() {
                 fireball.positionX - fireball.radius < slime.positionX + slime.width - gandalfJump &&
                 fireball.positionY - fireball.radius < slime.positionY + slime.height &&
                 fireball.positionY + fireball.radius > slime.positionY) {
-                slimes.splice(i, 1);
-                fireballs.splice(index, 1);
+                setTimeout(() => {
+                    slimes.splice(i, 1);
+                    fireballs.splice(index, 1);
+                }, 0);
             }
         });
         slime.drawEnemy();
         //при прыжке на врага, игрока подбрасывает вверх, а враг исчезает. Можно использовать как трамплин
         if (doesHeroJumpOnTheEnemy({hero: gandalf, enemy: slime})) {
+            setTimeout(() => {
+                slimes.splice(i, 1);
+            }, 0);
             gandalf.speedY -= 30;
-            slimes.splice(i, 1); 
+            
         //если игрок соприкоснулся с врагом - ресет
         } else if (gandalf.positionX + gandalf.width >= slime.positionX &&
                 //gandalf.positionY + gandalf.height > slime.positionY &&
@@ -376,7 +383,9 @@ function tick() {
     fireballs.forEach((fireball, i) => {
         if (fireball.positionX - fireball.radius > canvas.width ||
             fireball.positionX + fireball.radius < 0) {
-            fireballs.splice(i, 1);
+            setTimeout(() => {
+                fireballs.splice(i, 1);
+            })
         }
         fireball.draw();
     });
