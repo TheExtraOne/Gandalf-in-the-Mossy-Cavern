@@ -23,6 +23,7 @@ let backgroundObjects;
 let backgroundImg;
 let gandalfDistanceTraveled;
 let lastKey;
+let spheres;
 
 let isRightPressed = false;
 let isLeftPressed = false;
@@ -116,6 +117,24 @@ function updateScore(span1, span2, hero) {
     span2.textContent = `total score: ${hero.score}`;
 }
 
+function winStuff(hero) {
+    hero.speedX = 0;
+    if (lastKey === 'KeyD') {
+        hero.currentState = hero.standRight;
+    } else {
+        hero.currentState = hero.standLeft;
+    }
+    isLeftPressed = false;
+    isRightPressed = false
+    hero.blockMovement = true;
+}
+
+function randomDiap(n, m) {
+    return Math.floor(
+        Math.random() * (m - n + 1)
+    ) + n;
+}
+
 class Wizzard {
     constructor(stayRight, stayLeft, runRight, runLeft) {
         this.positionX = 100;
@@ -153,7 +172,7 @@ class Wizzard {
 }
 
 class Enemy {
-    constructor(imageSlime, width, height, cropwidth, cropHeight, x, y, speedX, limit) {
+    constructor(imageSlime, width, height, cropwidth, cropHeight, x, y, speedX, limit, isGreen = true) {
         this.positionX = x;
         this.positionY = y;
         this.speedX = speedX;
@@ -167,6 +186,7 @@ class Enemy {
         this.distance = 0;
         this.cropwidth = cropwidth;
         this.cropHeight = cropHeight;
+        this.isGreen = isGreen;
     }
     drawEnemy() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
@@ -237,6 +257,7 @@ class Background {
         ctx.drawImage(this.image, this.positionX, this.positionY);
     }
 }
+
 class FireBall {
     constructor(x, y, spedX) {
         this.positionX = x;
@@ -247,6 +268,32 @@ class FireBall {
     }
     draw() {
         this.positionX += this.spedX;
+
+        ctx.beginPath();
+        ctx.arc(this.positionX, this.positionY, this.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+    }
+}
+
+class Sphere {
+    constructor(x, y, speedX, speedY, radius, color) {
+        this.positionX = x;
+        this.positionY = y;
+        this.spedX = speedX;
+        this.speedY = speedY;
+        this.radius = radius;
+        this.color = color;
+        this.accelY = gandalfAccelY
+    }
+    draw() {
+        if (this.positionY + this.radius + this.speedY < canvas.height) {
+            this.speedY += this.accelY * 0.1;
+        }
+
+        this.positionX += this.spedX;
+        this.positionY += this.speedY;
 
         ctx.beginPath();
         ctx.arc(this.positionX, this.positionY, this.radius, 0, Math.PI * 2, false);
@@ -291,6 +338,7 @@ function tick() {
             backgroundObjects.forEach(backgroundObject => {backgroundObject.speedX = -0.6 * gandalfStep});
             slimes.forEach(slime => {slime.positionX -= gandalfStep});
             mana.forEach(flower => {flower.positionX -= gandalfStep});
+            spheres.forEach(eachSphere => {eachSphere.positionX -= gandalfStep});
         }
     }
     if (isLeftPressed && gandalf.speedX === 0 && gandalfDistanceTraveled > 0) {
@@ -308,6 +356,7 @@ function tick() {
             backgroundObjects.forEach(backgroundObject => {backgroundObject.speedX = 0.6 * gandalfStep});
             slimes.forEach(slime => {slime.positionX += gandalfStep});
             mana.forEach(flower => {flower.positionX += gandalfStep});
+            spheres.forEach(eachSphere => {eachSphere.positionX += gandalfStep});
         }
     }
 
@@ -342,11 +391,6 @@ function tick() {
         reset();
     }
 
-    //условия победы: добраться до конца
-    /*if (gandalfDistanceTraveled > 8900) {
-        console.log('win');
-    }*/
-
     //отрисовка
     backgroundImg.forEach(backgroundstep => {
         backgroundstep.drawBackground();
@@ -364,15 +408,7 @@ function tick() {
             gandalf.count++;
             if (flower.ring) {
                 gandalf.score += 100;
-                gandalf.speedX = 0;
-                if (lastKey === 'KeyD') {
-                    gandalf.currentState = gandalf.standRight;
-                } else {
-                    gandalf.currentState = gandalf.standLeft;
-                }
-                isLeftPressed = false;
-                isRightPressed = false
-                gandalf.blockMovement = true;
+                winStuff(gandalf);
             } else {
                 gandalf.score += 20;
             }
@@ -389,6 +425,13 @@ function tick() {
                 fireball.positionX - fireball.radius < slime.positionX + slime.width - gandalfJump &&
                 fireball.positionY - fireball.radius < slime.positionY + slime.height &&
                 fireball.positionY + fireball.radius > slime.positionY) {
+                for (let i = 0 ; i < 100; i++) {
+                    let color = '#34de31';
+                    if (!slime.isGreen) {
+                        color = '#d1b75a'
+                    }
+                    spheres.push(new Sphere(slime.positionX + slime.width / 2, slime.positionY + slime.height / 2, randomDiap(-10, 10) / 10, randomDiap(-10, 10) / 10, Math.random() * 4, color));
+                }
                 setTimeout(() => {
                     slimes.splice(i, 1);
                     fireballs.splice(index, 1);
@@ -399,6 +442,13 @@ function tick() {
         slime.drawEnemy();
         //при прыжке на врага, игрока подбрасывает вверх, а враг исчезает. Можно использовать как трамплин
         if (doesHeroJumpOnTheEnemy({hero: gandalf, enemy: slime})) {
+            for (let i = 0 ; i < 100; i++) {
+                let color = '#34de31';
+                    if (!slime.isGreen) {
+                        color = '#d1b75a'
+                    }
+                spheres.push(new Sphere(slime.positionX + slime.width / 2, slime.positionY + slime.height / 2, randomDiap(-10, 10) / 10, randomDiap(-10, 10) / 10, Math.random() * 4, color));
+            }
             setTimeout(() => {
                 slimes.splice(i, 1);
             }, 0);
@@ -422,6 +472,7 @@ function tick() {
         }
         fireball.draw();
     });
+    spheres.forEach(sphere => {sphere.draw();});
     stages.forEach(stage => {
         stage.drawBackground();
         stage.speedX = 0;
@@ -520,6 +571,7 @@ function reset() {
         new Flower(ring, 80, 70, 98, 86, 200, 400, true),
         
     ];
+    spheres = [];
     fireballs = [];
     slimes = [
         new Enemy(greenSlime, 100, 90, 302, 207, 800, 100, -0.3, 150),
@@ -529,14 +581,14 @@ function reset() {
         new Enemy(greenSlime, 100, 90, 302, 207, 4160, 100, -0.3, 0),
         new Enemy(greenSlime, 100, 90, 302, 207, 5200, 400, -0.3, 0),
         new Enemy(greenSlime, 100, 90, 302, 207, 5600, 400, -0.3, 150),
-        new Enemy(orangeSlime, 120, 120, 512, 340, 5800, 100, -0.3, 150),
-        new Enemy(orangeSlime, 120, 120, 512, 340, 6600, 100, -0.3, 150),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 5800, 100, -0.3, 150, false),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 6600, 100, -0.3, 150, false),
         new Enemy(greenSlime, 100, 90, 302, 207, 6970, 300, -0.3, 100),
-        new Enemy(orangeSlime, 120, 120, 512, 340, 7200, 100, -0.3, 150),
-        new Enemy(orangeSlime, 120, 120, 512, 340, 7700, 10, -0.3, 100),
-        new Enemy(orangeSlime, 120, 120, 512, 340, 7850, 300, -0.3, 0),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 7200, 100, -0.3, 150, false),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 7700, 10, -0.3, 100, false),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 7850, 300, -0.3, 0, false),
         new Enemy(greenSlime, 100, 90, 302, 207, 8300, 300, -0.3, 0),
-        new Enemy(orangeSlime, 120, 120, 512, 340, 8780, 300, -0.3, 150),
+        new Enemy(orangeSlime, 120, 120, 512, 340, 8780, 300, -0.3, 150, false),
     ];
     stages = [
         new Background(200, 230, platform, 273, 120),
