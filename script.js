@@ -132,6 +132,7 @@ class Wizzard {
         this.runLeft = runLeft,
         this.currentState = this.standRight;
         this.hasPower = false;
+        this.blockMovement = false;
         this.count = 0;
         this.score = 0;
     }
@@ -342,9 +343,9 @@ function tick() {
     }
 
     //условия победы: добраться до конца
-    if (gandalfDistanceTraveled > 8900) {
+    /*if (gandalfDistanceTraveled > 8900) {
         console.log('win');
-    }
+    }*/
 
     //отрисовка
     backgroundImg.forEach(backgroundstep => {
@@ -363,6 +364,15 @@ function tick() {
             gandalf.count++;
             if (flower.ring) {
                 gandalf.score += 100;
+                gandalf.speedX = 0;
+                if (lastKey === 'KeyD') {
+                    gandalf.currentState = gandalf.standRight;
+                } else {
+                    gandalf.currentState = gandalf.standLeft;
+                }
+                isLeftPressed = false;
+                isRightPressed = false
+                gandalf.blockMovement = true;
             } else {
                 gandalf.score += 20;
             }
@@ -425,61 +435,69 @@ function tick() {
 
 function startMove(event) {
     event = event || window.event;
-    //вперед
-    if (event.code === 'KeyD') {
-        gandalf.currentState = gandalf.runRight;
-        isRightPressed = true;
-        lastKey = 'KeyD';
-    }
-    //назад
-    if (event.code === 'KeyA') {
-        gandalf.currentState = gandalf.runLeft;
-        isLeftPressed = true;
-        lastKey = 'KeyA';
-    }
-    //прыжок
-    if (event.code === 'KeyW') {
-        if (isJumpPressed) {
-            return;
+    if (gandalf.blockMovement) {
+        return;
+    } else {
+        //вперед
+        if (event.code === 'KeyD') {
+            gandalf.currentState = gandalf.runRight;
+            isRightPressed = true;
+            lastKey = 'KeyD';
         }
-        else if (gandalf.speedY === 0 && !isJumpPressed) {
-            gandalf.speedY = -gandalfJump;
-            isJumpPressed = true;
-        } 
-    }
-    //каст фаербола
-    if (event.code === 'Space' && gandalf.hasPower) {
-        if(isSpacePressed) {
-            return;
+        //назад
+        if (event.code === 'KeyA') {
+            gandalf.currentState = gandalf.runLeft;
+            isLeftPressed = true;
+            lastKey = 'KeyA';
         }
-        if (lastKey === 'KeyD') {
-            isSpacePressed = true;
-            fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), 10));
+        //прыжок
+        if (event.code === 'KeyW') {
+            if (isJumpPressed) {
+                return;
+            }
+            else if (gandalf.speedY === 0 && !isJumpPressed) {
+                gandalf.speedY = -gandalfJump;
+                isJumpPressed = true;
+            } 
         }
-        if (lastKey === 'KeyA') {
-            isSpacePressed = true;
-            fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), -10));
+        //каст фаербола
+        if (event.code === 'Space' && gandalf.hasPower) {
+            if(isSpacePressed) {
+                return;
+            }
+            if (lastKey === 'KeyD') {
+                isSpacePressed = true;
+                fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), 10));
+            }
+            if (lastKey === 'KeyA') {
+                isSpacePressed = true;
+                fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), -10));
+            }
         }
     }
 }
 
 function finishMove(event) {
     event = event || window.event;
-    //вперед
-    if (event.code === 'KeyD') {
-        gandalf.currentState = gandalf.standRight;
-        isRightPressed = false;
-    }
-    //назад
-    if (event.code === 'KeyA') {
-        gandalf.currentState = gandalf.standLeft;
-        isLeftPressed = false;
-    }
-    if (event.code === 'KeyW') {
-        isJumpPressed = false;
-    }
-    if (event.code === 'Space' && gandalf.hasPower) {
-        isSpacePressed = false;
+    if (gandalf.blockMovement) {
+        return;
+    } else {
+        //вперед
+        if (event.code === 'KeyD') {
+            gandalf.currentState = gandalf.standRight;
+            isRightPressed = false;
+        }
+        //назад
+        if (event.code === 'KeyA') {
+            gandalf.currentState = gandalf.standLeft;
+            isLeftPressed = false;
+        }
+        if (event.code === 'KeyW') {
+            isJumpPressed = false;
+        }
+        if (event.code === 'Space' && gandalf.hasPower) {
+            isSpacePressed = false;
+        }
     }
 }
 
@@ -499,7 +517,7 @@ function reset() {
         new Flower(manaFlower, 100, 70, 338.8, 339, 7400, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 8040, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 8960, 10),
-        new Flower(ring, 80, 70, 98, 86, 9550, 400, true),
+        new Flower(ring, 80, 70, 98, 86, 200, 400, true),
         
     ];
     fireballs = [];
