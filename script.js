@@ -11,6 +11,9 @@ const gandalfJump = 16;
 const howDeepInMoss = 21;
 const howCloseToPit = 20;
 
+const manaFlowers = document.querySelector('.mana-flowers');
+const totalScore = document.querySelector('.total-score');
+
 let gandalf;
 let stages;
 let slimes;
@@ -106,6 +109,11 @@ function doesHeroToutchMana({hero, mana}) {
         hero.positionX < mana.positionX + mana.width &&
         hero.positionY + hero.height > mana.positionY &&
         hero.positionY < mana.positionY + mana.height);
+}
+
+function updateScore(span1, span2, hero) {
+    span1.textContent = `mana-flowers: ${hero.count}`;
+    span2.textContent = `total score: ${hero.score}`;
 }
 
 class Wizzard {
@@ -408,6 +416,9 @@ function tick() {
         stage.drawBackground();
         stage.speedX = 0;
     });
+
+    //Счет
+    updateScore(manaFlowers, totalScore, gandalf);
     
     requestAnimationFrame(tick);
 }
@@ -488,7 +499,7 @@ function reset() {
         new Flower(manaFlower, 100, 70, 338.8, 339, 7400, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 8040, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 8960, 10),
-        new Flower(ring, 80, 70, 98, 86, 200, 400, true),
+        new Flower(ring, 80, 70, 98, 86, 9550, 400, true),
         
     ];
     fireballs = [];
