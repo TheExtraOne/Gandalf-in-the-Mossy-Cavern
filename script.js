@@ -68,6 +68,9 @@ sideBackground.src = 'img/Background2.jpg';
 let mossSlopes = new Image();
 mossSlopes.src = 'img/mossySlopes.png';
 
+let ring = new Image();
+ring.src = 'img/smallRing1.png';
+
 document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 
@@ -122,6 +125,7 @@ class Wizzard {
         this.currentState = this.standRight;
         this.hasPower = false;
         this.count = 0;
+        this.score = 0;
     }
     drawNewPosition() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
@@ -178,7 +182,7 @@ class Enemy {
 }
 
 class Flower {
-    constructor(imageFlower, width, height, cropwidth, cropHeight, x, y) {
+    constructor(imageFlower, width, height, cropwidth, cropHeight, x, y, ring = false) {
         this.positionX = x;
         this.positionY = y;
         this.speedY = 0;
@@ -189,6 +193,7 @@ class Flower {
         this.cadre = 0;
         this.cropwidth = cropwidth;
         this.cropHeight = cropHeight;
+        this.ring = ring;
     }
     drawFlower() {
         if (this.positionY + this.height + this.speedY < canvas.height) {
@@ -196,11 +201,14 @@ class Flower {
         }
 
         this.positionY += this.speedY;
-
-        ctx.drawImage(this.image, this.cropwidth * this.cadre, 0, this.cropwidth, this.cropHeight, this.positionX, this.positionY, this.width, this.height);
-        this.cadre++;
-        if (this.cadre > 79) {
-            this.cadre = 0;
+        if (!this.ring) {
+            ctx.drawImage(this.image, this.cropwidth * this.cadre, 0, this.cropwidth, this.cropHeight, this.positionX, this.positionY, this.width, this.height);
+            this.cadre++;
+            if (this.cadre > 79) {
+                this.cadre = 0;
+            }
+        } else {
+            ctx.drawImage(this.image, 0, 0, this.cropwidth, this.cropHeight, this.positionX, this.positionY, this.width, this.height);
         }
     }
 }
@@ -294,7 +302,7 @@ function tick() {
         }
     }
 
-    //если игрок находится в пределах платформы
+    //объект останавливается при падении, если соприкасается с платформой
     stages.forEach(stage => {
         if (doesToutchThePlatform({obj:gandalf, platform: stage})) {
             gandalf.accelY = 0;
@@ -329,6 +337,7 @@ function tick() {
     if (gandalfDistanceTraveled > 8900) {
         console.log('win');
     }
+
     //отрисовка
     backgroundImg.forEach(backgroundstep => {
         backgroundstep.drawBackground();
@@ -344,6 +353,11 @@ function tick() {
                 mana.splice(i, 1);
             })
             gandalf.count++;
+            if (flower.ring) {
+                gandalf.score += 100;
+            } else {
+                gandalf.score += 20;
+            }
             if (gandalf.count > 5) {
                 gandalf.hasPower = true;
             }
@@ -361,6 +375,7 @@ function tick() {
                     slimes.splice(i, 1);
                     fireballs.splice(index, 1);
                 }, 0);
+                gandalf.score += 10;
             }
         });
         slime.drawEnemy();
@@ -370,10 +385,10 @@ function tick() {
                 slimes.splice(i, 1);
             }, 0);
             gandalf.speedY -= 30;
+            gandalf.score += 10;
             
         //если игрок соприкоснулся с врагом - ресет
         } else if (gandalf.positionX + gandalf.width >= slime.positionX &&
-                //gandalf.positionY + gandalf.height > slime.positionY &&
                 gandalf.positionY + gandalf.height / 2 > slime.positionY &&
                 gandalf.positionY + gandalf.height / 2 < slime.positionY + slime.height &&
                 gandalf.positionX <= slime.positionX + slime.width) {
@@ -473,6 +488,7 @@ function reset() {
         new Flower(manaFlower, 100, 70, 338.8, 339, 7400, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 8040, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 8960, 10),
+        new Flower(ring, 80, 70, 98, 86, 200, 400, true),
         
     ];
     fireballs = [];
