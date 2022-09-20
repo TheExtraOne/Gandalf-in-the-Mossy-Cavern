@@ -426,11 +426,11 @@ function tick() {
                 fireball.positionY - fireball.radius < slime.positionY + slime.height &&
                 fireball.positionY + fireball.radius > slime.positionY) {
                 for (let i = 0 ; i < 100; i++) {
-                    let color = '#34de31';
+                    let color = '#89cf7e'; //оттенок зеленого
                     if (!slime.isGreen) {
-                        color = '#d1b75a'
+                        color = '#d1b75a'   //оттенок оранжевого
                     }
-                    spheres.push(new Sphere(slime.positionX + slime.width / 2, slime.positionY + slime.height / 2, randomDiap(-10, 10) / 10, randomDiap(-10, 10) / 10, Math.random() * 4, color));
+                    spheres.push(new Sphere(slime.positionX + slime.width / 2, slime.positionY + slime.height / 2, randomDiap(-10, 10) / 10, randomDiap(-10, 10) / 10, Math.random() * gandalfStep, color));
                 }
                 setTimeout(() => {
                     slimes.splice(i, 1);
@@ -443,11 +443,11 @@ function tick() {
         //при прыжке на врага, игрока подбрасывает вверх, а враг исчезает. Можно использовать как трамплин
         if (doesHeroJumpOnTheEnemy({hero: gandalf, enemy: slime})) {
             for (let i = 0 ; i < 100; i++) {
-                let color = '#34de31';
+                let color = '#89cf7e';  //оттенок зеленого
                     if (!slime.isGreen) {
-                        color = '#d1b75a'
+                        color = '#d1b75a' //оттенок оранжевого
                     }
-                spheres.push(new Sphere(slime.positionX + slime.width / 2, slime.positionY + slime.height / 2, randomDiap(-10, 10) / 10, randomDiap(-10, 10) / 10, Math.random() * 4, color));
+                spheres.push(new Sphere(slime.positionX + slime.width / 2, slime.positionY + slime.height / 2, randomDiap(-10, 10) / 10, randomDiap(-10, 10) / 10, Math.random() * gandalfStep, color));
             }
             setTimeout(() => {
                 slimes.splice(i, 1);
