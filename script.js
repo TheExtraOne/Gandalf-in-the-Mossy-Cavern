@@ -472,7 +472,15 @@ function tick() {
         }
         fireball.draw();
     });
-    spheres.forEach(sphere => {sphere.draw();});
+    spheres.forEach((sphere, i) => {
+        if (sphere.positionY > canvas.height) {
+            setTimeout(() => {
+                spheres.splice(i, 1);
+            }, 0);
+        } else {
+            sphere.draw();
+        }
+    });
     stages.forEach(stage => {
         stage.drawBackground();
         stage.speedX = 0;
