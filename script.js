@@ -117,7 +117,7 @@ function updateScore(span1, span2, hero) {
     span2.textContent = `total score: ${hero.score}`;
 }
 
-function winStuff(hero) {
+function winStuff(hero, powerRing) {
     hero.speedX = 0;
     if (lastKey === 'KeyD') {
         hero.currentState = hero.standRight;
@@ -127,6 +127,17 @@ function winStuff(hero) {
     isLeftPressed = false;
     isRightPressed = false
     hero.blockMovement = true;
+
+    //салют, подсмотрено в интернете
+    for (let i = 0; i < 400; i++) {
+        spheres.push(new Sphere( (powerRing.positionX + powerRing.width / 2),
+        canvas.height / 3,
+        Math.cos(Math.PI * 2 * i/ 400) * Math.random(), 
+        Math.sin(Math.PI * 2 * i/ 400) * Math.random(), 
+        Math.random() * 3, 
+        `hsl(${randomDiap(1,100)}, 100%, 50%)`,
+        true));
+    }
 }
 
 function randomDiap(n, m) {
@@ -278,18 +289,25 @@ class FireBall {
 }
 
 class Sphere {
-    constructor(x, y, speedX, speedY, radius, color) {
+    constructor(x, y, speedX, speedY, radius, color, fireworks = false) {
         this.positionX = x;
         this.positionY = y;
         this.spedX = speedX;
         this.speedY = speedY;
         this.radius = radius;
         this.color = color;
-        this.accelY = gandalfAccelY
+        this.accelY = gandalfAccelY;
+        this.isFireworks = fireworks;
     }
     draw() {
-        if (this.positionY + this.radius + this.speedY < canvas.height) {
-            this.speedY += this.accelY * 0.1;
+        if (!this.isFireworks) {
+            if (this.positionY + this.radius + this.speedY < canvas.height) {
+                this.speedY += this.accelY * 0.1;
+            }
+        } else {
+            if (this.positionY + this.radius + this.speedY < canvas.height) {
+                this.speedY += this.accelY * 0.005;
+            }
         }
 
         this.positionX += this.spedX;
@@ -408,7 +426,7 @@ function tick() {
             gandalf.count++;
             if (flower.ring) {
                 gandalf.score += 100;
-                winStuff(gandalf);
+                winStuff(gandalf, flower);
             } else {
                 gandalf.score += 20;
             }
@@ -430,7 +448,12 @@ function tick() {
                     if (!slime.isGreen) {
                         color = '#d1b75a'   //оттенок оранжевого
                     }
-                    spheres.push(new Sphere(slime.positionX + slime.width / 2, slime.positionY + slime.height / 2, randomDiap(-10, 10) / 10, randomDiap(-10, 10) / 10, Math.random() * gandalfStep, color));
+                    spheres.push(new Sphere(slime.positionX + slime.width / 2, 
+                        slime.positionY + slime.height / 2, 
+                        randomDiap(-10, 10) / 10, 
+                        randomDiap(-10, 10) / 10, 
+                        Math.random() * gandalfStep, 
+                        color));
                 }
                 setTimeout(() => {
                     slimes.splice(i, 1);
@@ -447,7 +470,12 @@ function tick() {
                     if (!slime.isGreen) {
                         color = '#d1b75a' //оттенок оранжевого
                     }
-                spheres.push(new Sphere(slime.positionX + slime.width / 2, slime.positionY + slime.height / 2, randomDiap(-10, 10) / 10, randomDiap(-10, 10) / 10, Math.random() * gandalfStep, color));
+                spheres.push(new Sphere(slime.positionX + slime.width / 2, 
+                    slime.positionY + slime.height / 2, 
+                    randomDiap(-10, 10) / 10, 
+                    randomDiap(-10, 10) / 10, 
+                    Math.random() * gandalfStep, 
+                    color));
             }
             setTimeout(() => {
                 slimes.splice(i, 1);
@@ -576,7 +604,7 @@ function reset() {
         new Flower(manaFlower, 100, 70, 338.8, 339, 7400, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 8040, 100),
         new Flower(manaFlower, 100, 70, 338.8, 339, 8960, 10),
-        new Flower(ring, 80, 70, 98, 86, 200, 400, true),
+        new Flower(ring, 80, 70, 98, 86, 9500, 400, true),
         
     ];
     spheres = [];
