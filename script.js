@@ -109,6 +109,7 @@ if (mainAudio.canPlayType("audio/mpeg") == "probably"){
 
 function clickSoundInit(audio) {
     if (audio === mainAudio) {
+        audio.loop = true;
         audio.play();
         return;
     }
