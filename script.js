@@ -5,6 +5,8 @@ canvas.width = 1024;
 canvas.height = 600;
 const ctx = canvas.getContext('2d');
 
+const wrapper = document.querySelector('.wrapper');
+
 const gandalfAccelY = 0.5;
 const gandalfStep = 5;
 const gandalfJump = 16;
@@ -75,6 +77,50 @@ mossSlopes.src = 'img/mossySlopes.png';
 let ring = new Image();
 ring.src = 'img/smallRing1.png';
 
+
+const moneyAudio = new Audio;
+if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
+    moneyAudio.src = "sounds/money.mp3";
+} else {
+    moneyAudio.src=
+    "sounds/moneyOgg.ogg";
+}
+const slimeAudio = new Audio;
+if (slimeAudio.canPlayType("audio/mpeg") == "probably"){
+    slimeAudio.src = "sounds/sqush.mp3";
+} else {
+    slimeAudio.src=
+    "sounds/squshOgg.ogg";
+}
+const victoryAudio = new Audio;
+if (victoryAudio.canPlayType("audio/mpeg") == "probably"){
+    victoryAudio.src = "sounds/victory.mp3";
+} else {
+    victoryAudio.src=
+    "sounds/victoryOgg.ogg";
+}
+const mainAudio = new Audio;
+if (mainAudio.canPlayType("audio/mpeg") == "probably"){
+    mainAudio.src = "sounds/general2.mp3";
+} else {
+    mainAudio.src=
+    "sounds/general2Ogg.ogg";
+}
+
+function clickSoundInit(audio) {
+    if (audio === mainAudio) {
+        audio.play();
+        return;
+    }
+    audio.play(); // запускаем звук
+    audio.pause(); // и сразу останавливаем
+}
+
+function clickSound(audio) {
+    audio.currentTime = 0; // в секундах
+    audio.play();
+}
+
 document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 
@@ -127,6 +173,8 @@ function winStuff(hero, powerRing) {
     isLeftPressed = false;
     isRightPressed = false
     hero.blockMovement = true;
+
+    clickSound(victoryAudio);
 
     //салют, подсмотрено в интернете
     for (let i = 0; i < 400; i++) {
@@ -423,6 +471,7 @@ function tick() {
             setTimeout(() => {
                 mana.splice(i, 1);
             })
+            clickSound(moneyAudio);
             gandalf.count++;
             if (flower.ring) {
                 gandalf.score += 100;
@@ -459,6 +508,7 @@ function tick() {
                     slimes.splice(i, 1);
                     fireballs.splice(index, 1);
                 }, 0);
+                clickSound(slimeAudio);
                 gandalf.score += 10;
             }
         });
@@ -482,6 +532,7 @@ function tick() {
             }, 0);
             gandalf.speedY -= 30;
             gandalf.score += 10;
+            clickSound(slimeAudio);
             
         //если игрок соприкоснулся с врагом - ресет
         } else if (gandalf.positionX + gandalf.width >= slime.positionX &&
@@ -527,6 +578,10 @@ function startMove(event) {
     } else {
         //вперед
         if (event.code === 'KeyD') {
+            clickSoundInit(moneyAudio);
+            clickSoundInit(slimeAudio);
+            clickSoundInit(victoryAudio);
+            clickSoundInit(mainAudio);
             gandalf.currentState = gandalf.runRight;
             isRightPressed = true;
             lastKey = 'KeyD';
