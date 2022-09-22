@@ -100,6 +100,7 @@ if (victoryAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/victoryOgg.ogg";
 }
 const mainAudio = new Audio();
+mainAudio.loop = true;
 if (mainAudio.canPlayType("audio/mpeg") == "probably"){
     mainAudio.src = "sounds/general2.mp3";
 } else {
@@ -112,6 +113,7 @@ document.addEventListener('keyup', finishMove, false);
 startButton.addEventListener('click', lounchMusic, false);
 
 function lounchMusic(){
+    startButton.blur();
     clickSoundInit(moneyAudio);
     clickSoundInit(slimeAudio);
     clickSoundInit(victoryAudio);
@@ -120,7 +122,6 @@ function lounchMusic(){
 
 function clickSoundInit(audio) {
     if (audio === mainAudio) {
-        audio.loop = true;
         audio.play();
         return;
     }
