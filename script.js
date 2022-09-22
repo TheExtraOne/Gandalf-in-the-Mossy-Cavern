@@ -5,7 +5,7 @@ canvas.width = 1024;
 canvas.height = 600;
 const ctx = canvas.getContext('2d');
 
-const wrapper = document.querySelector('.wrapper');
+const startButton = document.querySelector('#startButton');
 
 const gandalfAccelY = 0.5;
 const gandalfStep = 5;
@@ -78,33 +78,44 @@ let ring = new Image();
 ring.src = 'img/smallRing1.png';
 
 
-const moneyAudio = new Audio;
+const moneyAudio = new Audio();
 if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
     moneyAudio.src = "sounds/money.mp3";
 } else {
     moneyAudio.src=
     "sounds/moneyOgg.ogg";
 }
-const slimeAudio = new Audio;
+const slimeAudio = new Audio();
 if (slimeAudio.canPlayType("audio/mpeg") == "probably"){
     slimeAudio.src = "sounds/sqush.mp3";
 } else {
     slimeAudio.src=
     "sounds/squshOgg.ogg";
 }
-const victoryAudio = new Audio;
+const victoryAudio = new Audio();
 if (victoryAudio.canPlayType("audio/mpeg") == "probably"){
     victoryAudio.src = "sounds/victory.mp3";
 } else {
     victoryAudio.src=
     "sounds/victoryOgg.ogg";
 }
-const mainAudio = new Audio;
+const mainAudio = new Audio();
 if (mainAudio.canPlayType("audio/mpeg") == "probably"){
     mainAudio.src = "sounds/general2.mp3";
 } else {
     mainAudio.src=
     "sounds/general2Ogg.ogg";
+}
+
+document.addEventListener('keydown', startMove, false);
+document.addEventListener('keyup', finishMove, false);
+startButton.addEventListener('click', lounchMusic, false);
+
+function lounchMusic(){
+    clickSoundInit(moneyAudio);
+    clickSoundInit(slimeAudio);
+    clickSoundInit(victoryAudio);
+    clickSoundInit(mainAudio);
 }
 
 function clickSoundInit(audio) {
@@ -121,9 +132,6 @@ function clickSound(audio) {
     audio.currentTime = 0; // в секундах
     audio.play();
 }
-
-document.addEventListener('keydown', startMove, false);
-document.addEventListener('keyup', finishMove, false);
 
 //проверяю, находится ли игрок или его противник на платформе
 function doesToutchThePlatform({obj, platform}) {
@@ -579,10 +587,6 @@ function startMove(event) {
     } else {
         //вперед
         if (event.code === 'KeyD') {
-            clickSoundInit(moneyAudio);
-            clickSoundInit(slimeAudio);
-            clickSoundInit(victoryAudio);
-            clickSoundInit(mainAudio);
             gandalf.currentState = gandalf.runRight;
             isRightPressed = true;
             lastKey = 'KeyD';
