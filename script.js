@@ -79,6 +79,7 @@ ring.src = 'img/smallRing1.png';
 
 
 const moneyAudio = new Audio();
+moneyAudio.volume = 0.3;
 if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
     moneyAudio.src = "sounds/money.mp3";
 } else {
@@ -86,6 +87,7 @@ if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/moneyOgg.ogg";
 }
 const slimeAudio = new Audio();
+slimeAudio.volume = 0.3;
 if (slimeAudio.canPlayType("audio/mpeg") == "probably"){
     slimeAudio.src = "sounds/sqush.mp3";
 } else {
@@ -93,6 +95,7 @@ if (slimeAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/squshOgg.ogg";
 }
 const victoryAudio = new Audio();
+victoryAudio.volume = 0.5;
 if (victoryAudio.canPlayType("audio/mpeg") == "probably"){
     victoryAudio.src = "sounds/victory.mp3";
 } else {
@@ -101,6 +104,7 @@ if (victoryAudio.canPlayType("audio/mpeg") == "probably"){
 }
 const mainAudio = new Audio();
 mainAudio.loop = true;
+mainAudio.volume = 0.15;
 if (mainAudio.canPlayType("audio/mpeg") == "probably"){
     mainAudio.src = "sounds/general2.mp3";
 } else {
