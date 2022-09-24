@@ -27,7 +27,7 @@ function reset() {
             new Flower(manaFlower, 100, 70, 338.8, 339, 7400, 100),
             new Flower(manaFlower, 100, 70, 338.8, 339, 8040, 100),
             new Flower(manaFlower, 100, 70, 338.8, 339, 8960, 10),
-            new Flower(ring, 80, 70, 98, 86, 9500, 400, true),
+            new Flower(ring1, 80, 70, 98, 86, 9500, 400, true),
             
         ];
         slimes = [
@@ -103,8 +103,8 @@ function reset() {
         ];
     }
     if (level === 2) {
-        //let prevScore = gandalf.score;
-        gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft/*, prevScore*/);
+        let prevScore = gandalf.score;
+        gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft, prevScore);
         mana = [
             new Flower(manaFlower, 100, 70, 338.8, 339, 490, 100),
             new Flower(manaFlower, 100, 70, 338.8, 339, 1550, 400),
@@ -113,7 +113,10 @@ function reset() {
             new Flower(manaFlower, 100, 70, 338.8, 339, 3950, 100),
             new Flower(manaFlower, 100, 70, 338.8, 339, 4400, 100),
             new Flower(manaFlower, 100, 70, 338.8, 339, 5100, 100),
-            new Flower(manaFlower, 100, 70, 338.8, 339, 5950, 100),            
+            new Flower(manaFlower, 100, 70, 338.8, 339, 5900, 100),
+            new Flower(manaFlower, 100, 70, 338.8, 339, 7050, 100),
+            new Flower(manaFlower, 100, 70, 338.8, 339, 8800, 50),
+            new Flower(ring2, 80, 70, 98, 86, 9710, 200, true),            
         ];
         slimes = [
             new Enemy(greenSlime, 100, 90, 302, 207, 600, 400, -0.3, 450),
@@ -126,7 +129,16 @@ function reset() {
             new Enemy(orangeSlime, 120, 120, 512, 340, 4300, 400, -0.3, 0, false),
             new Enemy(orangeSlime, 120, 120, 512, 340, 4450, 400, -0.3, 0, false),
             new Enemy(orangeSlime, 120, 120, 512, 340, 4620, 400, -0.3, 0, false),
-            //new Enemy(greenSlime, 100, 90, 302, 207, 5600, 100, -0.3, 150),
+            new Enemy(greenSlime, 100, 90, 302, 207, 5900, 400, -0.3, 150),
+            new Enemy(orangeSlime, 120, 120, 512, 340, 6100, 400, -0.3, 0, false),
+            new Enemy(greenSlime, 100, 90, 302, 207, 6400, 400, -0.3, 150),
+            new Enemy(orangeSlime, 120, 120, 512, 340, 7000, 400, -0.3, 0, false),
+            new Enemy(greenSlime, 100, 90, 302, 207, 7620, 400, -0.3, 100),
+            new Enemy(orangeSlime, 120, 120, 512, 340, 7850, 400, -0.3, 0, false),
+            new Enemy(orangeSlime, 120, 120, 512, 340, 8400, 100, -0.3, 0, false),
+            new Enemy(orangeSlime, 120, 120, 512, 340, 8600, 100, -0.3, 0, false),
+            new Enemy(greenSlime, 100, 90, 302, 207, 9010, 100, -0.3, 0),
+            new Enemy(greenSlime, 100, 90, 302, 207, 9210, 100, -0.3, 0),
         ];
         stages = [
             new Background(0, 540, stage, 231, 120),
@@ -160,6 +172,25 @@ function reset() {
             new Background(5700, 200, block, 119, 119, true),
             new Background(5600, 540, stage, 231, 120),
             new Background(5900, 150, platform, 273, 120),
+            new Background(5830, 540, stage, 231, 120),
+            new Background(6060, 540, stage, 231, 120),
+            new Background(6300, 540, stage, 231, 120),
+            new Background(6000, 300, block, 119, 119, true),
+            new Background(6200, 300, block, 119, 119, true),
+            new Background(6000, 20, block, 119, 119, true),
+            new Background(6700, 300, platform, 273, 120),
+            new Background(7000, 300, platform, 273, 120),
+            new Background(7400, 150, smallPlatform, 123, 122),
+            new Background(7500, 540, stage, 231, 120),
+            new Background(7850, 300, smallPlatform, 123, 122),
+            new Background(8200, 150, smallPlatform, 123, 122),
+            new Background(8400, 400, smallPlatform, 123, 122),
+            new Background(8600, 400, smallPlatform, 123, 122),
+            new Background(8800, 100, smallPlatform, 123, 122),
+            new Background(9000, 400, smallPlatform, 123, 122),
+            new Background(9200, 400, smallPlatform, 123, 122),
+            new Background(9500, 200, smallPlatform, 123, 122),
+            new Background(9700, 400, smallPlatform, 123, 122),
         ];
     }
 }

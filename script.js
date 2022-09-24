@@ -27,7 +27,7 @@ let gandalfDistanceTraveled;
 let lastKey;
 let spheres;
 
-let level = 2;
+let level = 1;
 
 let isRightPressed = false;
 let isLeftPressed = false;
@@ -76,8 +76,11 @@ sideBackground.src = 'img/Background2.jpg';
 let mossSlopes = new Image();
 mossSlopes.src = 'img/mossySlopes.png';
 
-let ring = new Image();
-ring.src = 'img/smallRing1.png';
+let ring1 = new Image();
+ring1.src = 'img/smallRing1.png';
+
+let ring2 = new Image();
+ring2.src = 'img/smallRing2.png';
 
 
 const moneyAudio = new Audio();
