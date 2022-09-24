@@ -1,17 +1,20 @@
 'use strict'
 
 const canvas = document.querySelector('canvas');
+const userWidth = document.documentElement.clientWidth;
+const userHeight = document.documentElement.clientHeight;
+
 canvas.width = 1024;
-canvas.height = 600;
+canvas.height = Math.floor(canvas.width / 1.7);
 const ctx = canvas.getContext('2d');
 
 const startButton = document.querySelector('#startButton');
 
 const gandalfAccelY = 0.5;
-const gandalfStep = 5;
-const gandalfJump = 16;
-const howDeepInMoss = 21;
-const howCloseToPit = 20;
+const gandalfStep = Math.floor(canvas.width / 204.8);
+const gandalfJump = Math.floor(canvas.width / 64);
+const howDeepInMoss = Math.floor(canvas.width / 48.76);
+const howCloseToPit = Math.floor(canvas.width / 51.2);
 
 const manaFlowers = document.querySelector('.mana-flowers');
 const totalScore = document.querySelector('.total-score');
@@ -282,7 +285,7 @@ function tick() {
             setTimeout(() => {
                 slimes.splice(i, 1);
             }, 0);
-            gandalf.speedY -= 30;
+            gandalf.speedY -= Math.floor(canvas.width / 34.13);
             gandalf.score += 10;
             clickSound(slimeAudio);
             
