@@ -19,6 +19,9 @@ const howCloseToPit = 20 * scale;
 
 const manaFlowers = document.querySelector('.mana-flowers');
 const totalScore = document.querySelector('.total-score');
+const crossContainer = document.querySelector('.cross-container');
+const openContainer = document.querySelector('.open-container');
+const sideBar = document.querySelector('.side-bar');
 
 let gandalf;
 let stages;
@@ -124,6 +127,18 @@ if (mainAudio.canPlayType("audio/mpeg") == "probably"){
 document.addEventListener('keydown', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 startButton.addEventListener('click', lounchMusic, false);
+crossContainer.addEventListener('click', hideSideMenu, false);
+openContainer.addEventListener('click', showSideMenu, false);
+
+function hideSideMenu() {
+    openContainer.classList.toggle('invis');
+    sideBar.classList.toggle('invis');
+}
+
+function showSideMenu() {
+    openContainer.classList.toggle('invis');
+    sideBar.classList.toggle('invis');
+}
 
 reset();
 requestAnimationFrame(tick);

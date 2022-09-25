@@ -12,31 +12,65 @@ body {
     background-color: black;
 }
 .wrapper {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.side-bar{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    flex: 1 0 20%;
-    /*background: url(img/nav/sideBar.jpg) center no-repeat;
-    background-size: cover;*/
-    background: linear-gradient(to bottom,
-    #62B8B7 15.48%, 
-    #1695A6 40.51%,
-    #017E94 60.57%,
-    #014E68 80.33%,
-    #01374F 90.1%);
-    align-self: stretch;
-    border-radius: 7px;
-    margin-right: 10px;
     font-size: 20px;
     font-weight: 500;
     letter-spacing: 1px;
 }
+.side-bar{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    flex: 1 1 20%;
+    background: url(img/nav/sideBar.jpg) center no-repeat;
+    background-size: cover;
+    /*background: linear-gradient(to bottom,
+    #62B8B7 15.48%, 
+    #1695A6 40.51%,
+    #017E94 60.57%,
+    #014E68 80.33%,
+    #01374F 90.1%);*/
+    align-self: stretch;
+    border-radius: 7px;
+    margin-right: 10px;
+    padding: 5px 15px;
+}
+.cross-container, .open-container{
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+    cursor: pointer;
+    transition: all 200ms ease-in;
+}
+.open-container{
+    top: 10px;
+    left: 8px;
+}
+.cross-container:hover, .open-container:hover{
+    background: linear-gradient(100deg, #89d8d3 20%, #03c8a8 94%);
+    transform: scale(1.1);   
+}
+.invis{
+    display: none;
+}
+.points{
+    margin-top: 50px;
+    text-shadow: 1px 0 1px #96e4df, 
+    0 1px 1px #96e4df, 
+    -1px 0 1px #96e4df, 
+    0 -1px 1px #96e4df;}
 .buttons-container{
     flex: 0 1 60%;
     display: flex;
@@ -61,6 +95,7 @@ button {
     7px 7px 20px 0px rgba(0,0,0,.1),
     4px 4px 5px 0px rgba(0,0,0,.1);
     outline: none;
+    transition: all 200ms ease-in;
 }
 button {
     background-color: #4dccc6;
@@ -72,6 +107,7 @@ button {
 button:hover{
     background-color: #89d8d3;
     background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+    transform: scale(1.1);
 }
 button span {
     position: relative;
