@@ -10,7 +10,7 @@ function reset() {
     ];
     backgroundImg = [
         new Background(0, 0, background, 769 * scale, 610 * scale, 769, 610),
-        new Background(769 * scale, 0, sideBackground, 769 * scale, 610 * scale, 769, 610),
+        new Background(767 * scale, 0, sideBackground, 769 * scale, 610 * scale, 769, 610),
     ];
     if (level === 1) {
         gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft);
