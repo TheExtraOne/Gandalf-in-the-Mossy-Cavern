@@ -171,3 +171,29 @@ button span:hover:before {
 button span:hover:after {
     width: 100%;
 }
+/*медиа*/
+@media all and (min-width: 1366px){
+	.wrapper{
+        transform: scale(1.1);
+    }
+}
+@media all and (min-width: 1440px){
+	.wrapper{
+        transform: scale(1.17);
+    }
+}
+@media all and (min-width: 1536px){
+	.wrapper{
+        transform: scale(1.25);
+    }
+}
+@media all and (min-width: 1600px){
+	.wrapper{
+        transform: scale(1.3);
+    }
+}
+@media all and (min-width: 1920px){
+	.wrapper{
+        transform: scale(1.55);
+    }
+}
