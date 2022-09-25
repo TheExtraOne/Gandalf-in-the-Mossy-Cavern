@@ -3,18 +3,19 @@
 const canvas = document.querySelector('canvas');
 const userWidth = document.documentElement.clientWidth;
 const userHeight = document.documentElement.clientHeight;
+const scale = (userWidth < 1058) ? userWidth / 1024 : 1;
 
-canvas.width = 1024;
-canvas.height = Math.floor(canvas.width / 1.7);
+canvas.width = 1024 * scale;
+canvas.height = 600 * scale;
 const ctx = canvas.getContext('2d');
 
 const startButton = document.querySelector('#startButton');
 
-const gandalfAccelY = 0.5;
-const gandalfStep = Math.floor(canvas.width / 204.8);
-const gandalfJump = Math.floor(canvas.width / 64);
-const howDeepInMoss = Math.floor(canvas.width / 48.76);
-const howCloseToPit = Math.floor(canvas.width / 51.2);
+const gandalfAccelY = 0.5 * scale;
+const gandalfStep = 5 * scale;
+const gandalfJump = 16 * scale;
+const howDeepInMoss = 21 * scale;
+const howCloseToPit = 20 * scale;
 
 const manaFlowers = document.querySelector('.mana-flowers');
 const totalScore = document.querySelector('.total-score');
@@ -132,9 +133,9 @@ function tick() {
 
     gandalf.accelY = gandalfAccelY;
 
-    if (isRightPressed && gandalf.positionX < 500) {
+    if (isRightPressed && gandalf.positionX < 500 * scale) {
         gandalf.speedX = gandalfStep;
-    } else if ((isLeftPressed && gandalf.positionX > 300) ||
+    } else if ((isLeftPressed && gandalf.positionX > 300 * scale) ||
         (isLeftPressed && gandalfDistanceTraveled === 0 && gandalf.positionX > 0)) {
         gandalf.speedX = -gandalfStep;
     } else {
@@ -285,7 +286,7 @@ function tick() {
             setTimeout(() => {
                 slimes.splice(i, 1);
             }, 0);
-            gandalf.speedY -= Math.floor(canvas.width / 34.13);
+            gandalf.speedY -= 30 * scale;
             gandalf.score += 10;
             clickSound(slimeAudio);
             

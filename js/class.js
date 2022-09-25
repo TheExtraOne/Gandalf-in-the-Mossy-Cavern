@@ -2,10 +2,10 @@
 
 class Wizzard {
     constructor(stayRight, stayLeft, runRight, runLeft, score = 0) {
-        this.positionX = Math.floor(canvas.width / 10.24);
-        this.positionY = Math.floor(canvas.width / 10.24);
-        this.width = Math.floor(canvas.width / 15.75);
-        this.height = Math.floor(canvas.width / 7.58);
+        this.positionX = 100 * scale;
+        this.positionY = 100 * scale;
+        this.width = 65 * scale;
+        this.height = 135 * scale;
         this.speedX = 0;
         this.speedY = 0;
         this.accelY = gandalfAccelY;
@@ -108,18 +108,20 @@ class Flower {
 }
 
 class Background {
-    constructor(x, y, image, imageWigth, imageHeight, block = false) {
+    constructor(x, y, image, imageWigth, imageHeight, cropwidth, cropHeight, block = false) {
         this.positionX = x;
         this.positionY = y;
         this.speedX = 0;
         this.width = imageWigth;
         this.height = imageHeight;
+        this.cropwidth = cropwidth;
+        this.cropHeight = cropHeight;
         this.image = image;
         this.block = block;
     }
     drawBackground() {  
         this.positionX += this.speedX;
-        ctx.drawImage(this.image, this.positionX, this.positionY);
+        ctx.drawImage(this.image, 0, 0, this.cropwidth, this.cropHeight, this.positionX, this.positionY, this.width, this.height);
     }
 }
 
@@ -128,7 +130,7 @@ class FireBall {
         this.positionX = x;
         this.positionY = y;
         this.spedX = spedX;
-        this.radius = Math.floor(canvas.width / 128);
+        this.radius = 8 * scale;
         this.color = '#79d9c7';
     }
     draw() {
