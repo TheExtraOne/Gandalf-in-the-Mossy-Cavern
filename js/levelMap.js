@@ -116,7 +116,7 @@ function reset() {
             new Flower(manaFlower, 100* scale, 70* scale, 338.8, 339, 5900* scale, 100* scale),
             new Flower(manaFlower, 100* scale, 70* scale, 338.8, 339, 7050* scale, 100* scale),
             new Flower(manaFlower, 100* scale, 70* scale, 338.8, 339, 8800* scale, 50* scale),
-            new Flower(ring2, 80* scale, 70* scale, 98, 86, 9710* scale, 200* scale, true),            
+            new Flower(ring2, 80* scale, 70* scale, 98, 86, 9720* scale, 200* scale, true),            
         ];
         slimes = [
             new Enemy(greenSlime, 100* scale, 90* scale, 302, 207, 600* scale, 400* scale, -0.3, 450* scale),

@@ -57,8 +57,8 @@ function doesHeroToutchMana({hero, mana}) {
 }
 
 function updateScore(span1, span2, hero) {
-    span1.textContent = `mana-flowers: ${hero.count}`;
-    span2.textContent = `total score: ${hero.score}`;
+    span1.textContent = `${hero.count}`;
+    span2.textContent = `${hero.score}`;
 }
 
 function winStuff(hero, powerRing) {

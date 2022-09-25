@@ -8,6 +8,9 @@
 		<!-- saved from url=(0014)about:internet -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"><!--Чтобы переключить Internet Explorer в режим последней версии --> 
 		<meta http-equiv="cleartype" content="on"><!--Для включения сглаживания шрифтов -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="styles.css"> <!--CSS для данной страницы-->
 		<link rel="icon" href="ico32.ico"> <!-- 32×32 лучше, чем 16-->
 		<link rel="icon" href="img/icons/webp80.webp" type="image/webp">
@@ -16,10 +19,21 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<button type="button" id="startButton">Start</button>
-			<div class="points"> 
-				<span class="mana-flowers">mana-flowers: 0</span>
-				<span class="total-score">total score: 0</span>
+			<div class="side-bar">
+				<div class="points">
+					<p>Mana-flowers:<br>
+						<span class="mana-flowers">0</span>
+					</p> 
+					<p>Total score:<br>
+						<span class="total-score">0</span>
+					</p>
+				</div>
+				<div class="buttons-container">
+					<button type="button" id="startButton"><span>Start music</span></button>
+					<button type="button" id="startButton"><span>Reset</span></button>
+					<button type="button" id="startButton"><span>Menu</span></button>
+					<button type="button" id="startButton"><span>Settings</span></button>
+				</div>
 			</div>
 			<canvas></canvas>
 		</div>
