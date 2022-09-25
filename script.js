@@ -1,15 +1,23 @@
 'use strict'
 
+const startButton = document.querySelector('#startButton');
+const manaFlowers = document.querySelector('.mana-flowers');
+const totalScore = document.querySelector('.total-score');
+const crossContainer = document.querySelector('.cross-container');
+const openContainer = document.querySelector('.open-container');
+const sideBar = document.querySelector('.side-bar');
+
 const canvas = document.querySelector('canvas');
 const userWidth = document.documentElement.clientWidth;
 const userHeight = document.documentElement.clientHeight;
 const scale = (userWidth < 1058) ? userWidth / 1024 : 1;
 
+if (userWidth <= 1216) {
+    hideSideMenu();
+}
 canvas.width = 1024 * scale;
 canvas.height = 600 * scale;
 const ctx = canvas.getContext('2d');
-
-const startButton = document.querySelector('#startButton');
 
 const gandalfAccelY = 0.5 * scale;
 const gandalfStep = 5 * scale;
@@ -17,11 +25,6 @@ const gandalfJump = 16 * scale;
 const howDeepInMoss = 21 * scale;
 const howCloseToPit = 20 * scale;
 
-const manaFlowers = document.querySelector('.mana-flowers');
-const totalScore = document.querySelector('.total-score');
-const crossContainer = document.querySelector('.cross-container');
-const openContainer = document.querySelector('.open-container');
-const sideBar = document.querySelector('.side-bar');
 
 let gandalf;
 let stages;

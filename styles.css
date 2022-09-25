@@ -13,6 +13,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: black;
+    overflow: hidden;
 }
 .wrapper {
     position: relative;
@@ -32,16 +33,12 @@ body {
     flex: 1 1 20%;
     background: url(img/nav/sideBar.jpg) center no-repeat;
     background-size: cover;
-    /*background: linear-gradient(to bottom,
-    #62B8B7 15.48%, 
-    #1695A6 40.51%,
-    #017E94 60.57%,
-    #014E68 80.33%,
-    #01374F 90.1%);*/
     align-self: stretch;
     border-radius: 7px;
     margin-right: 10px;
     padding: 5px 15px;
+    /*transform: translateX(0px);
+    transition: transform 500ms ease-in;*/
 }
 .cross-container, .open-container{
     position: absolute;
@@ -68,6 +65,10 @@ body {
     transform: scale(1.1);   
 }
 .invis{
+    /*width: 0px;
+    height: 0px;
+    transform: translateX(-300px);
+    opacity: 0;*/
     display: none;
 }
 .points{
@@ -75,7 +76,8 @@ body {
     text-shadow: 1px 0 1px #96e4df, 
     0 1px 1px #96e4df, 
     -1px 0 1px #96e4df, 
-    0 -1px 1px #96e4df;}
+    0 -1px 1px #96e4df;
+}
 .buttons-container{
     flex: 0 1 60%;
     display: flex;
@@ -172,6 +174,15 @@ button span:hover:after {
     width: 100%;
 }
 /*медиа*/
+@media all and (max-width: 1216px){
+	.side-bar{
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border: 2px solid black;
+    }
+}
 @media all and (min-width: 1366px){
 	.wrapper{
         transform: scale(1.1);
