@@ -214,7 +214,32 @@ button span:hover:after {
     .points{margin-top: calc(50px * 0.6);}
     .points p{margin-bottom: 5px;}
 }
-
+@media all and (max-width: 570px){
+    button {
+        width: calc(130px * 0.7);
+        height: calc(40px * 0.7);
+        border-radius: calc(5px * 0.7);
+        font-size: calc(17px * 0.7);
+    }
+    .points{margin-top: calc(50px * 0.5);}
+    .points p{margin-bottom: 5px;}
+}
+@media all and (max-width: 530px){
+    button {
+        width: calc(130px * 0.6);
+        height: calc(40px * 0.6);
+        border-radius: calc(5px * 0.6);
+        font-size: calc(17px * 0.6);
+    }
+    .wrapper{font-size: calc(20px * 0.6);}
+    .points{margin-top: calc(50px * 0.3);}
+    .points p{margin-bottom: 2px;}
+}
+@media all and (max-width: 440px){
+    .wrapper{font-size: calc(20px * 0.55);}
+    .points{margin-top: 0px;}
+    .points p{margin-bottom: 0px;}
+}
 
 @media all and (min-width: 1366px){
 	.wrapper{
