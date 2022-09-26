@@ -6,6 +6,7 @@
     cursor: url('img/cursor/blackSvg.svg'),
     url('img/cursor/blackPng.png'),
     url('img/cursor/blackCur.cur'), default;
+    user-select: none;
 }
 body {
     display: flex;
