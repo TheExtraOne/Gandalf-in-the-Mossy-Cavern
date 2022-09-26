@@ -6,6 +6,11 @@
     cursor: url('img/cursor/blackSvg.svg'),
     url('img/cursor/blackPng.png'),
     url('img/cursor/blackCur.cur'), default;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
     user-select: none;
 }
 body {
@@ -99,7 +104,6 @@ body {
     border-radius: 50%;
     font-size: 30px;
     background: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
-    transition: all 50ms ease-in;
 }
 .button-left{
     bottom: 3px;
@@ -248,10 +252,14 @@ button span:hover:after {
     .button-left{
         top: 30%;
         left: -10%;
+        transform: rotate(-90deg);
+        padding-bottom: 5px;
     }
     .button-right{
         top: 60%;
         left: -10%;
+        transform: rotate(90deg);
+        padding-bottom: 5px;
     }
     .button-jump{
         top: 30%;
@@ -262,6 +270,7 @@ button span:hover:after {
         right: -10%;
         font-size: 25px;
     }
+
     .points{margin-top: calc(50px * 0.6);}
     .points p{margin-bottom: 5px;}
 }
