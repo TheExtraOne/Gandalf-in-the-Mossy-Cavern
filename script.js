@@ -18,9 +18,9 @@ let userWidth = document.documentElement.clientWidth;
 let userHeight = document.documentElement.clientHeight;
 
 if (userWidth / userHeight > 1.75 && userWidth / userHeight < 2) {
-    userWidth -= 90;
+    userWidth -= 150;
 } else if (userWidth / userHeight >= 2) {
-    userWidth -= 200;
+    userWidth -= 300;
 }
 const scale = (userWidth < 1058) ? userWidth / 1024 : 1;
 
