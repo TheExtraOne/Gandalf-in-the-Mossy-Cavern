@@ -369,7 +369,7 @@ function tick() {
 
 function startMove(event) {
     event = event || window.event;
-
+    event.preventDefault();
     if (gandalf.blockMovement) {
         return;
     } else {
@@ -414,6 +414,7 @@ function startMove(event) {
 
 function finishMove(event) {
     event = event || window.event;
+    event.preventDefault();
     if (gandalf.blockMovement) {
         return;
     } else {

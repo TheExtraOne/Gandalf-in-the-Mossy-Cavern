@@ -56,6 +56,7 @@ body {
     justify-content: center;
     align-items: center;
     padding-bottom: 4px;
+    opacity: 0.8;
     border-radius: 50%;
     background: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
     cursor: url('img/cursor/pointerPng.png'),
@@ -102,6 +103,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0.8;
     border-radius: 50%;
     font-size: 30px;
     background: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
