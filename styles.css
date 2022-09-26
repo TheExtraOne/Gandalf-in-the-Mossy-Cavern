@@ -63,6 +63,7 @@ body {
     url('img/cursor/pointerSvg.svg'), default;
     transition: all 200ms ease-in;
 }
+.cross-container{padding-bottom: 0px;}
 .open-container{
     transform: rotate(180deg);
     top: 15px;
@@ -96,8 +97,8 @@ body {
 .button-jump,
 .button-cast{
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,24 +112,33 @@ body {
     transform: rotate(-90deg);
     padding-bottom: 5px;
 }
+.button-left:active{
+    transform: scale(0.9) rotate(-90deg);
+    background: linear-gradient(100deg, #89d8d3 20%, #03c8a8 94%);
+}
 .button-right{
     bottom: 3px;
     left: 85px;
     transform: rotate(90deg);
     padding-bottom: 5px;
 }
+.button-right:active{
+    transform: scale(0.9) rotate(90deg);
+    background: linear-gradient(100deg, #89d8d3 20%, #03c8a8 94%);
+}
 .button-jump{
     bottom: 3px;
     right: 10px;
+}
+.button-jump:active{
+    transform: scale(0.9);
+    background: linear-gradient(100deg, #89d8d3 20%, #03c8a8 94%);
 }
 .button-cast{
     bottom: 3px;
     right: 85px;
     font-size: 25px;
 }
-.button-left:active,
-.button-right:active,
-.button-jump:active,
 .button-cast:active{
     background: linear-gradient(100deg, #89d8d3 20%, #03c8a8 94%);
     transform: scale(0.9);
@@ -249,7 +259,7 @@ button span:hover:after {
     .points{margin-top: calc(50px * 0.7);}
 }
 @media all and (max-width: 750px){
-    .button-left{
+    /*.button-left{
         top: 30%;
         left: -10%;
         transform: rotate(-90deg);
@@ -269,7 +279,7 @@ button span:hover:after {
         top: 60%;
         right: -10%;
         font-size: 25px;
-    }
+    }*/
 
     .points{margin-top: calc(50px * 0.6);}
     .points p{margin-bottom: 5px;}
