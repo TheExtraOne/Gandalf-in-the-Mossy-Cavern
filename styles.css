@@ -44,7 +44,6 @@ body {
     margin-right: 10px;
     padding: 5px 15px;
     overflow: hidden;
-    transition: transform 500ms ease-in;
 }
 .cross-container, .open-container{
     position: absolute;
@@ -72,7 +71,10 @@ body {
 }
 .cross-container:hover, .open-container:hover{
     background: linear-gradient(100deg, #89d8d3 20%, #03c8a8 94%);
-    transform: scale(1.1);   
+    transform: scale(1.1);  
+}
+.cross-container:hover{
+    transform: rotate(180deg);
 }
 .invis{
     display: none;
