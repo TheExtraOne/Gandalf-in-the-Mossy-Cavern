@@ -88,7 +88,56 @@ body {
     align-items: center;
     flex-direction: column;
 }
-/*кнопка*/
+/*кнопки способностей*/
+.button-left,
+.button-right,
+.button-jump,
+.button-cast{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 35px;
+    background: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+    transition: all 50ms ease-in;
+}
+.button-left{
+    bottom: 2%;
+    left: 2%;
+}
+.button-left span{
+    position: relative;
+    right: 2px;
+}
+.button-right{
+    bottom: 2%;
+    left: 10%;
+}
+.button-right span{
+    position: relative;
+    left: 2px;
+}
+.button-jump{
+    bottom: 2%;
+    right: 2%;
+}
+.button-cast{
+    bottom: 2%;
+    right: 10%;
+    font-size: 25px;
+}
+.button-left:active,
+.button-right:active,
+.button-jump:active,
+.button-cast:active{
+    background: linear-gradient(100deg, #89d8d3 20%, #03c8a8 94%);
+    transform: scale(0.9);
+}
+.invis-button {display: none;}
+/*кнопкт меню*/
 button {
     width: 130px;
     height: 40px;
@@ -184,17 +233,8 @@ button span:hover:after {
         position: absolute;
         top: 0px;
         left: 0px;
+        z-index: 5;
         border: 2px solid black;
-    }
-}
-@media all and (max-width: 1071px){
-	.wrapper{
-        transform: scale(0.9);
-    }
-}
-@media all and (max-width: 950px){
-	.wrapper{
-        transform: scale(0.8);
     }
 }
 @media all and (max-width: 900px){

@@ -7,6 +7,11 @@ const levelNumber = document.querySelector('.level-number');
 const crossContainer = document.querySelector('.cross-container');
 const openContainer = document.querySelector('.open-container');
 const sideBar = document.querySelector('.side-bar');
+const showButtonsButton = document.querySelector('#showButtonsButton');
+const leftButton = document.querySelector('.button-left');
+const rightButton = document.querySelector('.button-right');
+const jumpButton = document.querySelector('.button-jump');
+const castButton = document.querySelector('.button-cast');
 
 const canvas = document.querySelector('canvas');
 let userWidth = document.documentElement.clientWidth;
@@ -16,6 +21,7 @@ const scale = (userWidth < 1058) ? userWidth / 1024 : 1;
 
 if (userWidth <= 1216) {
     hideSideMenu();
+    hideButtons();
 }
 canvas.width = 1024 * scale;
 canvas.height = 600 * scale;
@@ -130,19 +136,24 @@ if (mainAudio.canPlayType("audio/mpeg") == "probably"){
 }
 
 document.addEventListener('keydown', startMove, false);
+document.addEventListener('touchstart', startMove, false);
 document.addEventListener('keyup', finishMove, false);
+document.addEventListener('touchend', finishMove, false);
 startButton.addEventListener('click', lounchMusic, false);
 crossContainer.addEventListener('click', hideSideMenu, false);
-openContainer.addEventListener('click', showSideMenu, false);
+openContainer.addEventListener('click', hideSideMenu, false);
+showButtonsButton.addEventListener('click', hideButtons, false);
 
 function hideSideMenu() {
     openContainer.classList.toggle('invis');
     sideBar.classList.toggle('invis');
 }
 
-function showSideMenu() {
-    openContainer.classList.toggle('invis');
-    sideBar.classList.toggle('invis');
+function hideButtons() {
+    leftButton.classList.toggle('invis-button');
+    rightButton.classList.toggle('invis-button');
+    jumpButton.classList.toggle('invis-button');
+    castButton.classList.toggle('invis-button');
 }
 
 reset();
@@ -350,23 +361,27 @@ function tick() {
 
 function startMove(event) {
     event = event || window.event;
+    /*const leftButton = document.querySelector('.button-left');
+    const rightButton = document.querySelector('.button-right');
+    const jumpButton = document.querySelector('.button-jump');
+    const castButton = document.querySelector('.button-cast');*/
     if (gandalf.blockMovement) {
         return;
     } else {
         //вперед
-        if (event.code === 'KeyD') {
+        if (event.code === 'KeyD' || event.target.className === 'button-right') {
             gandalf.currentState = gandalf.runRight;
             isRightPressed = true;
             lastKey = 'KeyD';
         }
         //назад
-        if (event.code === 'KeyA') {
+        if (event.code === 'KeyA' || event.target.className === 'button-left') {
             gandalf.currentState = gandalf.runLeft;
             isLeftPressed = true;
             lastKey = 'KeyA';
         }
         //прыжок
-        if (event.code === 'KeyW') {
+        if (event.code === 'KeyW' || event.target.className === 'button-jump') {
             if (isJumpPressed) {
                 return;
             }
@@ -376,7 +391,7 @@ function startMove(event) {
             } 
         }
         //каст фаербола
-        if (event.code === 'Space' && gandalf.hasPower) {
+        if ( (event.code === 'Space' && gandalf.hasPower) || (event.target.className === 'button-cast' && gandalf.hasPower)) {
             if(isSpacePressed) {
                 return;
             }
@@ -398,19 +413,19 @@ function finishMove(event) {
         return;
     } else {
         //вперед
-        if (event.code === 'KeyD') {
+        if (event.code === 'KeyD' || event.target.className === 'button-right') {
             gandalf.currentState = gandalf.standRight;
             isRightPressed = false;
         }
         //назад
-        if (event.code === 'KeyA') {
+        if (event.code === 'KeyA' || event.target.className === 'button-left') {
             gandalf.currentState = gandalf.standLeft;
             isLeftPressed = false;
         }
-        if (event.code === 'KeyW') {
+        if (event.code === 'KeyW' || event.target.className === 'button-jump') {
             isJumpPressed = false;
         }
-        if (event.code === 'Space' && gandalf.hasPower) {
+        if ( (event.code === 'Space' && gandalf.hasPower) || (event.target.className === 'button-cast' && gandalf.hasPower)) {
             isSpacePressed = false;
         }
     }
