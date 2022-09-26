@@ -31,7 +31,6 @@ body {
     letter-spacing: 1px;
 }
 .side-bar{
-    touch-action: none;
     position: relative;
     display: flex;
     justify-content: space-around;
@@ -147,9 +146,7 @@ body {
     transform: scale(0.9);
 }
 .invis-button {display: none;}
-canvas{
-    touch-action: none;
-}
+
 /*кнопкт меню*/
 button {
     width: 130px;
