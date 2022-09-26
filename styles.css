@@ -66,12 +66,12 @@ body {
     transform: scale(1.1);   
 }
 .invis{
-    width: 0px;
+    /*width: 0px;
     height: 0px;
     transform: translateX(-300px);
     opacity: 0;
-    transition: transform 500ms ease-in;
-    /*display: none;*/
+    transition: transform 500ms ease-in;*/
+    display: none;
 }
 .points{
     margin-top: 50px;
@@ -94,8 +94,8 @@ body {
 .button-jump,
 .button-cast{
     position: absolute;
-    width: 35px;
-    height: 35px;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,12 +105,12 @@ body {
     transition: all 50ms ease-in;
 }
 .button-left{
-    top: 30%;
-    left: -5%;
+    bottom: 3px;
+    left: 10px;
 }
 .button-right{
-    top: 60%;
-    left: -5%;
+    bottom: 3px;
+    left: 85px;
 }
 .button-jump{
     bottom: 3px;
@@ -118,7 +118,7 @@ body {
 }
 .button-cast{
     bottom: 3px;
-    right: 65px;
+    right: 85px;
     font-size: 25px;
 }
 .button-left:active,
@@ -244,6 +244,23 @@ button span:hover:after {
     .points{margin-top: calc(50px * 0.7);}
 }
 @media all and (max-width: 740px){
+    .button-left{
+        top: 30%;
+        left: -10%;
+    }
+    .button-right{
+        top: 60%;
+        left: -10%;
+    }
+    .button-jump{
+        top: 30%;
+        right: -10%;
+    }
+    .button-cast{
+        top: 60%;
+        right: -10%;
+        font-size: 25px;
+    }
     .points{margin-top: calc(50px * 0.6);}
     .points p{margin-bottom: 5px;}
 }
@@ -273,6 +290,7 @@ button span:hover:after {
     .points{margin-top: 0px;}
     .points p{margin-bottom: 0px;}
 }
+
 
 @media all and (min-width: 1366px){
 	.wrapper{
