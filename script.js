@@ -7,6 +7,7 @@ const levelNumber = document.querySelector('.level-number');
 const crossContainer = document.querySelector('.cross-container');
 const openContainer = document.querySelector('.open-container');
 const sideBar = document.querySelector('.side-bar');
+const resetButton = document.querySelector('#resetButton');
 const showButtonsButton = document.querySelector('#showButtonsButton');
 const leftButton = document.querySelector('.button-left');
 const rightButton = document.querySelector('.button-right');
@@ -14,15 +15,16 @@ const jumpButton = document.querySelector('.button-jump');
 const castButton = document.querySelector('.button-cast');
 
 const canvas = document.querySelector('canvas');
-let userWidth = document.documentElement.clientWidth;
-let userHeight = document.documentElement.clientHeight;
+const userWidth = document.documentElement.clientWidth;
+const userHeight = document.documentElement.clientHeight;
+let optimumWidth = userWidth;
 
 if (userWidth / userHeight > 1.75 && userWidth / userHeight < 2) {
-    userWidth -= 150;
+    optimumWidth -= 150;
 } else if (userWidth / userHeight >= 2) {
-    userWidth -= 300;
+    optimumWidth -= 200;
 }
-const scale = (userWidth < 1058) ? userWidth / 1024 : 1;
+const scale = (optimumWidth < 1058) ? optimumWidth / 1024 : 1;
 
 if (userWidth <= 1216) {
     hideSideMenu();
@@ -145,6 +147,7 @@ document.addEventListener('touchstart', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 document.addEventListener('touchend', finishMove, false);
 startButton.addEventListener('click', lounchMusic, false);
+resetButton.addEventListener('click', reset, false);
 crossContainer.addEventListener('click', hideSideMenu, false);
 openContainer.addEventListener('click', hideSideMenu, false);
 showButtonsButton.addEventListener('click', hideButtons, false);

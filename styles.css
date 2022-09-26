@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Kanit', sans-serif;
+    font-family: /*'Kanit',*/ sans-serif;
     cursor: url('img/cursor/blackSvg.svg'),
     url('img/cursor/blackPng.png'),
     url('img/cursor/blackCur.cur'), default;
@@ -105,12 +105,12 @@ body {
     transition: all 50ms ease-in;
 }
 .button-left{
-    bottom: 3px;
-    left: 10px;
+    top: 30%;
+    left: -5%;
 }
 .button-right{
-    bottom: 3px;
-    left: 65px;
+    top: 60%;
+    left: -5%;
 }
 .button-jump{
     bottom: 3px;
