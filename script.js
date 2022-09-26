@@ -163,6 +163,12 @@ function hideButtons() {
     jumpButton.classList.toggle('invis-button');
     castButton.classList.toggle('invis-button');
 }
+//убирает pinch Zoom
+window.addEventListener('touchstart', function(e) {
+    if (e.targetTouches.length === 2) {
+        e.preventDefault();
+    }
+}, false);
 
 reset();
 updateLevel(levelNumber, level);
@@ -369,7 +375,7 @@ function tick() {
 
 function startMove(event) {
     event = event || window.event;
-    event.preventDefault();
+
     if (gandalf.blockMovement) {
         return;
     } else {
@@ -408,13 +414,13 @@ function startMove(event) {
                 isSpacePressed = true;
                 fireballs.push(new FireBall(gandalf.positionX + (gandalf.width / 2), gandalf.positionY + (gandalf.height / 2), -10));
             }
-        }
+        } 
     }
 }
 
 function finishMove(event) {
     event = event || window.event;
-    event.preventDefault();
+
     if (gandalf.blockMovement) {
         return;
     } else {
