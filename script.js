@@ -12,10 +12,6 @@ const canvas = document.querySelector('canvas');
 let userWidth = document.documentElement.clientWidth;
 let userHeight = document.documentElement.clientHeight;
 
-//для узких и длинных экранов
-if (userWidth / userHeight > 2) {
-    userWidth -= 150;
-}
 const scale = (userWidth < 1058) ? userWidth / 1024 : 1;
 
 if (userWidth <= 1216) {
