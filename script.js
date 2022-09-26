@@ -3,6 +3,7 @@
 const startButton = document.querySelector('#startButton');
 const manaFlowers = document.querySelector('.mana-flowers');
 const totalScore = document.querySelector('.total-score');
+const levelNumber = document.querySelector('.level-number');
 const crossContainer = document.querySelector('.cross-container');
 const openContainer = document.querySelector('.open-container');
 const sideBar = document.querySelector('.side-bar');
@@ -149,6 +150,7 @@ function showSideMenu() {
 }
 
 reset();
+updateLevel(levelNumber, level);
 requestAnimationFrame(tick);
 
 function tick() { 

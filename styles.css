@@ -79,6 +79,7 @@ body {
     -1px 0 1px #96e4df, 
     0 -1px 1px #96e4df;
 }
+.points p{margin-bottom: 10px;}
 .buttons-container{
     flex: 0 1 60%;
     display: flex;
@@ -105,7 +106,6 @@ button {
     background-color: #4dccc6;
     background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
     line-height: 42px;
-    padding: 0;
     border: none;
 }
 button:hover{
@@ -115,7 +115,9 @@ button:hover{
 }
 button span {
     position: relative;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     cursor: url('img/cursor/pointerPng.png'),
@@ -175,16 +177,6 @@ button span:hover:after {
     width: 100%;
 }
 /*медиа*/
-@media all and (max-width: 950px){
-	.wrapper{
-        transform: scale(0.8);
-    }
-}
-@media all and (max-width: 1071px){
-	.wrapper{
-        transform: scale(0.9);
-    }
-}
 @media all and (max-width: 1216px){
 	.side-bar{
         height: 100%;
@@ -194,6 +186,36 @@ button span:hover:after {
         border: 2px solid black;
     }
 }
+@media all and (max-width: 1071px){
+	.wrapper{
+        transform: scale(0.9);
+    }
+}
+@media all and (max-width: 950px){
+	.wrapper{
+        transform: scale(0.8);
+    }
+}
+@media all and (max-width: 900px){
+    .wrapper{font-size: calc(20px * 0.9);}
+    .points{margin-top: calc(50px * 0.8);}
+}
+@media all and (max-width: 800px){
+	button {
+        width: calc(130px * 0.8);
+        height: calc(40px * 0.8);
+        border-radius: calc(5px * 0.8);
+        font-size: calc(17px * 0.8);
+    }
+    .wrapper{font-size: calc(20px * 0.7);}
+    .points{margin-top: calc(50px * 0.7);}
+}
+@media all and (max-width: 740px){
+    .points{margin-top: calc(50px * 0.6);}
+    .points p{margin-bottom: 5px;}
+}
+
+
 @media all and (min-width: 1366px){
 	.wrapper{
         transform: scale(1.1);
