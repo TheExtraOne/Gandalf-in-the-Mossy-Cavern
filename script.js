@@ -17,6 +17,9 @@ const canvas = document.querySelector('canvas');
 let userWidth = document.documentElement.clientWidth;
 let userHeight = document.documentElement.clientHeight;
 
+if (userWidth / userHeight > 2) {
+    userWidth -= 150;
+}
 const scale = (userWidth < 1058) ? userWidth / 1024 : 1;
 
 if (userWidth <= 1216) {
@@ -361,10 +364,7 @@ function tick() {
 
 function startMove(event) {
     event = event || window.event;
-    /*const leftButton = document.querySelector('.button-left');
-    const rightButton = document.querySelector('.button-right');
-    const jumpButton = document.querySelector('.button-jump');
-    const castButton = document.querySelector('.button-cast');*/
+
     if (gandalf.blockMovement) {
         return;
     } else {
