@@ -8,8 +8,13 @@ const openContainer = document.querySelector('.open-container');
 const sideBar = document.querySelector('.side-bar');
 
 const canvas = document.querySelector('canvas');
-const userWidth = document.documentElement.clientWidth;
-const userHeight = document.documentElement.clientHeight;
+let userWidth = document.documentElement.clientWidth;
+let userHeight = document.documentElement.clientHeight;
+
+//для узких и длинных экранов
+if (userWidth / userHeight > 2) {
+    userWidth -= 150;
+}
 const scale = (userWidth < 1058) ? userWidth / 1024 : 1;
 
 if (userWidth <= 1216) {

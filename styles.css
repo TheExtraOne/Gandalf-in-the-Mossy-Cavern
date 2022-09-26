@@ -37,8 +37,8 @@ body {
     border-radius: 7px;
     margin-right: 10px;
     padding: 5px 15px;
-    /*transform: translateX(0px);
-    transition: transform 500ms ease-in;*/
+    overflow: hidden;
+    transition: transform 500ms ease-in;
 }
 .cross-container, .open-container{
     position: absolute;
@@ -65,11 +65,12 @@ body {
     transform: scale(1.1);   
 }
 .invis{
-    /*width: 0px;
+    width: 0px;
     height: 0px;
     transform: translateX(-300px);
-    opacity: 0;*/
-    display: none;
+    opacity: 0;
+    transition: transform 500ms ease-in;
+    /*display: none;*/
 }
 .points{
     margin-top: 50px;
@@ -174,6 +175,16 @@ button span:hover:after {
     width: 100%;
 }
 /*медиа*/
+@media all and (max-width: 950px){
+	.wrapper{
+        transform: scale(0.8);
+    }
+}
+@media all and (max-width: 1071px){
+	.wrapper{
+        transform: scale(0.9);
+    }
+}
 @media all and (max-width: 1216px){
 	.side-bar{
         height: 100%;
