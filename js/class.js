@@ -69,7 +69,7 @@ class Enemy {
 
         ctx.drawImage(this.image, this.cropwidth * this.cadre, 0, this.cropwidth, this.cropHeight, this.positionX, this.positionY, this.width, this.height);
         this.cadre++;
-        if (this.cadre > 70) {
+        if (this.cadre > 79) {
             this.cadre = 0;
         }
     }
