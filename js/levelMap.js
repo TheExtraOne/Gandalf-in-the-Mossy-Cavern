@@ -1,6 +1,9 @@
 'use strict'
 
 function reset() {
+    if (!castButton.classList.contains('invis-button')) {
+        castButton.classList.toggle('invis-button');
+    }
     spheres = [];
     fireballs = [];
     gandalfDistanceTraveled = 0;
@@ -31,6 +34,7 @@ function reset() {
             
         ];
         slimes = [
+            new Enemy(orangeSlime, 120* scale, 120* scale, 512, 340, 350* scale, 100* scale, -0.3, 150* scale, false),
             new Enemy(greenSlime, 100 * scale, 90 * scale, 302, 207, 800 * scale, 100 * scale, -0.3, 150 * scale),
             new Enemy(greenSlime, 100 * scale, 90 * scale, 302, 207, 2500 * scale, 400 * scale, -0.3, 150 * scale),
             new Enemy(greenSlime, 100* scale, 90* scale, 302, 207, 3580* scale, 100* scale, -0.3, 170* scale),

@@ -58,6 +58,7 @@ let isRightPressed = false;
 let isLeftPressed = false;
 let isJumpPressed = false;
 let isSpacePressed = false;
+//let showOnce = true;
 
 let stayRight = new Image();
 stayRight.src = "img/StayRight.png";
@@ -161,7 +162,7 @@ function hideButtons() {
     leftButton.classList.toggle('invis-button');
     rightButton.classList.toggle('invis-button');
     jumpButton.classList.toggle('invis-button');
-    castButton.classList.toggle('invis-button');
+    //castButton.classList.toggle('invis-button');
 }
 //убирает pinch Zoom
 window.addEventListener('touchstart', function(e) {
@@ -281,8 +282,11 @@ function tick() {
             } else {
                 gandalf.score += 20;
             }
-            if (gandalf.count > 5) {
+            if (gandalf.count >= 5) {
                 gandalf.hasPower = true;
+                if (castButton.classList.contains('invis-button')) {
+                    castButton.classList.toggle('invis-button');
+                }
             }
         }
         flower.drawFlower();

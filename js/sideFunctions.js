@@ -59,7 +59,7 @@ function doesHeroToutchMana({hero, mana}) {
 function updateScore(span1, span2, hero) {
     span1.textContent = `${hero.count}`;
     span2.textContent = `${hero.score}`;
-    levelNumber.textContent = `${level}`;
+    //levelNumber.textContent = `${level}`;
 }
 
 function updateLevel(span, newLevel) {
@@ -95,6 +95,7 @@ function winStuff(hero, powerRing) {
     }
 
     level++;
+    //setTimeout(() => {castButton.classList.toggle('invis-button');}, 3000, false)
     setTimeout(updateLevel, 3000, levelNumber, level);
     setTimeout(reset, 3000);
 }
