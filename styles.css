@@ -168,15 +168,16 @@ body {
     display: none;
 }
 .points{
+    font-size: 24px;
     margin-top: 50px;
     text-shadow: 1px 0 1px #96e4df, 
     0 1px 1px #96e4df, 
     -1px 0 1px #96e4df, 
     0 -1px 1px #96e4df;
 }
-.points p{margin-bottom: 10px;}
+.points p{margin-bottom: 40px;}
 .buttons-container{
-    flex: 0 1 60%;
+    flex: 0 1 40%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -349,7 +350,11 @@ button span:hover:after {
         font-size: calc(17px * 0.8);
     }
     .wrapper-for-game{font-size: calc(20px * 0.7);}
-    .points{margin-top: calc(50px * 0.7);}
+    .points{
+        margin-top: calc(50px * 0.7);
+        font-size: 23px;
+    }
+    .points p{margin-bottom: 35px;}
 }
 @media all and (max-width: 750px){
     /*.button-left{
@@ -374,8 +379,11 @@ button span:hover:after {
         font-size: 25px;
     }*/
 
-    .points{margin-top: calc(50px * 0.6);}
-    .points p{margin-bottom: 5px;}
+    .points{
+        margin-top: calc(50px * 0.6);
+        font-size: 20px;
+    }
+    .points p{margin-bottom: 25px;}
 }
 @media all and (max-width: 570px){
     button {
@@ -384,8 +392,11 @@ button span:hover:after {
         border-radius: calc(5px * 0.7);
         font-size: calc(17px * 0.7);
     }
-    .points{margin-top: calc(50px * 0.5);}
-    .points p{margin-bottom: 5px;}
+    .points{
+        margin-top: calc(50px * 0.5);
+        font-size: 16px;
+    }
+    .points p{margin-bottom: 20px;}
 }
 @media all and (max-width: 530px){
     button {
@@ -396,12 +407,12 @@ button span:hover:after {
     }
     .wrapper-for-game{font-size: calc(20px * 0.6);}
     .points{margin-top: calc(50px * 0.3);}
-    .points p{margin-bottom: 2px;}
+    .points p{margin-bottom: 15px;}
 }
 @media all and (max-width: 440px){
     .wrapper-for-game{font-size: calc(20px * 0.55);}
     .points{margin-top: 0px;}
-    .points p{margin-bottom: 0px;}
+    .points p{margin-bottom: 10px;}
 }
 
 
