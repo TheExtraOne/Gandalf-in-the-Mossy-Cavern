@@ -21,6 +21,85 @@ body {
     background-color: black;
     overflow: hidden;
 }
+/*меню*/
+.wrapper-for-main-menu{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: url(img/nav/BackgroundBig.png) center no-repeat;
+    background-size: cover;
+}
+.wrapper-for-main-menu h1{
+    flex: 0 1 22%;
+    margin: 10px 10px 40px 10px;
+    font-size: 76px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 3px;
+    text-shadow: 1px 0 1px #96e4df, 
+    0 1px 1px #96e4df, 
+    -1px 0 1px #96e4df, 
+    0 -1px 1px #96e4df;
+}
+.main-menu-container{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    flex: 0 1 60%;
+    width: 450px;
+    background: linear-gradient(315deg, rgba(77, 204, 198, 0.7)0%, rgba(150, 228, 223, 0.7) 74%);
+    border: solid 5px black;
+    border-radius: 25px;
+    padding: 5px 15px;
+    overflow: hidden;
+}
+.main-menu-container button{
+    width: 224px;
+    height: 67px;
+    border-radius: 14px;
+    font-size: 29px;
+    font-weight: 600;
+}
+.main-menu-container h3{
+    font-size: 45px;
+    font-weight: 600;
+    height: 30px;
+}
+.main-menu-container div{
+    flex:  0 1 60%;
+}
+.main-menu-container div p {
+    margin-bottom: 12px;
+    font-size: 19px;
+}
+.main-menu-container div ol{font-size: 35px;}
+.main-menu-container div ol span{padding-left: 30px;}
+.back-to-main-menu{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 29px;
+    cursor: url('img/cursor/pointerPng.png'),
+    url('img/cursor/pointerCur.cur'),
+    url('img/cursor/pointerSvg.svg'), default;
+    transition: all 200ms ease-in;
+}
+.back-to-main-menu:hover{
+    font-size: 35px;
+}
+/*игровое поле*/
 .wrapper {
     position: relative;
     display: flex;
