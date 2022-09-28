@@ -111,8 +111,8 @@ function switchToState(newState) {
 function switchToGameField() {
     lounchMusic();
     switchToState( { pagename:'Game' } );
-    include("../js/class.js");
-    include("../js/levelMap.js");
+    include("class.js");
+    include("levelMap.js");
     include("../script.js");
 }
 
