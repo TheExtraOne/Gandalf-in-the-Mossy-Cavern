@@ -1,6 +1,5 @@
 'use strict'
 
-const startButton = document.querySelector('#startButton');
 const manaFlowers = document.querySelector('.mana-flowers');
 const totalScore = document.querySelector('.total-score');
 const levelNumber = document.querySelector('.level-number');
@@ -58,7 +57,6 @@ let isRightPressed = false;
 let isLeftPressed = false;
 let isJumpPressed = false;
 let isSpacePressed = false;
-//let showOnce = true;
 
 let stayRight = new Image();
 stayRight.src = "img/StayRight.png";
@@ -109,8 +107,8 @@ let ring2 = new Image();
 ring2.src = 'img/smallRing2.png';
 
 
-const moneyAudio = new Audio();
-moneyAudio.volume = 0.3;
+/*const moneyAudio = new Audio();
+moneyAudio.volume = 0.5;
 if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
     moneyAudio.src = "sounds/money.mp3";
 } else {
@@ -118,7 +116,7 @@ if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/moneyOgg.ogg";
 }
 const slimeAudio = new Audio();
-slimeAudio.volume = 0.3;
+slimeAudio.volume = 0.5;
 if (slimeAudio.canPlayType("audio/mpeg") == "probably"){
     slimeAudio.src = "sounds/sqush.mp3";
 } else {
@@ -141,13 +139,12 @@ if (mainAudio.canPlayType("audio/mpeg") == "probably"){
 } else {
     mainAudio.src=
     "sounds/general2Ogg.ogg";
-}
+}*/
 
 document.addEventListener('keydown', startMove, false);
 document.addEventListener('touchstart', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 document.addEventListener('touchend', finishMove, false);
-startButton.addEventListener('click', lounchMusic, false);
 resetButton.addEventListener('click', reset, false);
 crossContainer.addEventListener('click', hideSideMenu, false);
 openContainer.addEventListener('click', hideSideMenu, false);
@@ -162,7 +159,6 @@ function hideButtons() {
     leftButton.classList.toggle('invis-button');
     rightButton.classList.toggle('invis-button');
     jumpButton.classList.toggle('invis-button');
-    //castButton.classList.toggle('invis-button');
 }
 //убирает pinch Zoom
 window.addEventListener('touchstart', function(e) {

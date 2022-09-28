@@ -1,5 +1,7 @@
 'use strict'
 
+let canSum = true;
+let prevScore = 0
 function reset() {
     if (!castButton.classList.contains('invis-button')) {
         castButton.classList.toggle('invis-button');
@@ -107,7 +109,11 @@ function reset() {
         ];
     }
     if (level === 2) {
-        let prevScore = gandalf.score;
+        if (canSum) {
+            prevScore = gandalf.score;
+            canSum = false;
+        }
+
         gandalf = new Wizzard(stayRight, stayLeft, runRight, runLeft, prevScore);
         mana = [
             new Flower(manaFlower, 100* scale, 70* scale, 338.8, 339, 490* scale, 100* scale),

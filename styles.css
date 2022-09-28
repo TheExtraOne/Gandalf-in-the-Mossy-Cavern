@@ -71,15 +71,23 @@ body {
     font-weight: 600;
     height: 30px;
 }
-.main-menu-container div{
-    flex:  0 1 60%;
-}
+.main-menu-container div{flex:  0 1 60%;}
 .main-menu-container div p {
     margin-bottom: 12px;
     font-size: 19px;
 }
 .main-menu-container div ol{font-size: 35px;}
 .main-menu-container div ol span{padding-left: 30px;}
+.main-menu-container input[type=text] {
+    width: 248px;
+    height: 47px;
+    font-size: 20px;
+    padding: 3px 5px 3px 10px;
+    background-color: transparent;
+    border: solid 2px black;
+    border-radius: 9px;
+}
+.main-menu-container label{font-size: 28px;}
 .back-to-main-menu{
     position: absolute;
     top: 0px;
@@ -100,8 +108,9 @@ body {
     font-size: 35px;
 }
 /*игровое поле*/
-.wrapper {
-    position: relative;
+.wrapper-for-game {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -329,7 +338,7 @@ button span:hover:after {
     }
 }
 @media all and (max-width: 900px){
-    .wrapper{font-size: calc(20px * 0.9);}
+    .wrapper-for-game{font-size: calc(20px * 0.9);}
     .points{margin-top: calc(50px * 0.8);}
 }
 @media all and (max-width: 800px){
@@ -339,7 +348,7 @@ button span:hover:after {
         border-radius: calc(5px * 0.8);
         font-size: calc(17px * 0.8);
     }
-    .wrapper{font-size: calc(20px * 0.7);}
+    .wrapper-for-game{font-size: calc(20px * 0.7);}
     .points{margin-top: calc(50px * 0.7);}
 }
 @media all and (max-width: 750px){
@@ -385,39 +394,39 @@ button span:hover:after {
         border-radius: calc(5px * 0.6);
         font-size: calc(17px * 0.6);
     }
-    .wrapper{font-size: calc(20px * 0.6);}
+    .wrapper-for-game{font-size: calc(20px * 0.6);}
     .points{margin-top: calc(50px * 0.3);}
     .points p{margin-bottom: 2px;}
 }
 @media all and (max-width: 440px){
-    .wrapper{font-size: calc(20px * 0.55);}
+    .wrapper-for-game{font-size: calc(20px * 0.55);}
     .points{margin-top: 0px;}
     .points p{margin-bottom: 0px;}
 }
 
 
 @media all and (min-width: 1366px){
-	.wrapper{
+	.wrapper-for-game{
         transform: scale(1.1);
     }
 }
 @media all and (min-width: 1440px){
-	.wrapper{
+	.wrapper-for-game{
         transform: scale(1.17);
     }
 }
 @media all and (min-width: 1536px){
-	.wrapper{
+	.wrapper-for-game{
         transform: scale(1.25);
     }
 }
 @media all and (min-width: 1600px){
-	.wrapper{
+	.wrapper-for-game{
         transform: scale(1.3);
     }
 }
 @media all and (min-width: 1920px){
-	.wrapper{
+	.wrapper-for-game{
         transform: scale(1.55);
     }
 }

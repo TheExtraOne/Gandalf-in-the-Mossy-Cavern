@@ -1,7 +1,7 @@
 'use strict'
 
-function lounchMusic(){
-    startButton.blur();
+/*function lounchMusic(){
+    //startButton.blur();
     clickSoundInit(moneyAudio);
     clickSoundInit(slimeAudio);
     clickSoundInit(victoryAudio);
@@ -20,7 +20,7 @@ function clickSoundInit(audio) {
 function clickSound(audio) {
     audio.currentTime = 0; // в секундах
     audio.play();
-}
+}*/
 
 //проверяю, находится ли игрок или его противник на платформе
 function doesToutchThePlatform({obj, platform}) {
@@ -95,7 +95,6 @@ function winStuff(hero, powerRing) {
     }
 
     level++;
-    //setTimeout(() => {castButton.classList.toggle('invis-button');}, 3000, false)
     setTimeout(updateLevel, 3000, levelNumber, level);
     setTimeout(reset, 3000);
 }
