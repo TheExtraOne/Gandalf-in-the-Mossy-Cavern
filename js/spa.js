@@ -34,6 +34,9 @@ if (mainAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/general2Ogg.ogg";
 }
 
+//для отслеживания. загрузились ли скрипты
+let areScriptsLoaded = false;
+
 // отслеживаем изменение закладки в УРЛе
 // оно происходит при любом виде навигации
 // в т.ч. при нажатии кнопок браузера ВПЕРЁД/НАЗАД
@@ -92,7 +95,7 @@ function switchToStateFromURLHash() {
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             break;
     }
-    document.querySelector('body').innerHTML = pageHTML;
+    document.querySelector('.test-wrapper').innerHTML = pageHTML;
 }
 
 // устанавливает в закладке УРЛа новое состояние приложения
@@ -109,11 +112,12 @@ function switchToState(newState) {
 }
 
 function switchToGameField() {
-    lounchMusic();
     switchToState( { pagename:'Game' } );
-    include("js/class.js");
-    include("js/levelMap.js");
-    include("script.js");
+    if(!areScriptsLoaded) {
+        lounchMusic();
+        include("script.js");
+        areScriptsLoaded = true;
+    }
 }
 
 function switchToMainPage() {

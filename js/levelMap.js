@@ -1,7 +1,8 @@
 'use strict'
 
 let canSum = true;
-let prevScore = 0
+let prevScore = 0;
+
 function reset() {
     if (!castButton.classList.contains('invis-button')) {
         castButton.classList.toggle('invis-button');

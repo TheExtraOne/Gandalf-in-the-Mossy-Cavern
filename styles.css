@@ -18,6 +18,11 @@ body {
     background-color: black;
     overflow: hidden;
 }
+.test-wrapper{
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+}
 /*меню*/
 .wrapper-for-main-menu{
     width: 100%;
