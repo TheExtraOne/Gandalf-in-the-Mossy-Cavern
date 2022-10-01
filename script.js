@@ -33,6 +33,8 @@ canvas.width = 1024 * scale;
 canvas.height = 600 * scale;
 const ctx = canvas.getContext('2d');
 
+sideBar.style.height = canvas.height + 'px';
+
 const gandalfAccelY = 0.5 * scale;
 const gandalfStep = 5 * scale;
 const gandalfJump = 16 * scale;
@@ -105,41 +107,6 @@ ring1.src = 'img/smallRing1.png';
 
 let ring2 = new Image();
 ring2.src = 'img/smallRing2.png';
-
-
-/*const moneyAudio = new Audio();
-moneyAudio.volume = 0.5;
-if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
-    moneyAudio.src = "sounds/money.mp3";
-} else {
-    moneyAudio.src=
-    "sounds/moneyOgg.ogg";
-}
-const slimeAudio = new Audio();
-slimeAudio.volume = 0.5;
-if (slimeAudio.canPlayType("audio/mpeg") == "probably"){
-    slimeAudio.src = "sounds/sqush.mp3";
-} else {
-    slimeAudio.src=
-    "sounds/squshOgg.ogg";
-}
-const victoryAudio = new Audio();
-victoryAudio.volume = 0.5;
-if (victoryAudio.canPlayType("audio/mpeg") == "probably"){
-    victoryAudio.src = "sounds/victory.mp3";
-} else {
-    victoryAudio.src=
-    "sounds/victoryOgg.ogg";
-}
-const mainAudio = new Audio();
-mainAudio.loop = true;
-mainAudio.volume = 0.15;
-if (mainAudio.canPlayType("audio/mpeg") == "probably"){
-    mainAudio.src = "sounds/general2.mp3";
-} else {
-    mainAudio.src=
-    "sounds/general2Ogg.ogg";
-}*/
 
 document.addEventListener('keydown', startMove, false);
 document.addEventListener('touchstart', startMove, false);

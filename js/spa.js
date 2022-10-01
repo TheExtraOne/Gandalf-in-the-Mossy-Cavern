@@ -36,6 +36,7 @@ if (mainAudio.canPlayType("audio/mpeg") == "probably"){
 
 //для отслеживания. загрузились ли скрипты
 let areScriptsLoaded = false;
+let isMusicLoded = false;
 
 // отслеживаем изменение закладки в УРЛе
 // оно происходит при любом виде навигации
@@ -73,10 +74,15 @@ function switchToStateFromURLHash() {
     let pageHTML = "";
     switch ( SPAState.pagename ) {
         case 'Game':
-            pageHTML += '<div class="wrapper-for-game"><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="switchToMainPage()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="open-container invis">&#9650;</div><canvas></canvas></div>';
+            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="switchToMainPage()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
+            if(!areScriptsLoaded) {
+                include("script.js");
+                areScriptsLoaded = true;
+            }
+            
             break;
         case 'Main':
-            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><button type="button" id="startButton" onclick="switchToGameField()"><span>Start</span></button><button type="button" id="rulesButton" onclick="switchToRulesPage()"><span>Rules</span></button><button type="button" id="tableButton" onclick="switchToRecordsPage()"><span>Records</span></button><button type="button" id="settingButton" onclick="switchToSettingsPage()"><span>Settings</span></button></div></div>';
+            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><button type="button" id="startButton" onclick="switchToGameField(), lounchMusic()"><span>Start</span></button><button type="button" id="rulesButton" onclick="switchToRulesPage()"><span>Rules</span></button><button type="button" id="tableButton" onclick="switchToRecordsPage()"><span>Records</span></button><button type="button" id="settingButton" onclick="switchToSettingsPage()"><span>Settings</span></button></div></div>';
             break;
         case 'Rules':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Rules</h3>';
@@ -113,11 +119,6 @@ function switchToState(newState) {
 
 function switchToGameField() {
     switchToState( { pagename:'Game' } );
-    if(!areScriptsLoaded) {
-        lounchMusic();
-        include("script.js");
-        areScriptsLoaded = true;
-    }
 }
 
 function switchToMainPage() {
@@ -145,11 +146,13 @@ function include(url) {
     document.querySelector('body').append(script);
 }
 function lounchMusic(){
-    //startButton.blur();
-    clickSoundInit(moneyAudio);
-    clickSoundInit(slimeAudio);
-    clickSoundInit(victoryAudio);
-    clickSoundInit(mainAudio);
+    if(!isMusicLoded) {
+        clickSoundInit(moneyAudio);
+        clickSoundInit(slimeAudio);
+        clickSoundInit(victoryAudio);
+        clickSoundInit(mainAudio);
+        isMusicLoded = true;
+    }
 }
 
 function clickSoundInit(audio) {
