@@ -34,9 +34,12 @@ if (mainAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/general2Ogg.ogg";
 }
 
-//для отслеживания. загрузились ли скрипты
+//для отслеживания. загрузились ли скрипты, мызыка или перезагружалась ли страница
 let areScriptsLoaded = false;
 let isMusicLoded = false;
+let popUp = document.querySelector('.b-popup');
+let popUpButton = document.querySelector('.popup-close-button');
+popUpButton.addEventListener('click', closePopup, false);
 
 // отслеживаем изменение закладки в УРЛе
 // оно происходит при любом виде навигации
@@ -75,11 +78,18 @@ function switchToStateFromURLHash() {
     switch ( SPAState.pagename ) {
         case 'Game':
             pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="switchToMainPage()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
+
             if(!areScriptsLoaded) {
                 include("script.js");
                 areScriptsLoaded = true;
             }
-            
+            //Для попапа с запуском музыки, если перезагрузили страницу
+            if (performance.navigation.type == 1) {
+                console.log( "Страница перезагружена" );
+                popUp.classList.toggle('invis-button');
+            } else {
+                console.log( "Страница не перезагружена");
+            }
             break;
         case 'Main':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><button type="button" id="startButton" onclick="switchToGameField(), lounchMusic()"><span>Start</span></button><button type="button" id="rulesButton" onclick="switchToRulesPage()"><span>Rules</span></button><button type="button" id="tableButton" onclick="switchToRecordsPage()"><span>Records</span></button><button type="button" id="settingButton" onclick="switchToSettingsPage()"><span>Settings</span></button></div></div>';
@@ -167,4 +177,12 @@ function clickSoundInit(audio) {
 function clickSound(audio) {
     audio.currentTime = 0; // в секундах
     audio.play();
+}
+
+function closePopup(event) {
+    event = event || window.event;
+    event.preventDefault();
+
+    lounchMusic();
+    popUp.classList.toggle('invis-button');
 }
