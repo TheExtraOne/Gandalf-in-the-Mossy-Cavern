@@ -244,9 +244,9 @@ function lockGetReady(callresult) {
     
         const info = {
             name : (document.getElementById('IName').value === '') ? 'Unknown user' : document.getElementById('IName').value,
-            score : totalScore.textContent
+            score : +totalScore.textContent
         };
-        scoreTable.push(info)
+        scoreTable.push(info);
         scoreTable.sort(byField('score'));
         console.log(scoreTable);
         $.ajax( {
