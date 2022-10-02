@@ -234,14 +234,25 @@ function lockGetReady(callresult) {
     if ( callresult.error!=undefined )
         alert(callresult.error);
     else {
+        let scoreTable = JSON.parse(callresult.result);
+        if (!scoreTable.length) {
+            scoreTable = [];
+        }
+        function byField(field) {
+            return (a, b) => a[field] > b[field] ? -1 : 1;
+        }  
+    
         const info = {
             name : (document.getElementById('IName').value === '') ? 'Unknown user' : document.getElementById('IName').value,
             score : totalScore.textContent
         };
+        scoreTable.push(info)
+        scoreTable.sort(byField('score'));
+        console.log(scoreTable);
         $.ajax( {
                 url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
                 data : { f : 'UPDATE', n : stringName,
-                v : JSON.stringify(info), p : updatePassword },
+                v : JSON.stringify(scoreTable), p : updatePassword },
                 success : updateReady, error : errorHandler
             }
         );
@@ -267,10 +278,11 @@ function readReady(callresult) {
     if ( callresult.error!=undefined )
         alert(callresult.error);
     else if ( callresult.result!="" ) {
-        const info=JSON.parse(callresult.result);
-        console.log(info, info.name, info.score);
+        const info = JSON.parse(callresult.result);
         let allLi = document.querySelectorAll('li');
-        allLi[0].innerHTML = `${info.name} <span>${info.score}</span>`;
+        for (let i = 0; i < allLi.length; i++) {
+            allLi[i].innerHTML = `${info[i].name} <span>${info[i].score}</span>`;
+        }
     }
 }
 
