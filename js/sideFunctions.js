@@ -37,7 +37,6 @@ function doesHeroToutchMana({hero, mana}) {
 function updateScore(span1, span2, hero) {
     span1.textContent = `${hero.count}`;
     span2.textContent = `${hero.score}`;
-    //levelNumber.textContent = `${level}`;
 }
 
 function updateLevel(span, newLevel) {

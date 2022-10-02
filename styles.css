@@ -82,15 +82,6 @@ body {
 }
 .main-menu-container div ol{font-size: 35px;}
 .main-menu-container div ol span{padding-left: 30px;}
-.main-menu-container input[type=text] {
-    width: 248px;
-    height: 47px;
-    font-size: 20px;
-    padding: 3px 5px 3px 10px;
-    background-color: transparent;
-    border: solid 2px black;
-    border-radius: 9px;
-}
 .main-menu-container label{font-size: 28px;}
 .back-to-main-menu{
     position: absolute;
@@ -189,6 +180,16 @@ body {
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
+}
+input[type=text] {
+    text-align: center;
+    width: 129px;
+    height: 40px;
+    font-size: 15px;
+    padding: 0px 5px 0px 4px;
+    background-color: transparent;
+    border: solid 2px black;
+    border-radius: 9px;
 }
 /*кнопки способностей*/
 .button-left,
@@ -372,6 +373,7 @@ button span:hover:before {
 button span:hover:after {
     width: 100%;
 }
+
 /*медиа*/
 @media all and (max-width: 1216px){
 	.side-bar{
@@ -389,12 +391,15 @@ button span:hover:after {
 }
 @media all and (max-width: 900px){
     .wrapper-for-game{font-size: 19px;}
+    .side-bar{justify-content: center;}
     .points{
         margin-top: 15px;
         font-size: 16px;
     }
-    .points p{margin-bottom: 10px;}
-    button{
+    .points p{margin-bottom: 5px;}
+    .buttons-container{flex: 0 1 52%;}
+    button,
+    input[type=text]{
         width: 123px;
         height: 33px;
         font-size: 15px;
@@ -442,7 +447,6 @@ button span:hover:after {
     }
     .main-menu-container div{top: -9px;}
     .main-menu-container div ol{font-size: 27px;}
-    .main-menu-container input[type=text]{margin: 10px auto;}
     .main-menu-container input[type=range]{margin-bottom: 10px;}
 }
 @media all and (max-width: 575px){
@@ -470,7 +474,8 @@ button span:hover:after {
         margin-top: 0px;
         font-size: 15px;
     }
-    button{
+    button,
+    input[type=text]{
         width: 100px;
         height: 27px;
         font-size: 12px;
@@ -479,7 +484,8 @@ button span:hover:after {
 @media all and (max-width: 380px){
     .points{font-size: 12px;}
     .points p{margin-bottom: 3px;}
-    button{
+    button,
+    input[type=text]{
         width: 89px;
         height: 24px;
     }

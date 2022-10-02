@@ -1,5 +1,9 @@
 "use strict";
 
+const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+let updatePassword;
+const stringName='MIHASEWA_GANDALF_SCORE';
+
 const moneyAudio = new Audio();
 moneyAudio.volume = 0.5;
 if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
@@ -79,7 +83,7 @@ function switchToStateFromURLHash() {
     let pageHTML = "";
     switch ( SPAState.pagename ) {
         case 'Game':
-            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
+            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><input type="text" name="userName" placeholder="Your nickname" id="IName"> <button type="button" class="small-button" onclick="storeInfo()">Save</button><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
 
             if(!areScriptsLoaded) {
                 include("js/script.js");
@@ -115,14 +119,15 @@ function switchToStateFromURLHash() {
             break;
         case 'Settings':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Settings</h3>';
-            pageHTML += "<input type='text' name='userName' placeholder='Enter your nickname'>";
+            /*pageHTML += "<p><input type='text' name='userName' placeholder='Enter your nickname' id='IName'> <button type='button' class='small-button' onclick='storeInfo()'>Save</button></p>";*/
             pageHTML += '<label for="volume">Music</label><input type="range" id="volume" name="volume" min="0" max="1" value="0.1" step="0.1"><label for="volume">Side Effects</label><input type="range" id="volume" name="volume" min="0" max="1" value="0.5" step="0.1">';
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             break;
         case 'Records':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Top-5</h3>';
-            pageHTML += "<div><ol><li>User 1 <span>1020</span></li><li>User 2 <span>1000</span></li><li>User 3 <span>820</span></li><li>User 4 <span>600</span></li><li>User 5 <span>200</span></li></ol></div>";
+            pageHTML += `<div><ol><li>User 1<span>1100</span></li><li>User 2 <span>1000</span></li><li>User 3 <span>820</span></li><li>User 4 <span>600</span></li><li>User 5 <span>200</span></li></ol></div>`;
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
+            test();
             break;
     }
     document.querySelector('.test-wrapper').innerHTML = pageHTML;
@@ -201,6 +206,7 @@ function closePopup(event) {
     lounchMusic();
     popUp.classList.toggle('invis-button');
 }
+
 function beforeMainMenu(event) {
     event = event || window.event;
     event.preventDefault();
@@ -214,3 +220,60 @@ function beforeMainMenu(event) {
     popUpNoButton.addEventListener('click', () => {popUp2.classList.toggle('invis-button');}, false);
 }
 
+function storeInfo() {
+    updatePassword = Math.random();
+    $.ajax( {
+            url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+            data : { f : 'LOCKGET', n : stringName, p : updatePassword },
+            success : lockGetReady, error : errorHandler
+        }
+    );
+}
+
+function lockGetReady(callresult) {
+    if ( callresult.error!=undefined )
+        alert(callresult.error);
+    else {
+        const info = {
+            name : (document.getElementById('IName').value === '') ? 'Unknown user' : document.getElementById('IName').value,
+            score : totalScore.textContent
+        };
+        $.ajax( {
+                url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+                data : { f : 'UPDATE', n : stringName,
+                v : JSON.stringify(info), p : updatePassword },
+                success : updateReady, error : errorHandler
+            }
+        );
+    }
+}
+
+function updateReady(callresult) {
+    if ( callresult.error!=undefined )
+        alert(callresult.error);
+}
+
+function test() {
+    $.ajax(
+        {
+            url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+            data : { f : 'READ', n : stringName },
+            success : readReady, error : errorHandler
+        }
+    );
+}
+
+function readReady(callresult) {
+    if ( callresult.error!=undefined )
+        alert(callresult.error);
+    else if ( callresult.result!="" ) {
+        const info=JSON.parse(callresult.result);
+        console.log(info, info.name, info.score);
+        let allLi = document.querySelectorAll('li');
+        allLi[0].innerHTML = `${info.name} <span>${info.score}</span>`;
+    }
+}
+
+function errorHandler(jqXHR,statusStr,errorStr) {
+    alert(statusStr+' '+errorStr);
+}
