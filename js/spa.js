@@ -172,8 +172,8 @@ switchToStateFromURLHash();
 function include(url) {
     let script = document.createElement('script');
     script.src = url;
-    //document.querySelectorAll('script')[3].after(script);
-    document.querySelector('body').append(script);
+    document.querySelectorAll('script')[4].after(script);
+    //document.querySelector('body').append(script);
 }
 function lounchMusic(){
     if(!isMusicLoded) {
