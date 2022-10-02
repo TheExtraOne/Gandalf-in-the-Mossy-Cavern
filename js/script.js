@@ -1,21 +1,21 @@
 'use strict'
 
-const manaFlowers = document.querySelector('.mana-flowers');
-const totalScore = document.querySelector('.total-score');
-const levelNumber = document.querySelector('.level-number');
-const crossContainer = document.querySelector('.cross-container');
-const openContainer = document.querySelector('.open-container');
-const sideBar = document.querySelector('.side-bar');
-const resetButton = document.querySelector('#resetButton');
-const showButtonsButton = document.querySelector('#showButtonsButton');
-const leftButton = document.querySelector('.button-left');
-const rightButton = document.querySelector('.button-right');
-const jumpButton = document.querySelector('.button-jump');
-const castButton = document.querySelector('.button-cast');
+let manaFlowers = document.querySelector('.mana-flowers');
+let totalScore = document.querySelector('.total-score');
+let levelNumber = document.querySelector('.level-number');
+let crossContainer = document.querySelector('.cross-container');
+let openContainer = document.querySelector('.open-container');
+let sideBar = document.querySelector('.side-bar');
+let resetButton = document.querySelector('#resetButton');
+let showButtonsButton = document.querySelector('#showButtonsButton');
+let leftButton = document.querySelector('.button-left');
+let rightButton = document.querySelector('.button-right');
+let jumpButton = document.querySelector('.button-jump');
+let castButton = document.querySelector('.button-cast');
 
-const canvas = document.querySelector('canvas');
-const userWidth = document.documentElement.clientWidth;
-const userHeight = document.documentElement.clientHeight;
+let canvas = document.querySelector('canvas');
+let userWidth = document.documentElement.clientWidth;
+let userHeight = document.documentElement.clientHeight;
 let optimumWidth = userWidth;
 
 if (userWidth / userHeight > 1.75 && userWidth / userHeight < 2) {
@@ -23,7 +23,7 @@ if (userWidth / userHeight > 1.75 && userWidth / userHeight < 2) {
 } else if (userWidth / userHeight >= 2) {
     optimumWidth -= 200;
 }
-const scale = (optimumWidth < 1058) ? optimumWidth / 1024 : 1;
+let scale = (optimumWidth < 1058) ? optimumWidth / 1024 : 1;
 
 if (userWidth <= 1216) {
     hideSideMenu();
@@ -31,15 +31,15 @@ if (userWidth <= 1216) {
 }
 canvas.width = 1024 * scale;
 canvas.height = 600 * scale;
-const ctx = canvas.getContext('2d');
+let ctx = canvas.getContext('2d');
 
 sideBar.style.height = canvas.height + 'px';
 
-const gandalfAccelY = 0.5 * scale;
-const gandalfStep = 5 * scale;
-const gandalfJump = 16 * scale;
-const howDeepInMoss = 21 * scale;
-const howCloseToPit = 20 * scale;
+let gandalfAccelY = 0.5 * scale;
+let gandalfStep = 5 * scale;
+let gandalfJump = 16 * scale;
+let howDeepInMoss = 21 * scale;
+let howCloseToPit = 20 * scale;
 
 
 let gandalf;
@@ -128,15 +128,16 @@ function hideButtons() {
     jumpButton.classList.toggle('invis-button');
 }
 //убирает pinch Zoom
-window.addEventListener('touchstart', function(e) {
+/*window.addEventListener('touchstart', function(e) {
     if (e.targetTouches.length === 2) {
         e.preventDefault();
     }
-}, false);
+}, false);*/
 
 reset();
 updateLevel(levelNumber, level);
 requestAnimationFrame(tick);
+
 
 function tick() { 
     ctx.clearRect(0, 0, canvas.width, canvas.height);

@@ -41,6 +41,8 @@ let popUp = document.querySelector('.b-popup');
 let popUpButton = document.querySelector('.popup-close-button');
 popUpButton.addEventListener('click', closePopup, false);
 
+let popUp2 = document.querySelector('.b-popup2');
+
 // отслеживаем изменение закладки в УРЛе
 // оно происходит при любом виде навигации
 // в т.ч. при нажатии кнопок браузера ВПЕРЁД/НАЗАД
@@ -77,18 +79,30 @@ function switchToStateFromURLHash() {
     let pageHTML = "";
     switch ( SPAState.pagename ) {
         case 'Game':
-            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="switchToMainPage()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
+            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
 
             if(!areScriptsLoaded) {
-                include("script.js");
+                include("js/script.js");
                 areScriptsLoaded = true;
+            } else{
+                //location.reload();
+                reset();
+                updateLevel(levelNumber, level);
+                requestAnimationFrame(tick);
             }
+
+
+            window.onbeforeunload = function() {
+                return false;
+            };
+
             //Для попапа с запуском музыки, если перезагрузили страницу
             if (performance.navigation.type == 1) {
-                console.log( "Страница перезагружена" );
+                console.log('was reloaded');
                 popUp.classList.toggle('invis-button');
             } else {
-                console.log( "Страница не перезагружена");
+                console.log('wasnt reloaded');
+                
             }
             break;
         case 'Main':
@@ -153,6 +167,7 @@ switchToStateFromURLHash();
 function include(url) {
     let script = document.createElement('script');
     script.src = url;
+    //document.querySelectorAll('script')[3].after(script);
     document.querySelector('body').append(script);
 }
 function lounchMusic(){
@@ -186,3 +201,16 @@ function closePopup(event) {
     lounchMusic();
     popUp.classList.toggle('invis-button');
 }
+function beforeMainMenu(event) {
+    event = event || window.event;
+    event.preventDefault();
+
+    popUp2.classList.toggle('invis-button');
+
+    let popUpYesButton = document.querySelector('.popup-yes-button');
+    popUpYesButton.addEventListener('click', () => {switchToMainPage();popUp2.classList.add('invis-button');}, false);
+
+    let popUpNoButton = document.querySelector('.popup-no-button');
+    popUpNoButton.addEventListener('click', () => {popUp2.classList.toggle('invis-button');}, false);
+}
+

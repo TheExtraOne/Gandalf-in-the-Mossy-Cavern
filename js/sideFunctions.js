@@ -1,27 +1,5 @@
 'use strict'
 
-/*function lounchMusic(){
-    //startButton.blur();
-    clickSoundInit(moneyAudio);
-    clickSoundInit(slimeAudio);
-    clickSoundInit(victoryAudio);
-    clickSoundInit(mainAudio);
-}
-
-function clickSoundInit(audio) {
-    if (audio === mainAudio) {
-        audio.play();
-        return;
-    }
-    audio.play(); // запускаем звук
-    audio.pause(); // и сразу останавливаем
-}
-
-function clickSound(audio) {
-    audio.currentTime = 0; // в секундах
-    audio.play();
-}*/
-
 //проверяю, находится ли игрок или его противник на платформе
 function doesToutchThePlatform({obj, platform}) {
     return (obj.positionY + obj.height - howDeepInMoss <= platform.positionY &&
