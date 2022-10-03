@@ -70,7 +70,7 @@ let greenSlime = new Image();
 greenSlime.src = "img/GreenSlimeTight.png";
 
 let orangeSlime = new Image();
-orangeSlime.src = "img/cssSpritesTest.png";
+orangeSlime.src = "img/newOrangeSprite.png";
 
 let platform = new Image();
 platform.src = "img/platform.png";
