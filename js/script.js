@@ -182,7 +182,9 @@ function tick() {
     now = Date.now();
     elapsed = now - startTime;
 
-    if (elapsed > fpsInterval){
+    if (elapsed < fpsInterval){
+        return;
+    }
 
     startTime = now - (elapsed % fpsInterval);
 
@@ -385,7 +387,6 @@ function tick() {
     updateScore(manaFlowers, totalScore, gandalf);
     
     //animationID = requestAnimationFrame(tick);
-}
 }
 
 function startMove(event) {
