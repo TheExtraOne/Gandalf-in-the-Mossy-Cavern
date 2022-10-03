@@ -51,35 +51,79 @@ let startTime;
 let now;
 let elapsed;
 /*картинки для canvas */
+//для проверки поддержки webp
+async function supportWEBP() {
+    const WEBP = new Image();
+    await (WEBP.onload = WEBP.onerror = function () {
+        if(WEBP.height==2){
+            window.detectWebp = true;
+            document.body.classList.add('webp')
+            return true; 
+        }else{
+            document.body.classList.add('nowebp')
+            return false;
+        }
+    })
+    await (WEBP.src = 'data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABQAQCdASoDAAIAAgA2JQBOgC6gAP73M8eLuxHGTv3eIAAA');
+};
+let isWebP = false;
+if(supportWEBP()){
+    isWebP = true;
+}
+
 let stayRight = new Image();
-stayRight.src = "img/StayRight.png";
+if (isWebP) {
+    stayRight.src = 'img/StayRightWeb.webp';
+} else {
+    stayRight.src = "img/StayRight.png";
+}
 
 let stayLeft = new Image();
-stayLeft.src = "img/StayLeft.png";
+if (isWebP) {
+    stayLeft.src = 'img/StayLeftWeb.webp';
+} else {
+    stayLeft.src = "img/StayLeft.png";
+}
 
 let runRight = new Image();
-runRight.src = "img/RunRight.png";
+if (isWebP) {
+    runRight.src = 'img/RunRightWeb.webp';
+} else {
+    runRight.src = "img/RunRight.png";
+}
 
 let runLeft = new Image();
-runLeft.src = "img/RunLeft.png";
+if (isWebP) {
+    runLeft.src = 'img/RunLeftWeb.webp';
+} else {
+    runLeft.src = "img/RunLeft.png";
+}
 
 let manaFlower = new Image();
 manaFlower.src = "img/ManaFlower.png";
 
 let greenSlime = new Image();
-greenSlime.src = "img/greenSlimeShort.png";
+greenSlime.src = 'img/greenSlime.png';
 
 let orangeSlime = new Image();
-orangeSlime.src = "img/orangeSlimeShort.png";
+orangeSlime.src = "img/orangeSlime.png";
 
 let platform = new Image();
-platform.src = "img/platform.png";
+if (isWebP) {
+    platform.src = 'img/platformWeb.webp';
+} else {
+    platform.src = "img/platform.png";
+}
 
 let smallPlatform = new Image();
 smallPlatform.src = "img/SmallPlatform.png";
 
 let stage = new Image();
-stage.src = 'img/MediumStage1.png';
+if (isWebP) {
+    stage.src = 'img/MediumStage1Web.webp';
+} else {
+    stage.src = 'img/MediumStage1.png';
+}
 
 let block = new Image();
 block.src = 'img/SmallBlock.png';
@@ -91,7 +135,12 @@ let sideBackground = new Image();
 sideBackground.src = 'img/Background2.jpg';
 
 let mossSlopes = new Image();
-mossSlopes.src = 'img/mossySlopes.png';
+if (isWebP) {
+    mossSlopes.src = 'img/mossySlopesWeb.webp';
+} else {
+    mossSlopes.src = 'img/mossySlopes.png';
+}
+
 
 let ring1 = new Image();
 ring1.src = 'img/smallRing1.png';
