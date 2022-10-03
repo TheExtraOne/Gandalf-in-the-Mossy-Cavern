@@ -69,7 +69,13 @@ class Enemy {
 
         ctx.drawImage(this.image, this.cropwidth * this.cadre, 0, this.cropwidth, this.cropHeight, this.positionX, this.positionY, this.width, this.height);
         this.cadre++;
-        if (this.cadre > 59) {
+        if (this.cadre > 79) {
+            if (this.isGreen){
+                console.log('Green:' + this.cadre * this.cropwidth);
+            }
+            else{
+                console.log('Orange:' + this.cadre * this.cropwidth);
+            }
             this.cadre = 0;
         }
     }
