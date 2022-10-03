@@ -105,6 +105,11 @@ body {
 .back-to-main-menu:hover{
     font-size: 35px;
 }
+input[type=range] {
+    cursor: url('img/cursor/pointerPng.png'),
+    url('img/cursor/pointerCur.cur'),
+    url('img/cursor/pointerSvg.svg'), default
+}
 /*игровое поле*/
 .wrapper-for-game {
     width: 100%;

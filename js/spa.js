@@ -5,8 +5,9 @@ const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
 let updatePassword;
 const stringName='MIHASEWA_GANDALF_SCORE';
 //музыка
+let sideEffectsVolume = 0.5;
 const moneyAudio = new Audio();
-moneyAudio.volume = 0.5;
+moneyAudio.volume = sideEffectsVolume;
 if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
     moneyAudio.src = "sounds/money.mp3";
 } else {
@@ -14,7 +15,7 @@ if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/moneyOgg.ogg";
 }
 const slimeAudio = new Audio();
-slimeAudio.volume = 0.5;
+slimeAudio.volume = sideEffectsVolume;
 if (slimeAudio.canPlayType("audio/mpeg") == "probably"){
     slimeAudio.src = "sounds/sqush.mp3";
 } else {
@@ -22,7 +23,7 @@ if (slimeAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/squshOgg.ogg";
 }
 const victoryAudio = new Audio();
-victoryAudio.volume = 0.5;
+victoryAudio.volume = sideEffectsVolume;
 if (victoryAudio.canPlayType("audio/mpeg") == "probably"){
     victoryAudio.src = "sounds/victory.mp3";
 } else {
@@ -31,7 +32,7 @@ if (victoryAudio.canPlayType("audio/mpeg") == "probably"){
 }
 const mainAudio = new Audio();
 mainAudio.loop = true;
-mainAudio.volume = 0.15;
+mainAudio.volume = 0.2;
 if (mainAudio.canPlayType("audio/mpeg") == "probably"){
     mainAudio.src = "sounds/general2.mp3";
 } else {
@@ -113,7 +114,7 @@ function switchToStateFromURLHash() {
             break;
         case 'Settings':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Settings</h3>';
-            pageHTML += '<label for="volume">Music</label><input type="range" id="volume" name="volume" min="0" max="1" value="0.1" step="0.1"><label for="volume">Side Effects</label><input type="range" id="volume" name="volume" min="0" max="1" value="0.5" step="0.1">';
+            pageHTML += `<label for="volume">Music</label><input type="range" id="volume" name="volume" min="0" max="1" value="${mainAudio.volume}" step="0.1" onchange="musicVolumeChanged()"><label for="volume">Side Effects</label><input type="range" id="volume" name="volume" min="0" max="1" value="${sideEffectsVolume}" step="0.1" onchange="effectsVolumeChanged()">`;
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             break;
         case 'Records':
@@ -285,4 +286,21 @@ function readReady(callresult) {
 
 function errorHandler(jqXHR,statusStr,errorStr) {
     alert(statusStr+' '+errorStr);
+}
+
+function musicVolumeChanged(event) {
+    event = event || window.event;
+    event.preventDefault();
+
+    mainAudio.volume = event.target.value;
+}
+
+function effectsVolumeChanged(event) {
+    event = event || window.event;
+    event.preventDefault();
+
+    sideEffectsVolume = event.target.value;
+    moneyAudio.volume = sideEffectsVolume;
+    slimeAudio.volume = sideEffectsVolume;
+    victoryAudio.volume = sideEffectsVolume;
 }
