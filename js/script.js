@@ -1,47 +1,32 @@
 'use strict'
 
-let manaFlowers = document.querySelector('.mana-flowers');
-let totalScore = document.querySelector('.total-score');
-let levelNumber = document.querySelector('.level-number');
-let crossContainer = document.querySelector('.cross-container');
-let openContainer = document.querySelector('.open-container');
-let sideBar = document.querySelector('.side-bar');
-let resetButton = document.querySelector('#resetButton');
-let showButtonsButton = document.querySelector('#showButtonsButton');
-let leftButton = document.querySelector('.button-left');
-let rightButton = document.querySelector('.button-right');
-let jumpButton = document.querySelector('.button-jump');
-let castButton = document.querySelector('.button-cast');
-
-let canvas = document.querySelector('canvas');
-let userWidth = document.documentElement.clientWidth;
-let userHeight = document.documentElement.clientHeight;
-let optimumWidth = userWidth;
-
-if (userWidth / userHeight > 1.75 && userWidth / userHeight < 2) {
-    optimumWidth -= 150;
-} else if (userWidth / userHeight >= 2) {
-    optimumWidth -= 200;
-}
-let scale = (optimumWidth < 1058) ? optimumWidth / 1024 : 1;
-
-if (userWidth <= 1216) {
-    hideSideMenu();
-    hideButtons();
-}
-canvas.width = 1024 * scale;
-canvas.height = 600 * scale;
-let ctx = canvas.getContext('2d');
-
-sideBar.style.height = canvas.height + 'px';
-
-let gandalfAccelY = 0.5 * scale;
-let gandalfStep = 5 * scale;
-let gandalfJump = 16 * scale;
-let howDeepInMoss = 21 * scale;
-let howCloseToPit = 20 * scale;
-
-
+/*DOM*/
+let manaFlowers;
+let totalScore;
+let levelNumber;
+let crossContainer;
+let openContainer;
+let sideBar;
+let resetButton;
+let showButtonsButton;
+let leftButton;
+let rightButton;
+let jumpButton;
+let castButton;
+let canvas;
+/*зависящие от canvas*/
+let userWidth;
+let userHeight;
+let optimumWidth;
+let scale;
+let ctx;
+/*Физика, движение, соприкосновение */
+let gandalfAccelY;
+let gandalfStep;
+let gandalfJump;
+let howDeepInMoss;
+let howCloseToPit;
+/*объекты (от классов)*/
 let gandalf;
 let stages;
 let slimes;
@@ -50,16 +35,16 @@ let fireballs;
 let backgroundObjects;
 let backgroundImg;
 let gandalfDistanceTraveled;
-let lastKey;
 let spheres;
-
-let level = 1;
-
-let isRightPressed = false;
-let isLeftPressed = false;
-let isJumpPressed = false;
-let isSpacePressed = false;
-
+/*уровни, управление */
+let level;
+let isRightPressed;
+let isLeftPressed;
+let isJumpPressed;
+let isSpacePressed;
+let lastKey;
+let animationID;
+/*картинки для canvas */
 let stayRight = new Image();
 stayRight.src = "img/StayRight.png";
 
@@ -112,10 +97,60 @@ document.addEventListener('keydown', startMove, false);
 document.addEventListener('touchstart', startMove, false);
 document.addEventListener('keyup', finishMove, false);
 document.addEventListener('touchend', finishMove, false);
-resetButton.addEventListener('click', reset, false);
-crossContainer.addEventListener('click', hideSideMenu, false);
-openContainer.addEventListener('click', hideSideMenu, false);
-showButtonsButton.addEventListener('click', hideButtons, false);
+
+function determineVar(){
+    manaFlowers = document.querySelector('.mana-flowers');
+    totalScore = document.querySelector('.total-score');
+    levelNumber = document.querySelector('.level-number');
+    crossContainer = document.querySelector('.cross-container');
+    openContainer = document.querySelector('.open-container');
+    sideBar = document.querySelector('.side-bar');
+    resetButton = document.querySelector('#resetButton');
+    showButtonsButton = document.querySelector('#showButtonsButton');
+    leftButton = document.querySelector('.button-left');
+    rightButton = document.querySelector('.button-right');
+    jumpButton = document.querySelector('.button-jump');
+    castButton = document.querySelector('.button-cast');
+
+    canvas = document.querySelector('canvas');
+    userWidth = document.documentElement.clientWidth;
+    userHeight = document.documentElement.clientHeight;
+    optimumWidth = userWidth;
+
+    if (userWidth / userHeight > 1.75 && userWidth / userHeight < 2) {
+        optimumWidth -= 150;
+    } else if (userWidth / userHeight >= 2) {
+        optimumWidth -= 200;
+    }
+    
+    scale = (optimumWidth < 1058) ? optimumWidth / 1024 : 1;
+    if (userWidth <= 1216) {
+        hideSideMenu();
+        hideButtons();
+    }
+    canvas.width = 1024 * scale;
+    canvas.height = 600 * scale;
+    ctx = canvas.getContext('2d');
+    
+    sideBar.style.height = canvas.height + 'px';
+    
+    gandalfAccelY = 0.5 * scale;
+    gandalfStep = 5 * scale;
+    gandalfJump = 16 * scale;
+    howDeepInMoss = 21 * scale;
+    howCloseToPit = 20 * scale;
+
+    level = 1;
+    isRightPressed = false;
+    isLeftPressed = false;
+    isJumpPressed = false;
+    isSpacePressed = false;
+
+    resetButton.addEventListener('click', reset, false);
+    crossContainer.addEventListener('click', hideSideMenu, false);
+    openContainer.addEventListener('click', hideSideMenu, false);
+    showButtonsButton.addEventListener('click', hideButtons, false);
+}
 
 function hideSideMenu() {
     openContainer.classList.toggle('invis');
@@ -127,16 +162,10 @@ function hideButtons() {
     rightButton.classList.toggle('invis-button');
     jumpButton.classList.toggle('invis-button');
 }
-//убирает pinch Zoom
-/*window.addEventListener('touchstart', function(e) {
-    if (e.targetTouches.length === 2) {
-        e.preventDefault();
-    }
-}, false);*/
 
-reset();
-updateLevel(levelNumber, level);
-requestAnimationFrame(tick);
+//reset();
+//updateLevel(levelNumber, level);
+//requestAnimationFrame(tick);
 
 
 function tick() { 
@@ -338,7 +367,7 @@ function tick() {
     //Счет
     updateScore(manaFlowers, totalScore, gandalf);
     
-    requestAnimationFrame(tick);
+    animationID = requestAnimationFrame(tick);
 }
 
 function startMove(event) {

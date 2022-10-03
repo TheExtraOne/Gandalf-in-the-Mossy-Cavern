@@ -1,9 +1,10 @@
 "use strict";
 
+//для AJAX
 const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
 let updatePassword;
 const stringName='MIHASEWA_GANDALF_SCORE';
-
+//музыка
 const moneyAudio = new Audio();
 moneyAudio.volume = 0.5;
 if (moneyAudio.canPlayType("audio/mpeg") == "probably"){
@@ -38,15 +39,18 @@ if (mainAudio.canPlayType("audio/mpeg") == "probably"){
     "sounds/general2Ogg.ogg";
 }
 
-//для отслеживания. загрузились ли скрипты, мызыка или перезагружалась ли страница
-let areScriptsLoaded = false;
+//для отслеживания загрузилась ли мызыка или былала текущей закладкой игра
 let isMusicLoded = false;
+let isGameHTML = false;
+
+//попапы с предупреждением
 let popUp = document.querySelector('.b-popup');
 let popUpButton = document.querySelector('.popup-close-button');
 popUpButton.addEventListener('click', closePopup, false);
 
 let popUp2 = document.querySelector('.b-popup2');
 
+//SPA
 // отслеживаем изменение закладки в УРЛе
 // оно происходит при любом виде навигации
 // в т.ч. при нажатии кнопок браузера ВПЕРЁД/НАЗАД
@@ -85,16 +89,7 @@ function switchToStateFromURLHash() {
         case 'Game':
             pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><input type="text" name="userName" placeholder="Your nickname" id="IName"> <button type="button" class="small-button" onclick="storeInfo()">Save</button><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
 
-            if(!areScriptsLoaded) {
-                include("js/script.js");
-                areScriptsLoaded = true;
-            } else{
-                //location.reload();
-                reset();
-                updateLevel(levelNumber, level);
-                requestAnimationFrame(tick);
-            }
-
+            isGameHTML = true;
 
             window.onbeforeunload = function() {
                 return false;
@@ -102,11 +97,10 @@ function switchToStateFromURLHash() {
 
             //Для попапа с запуском музыки, если перезагрузили страницу
             if (performance.navigation.type == 1) {
-                console.log('was reloaded');
+                //console.log('was reloaded');
                 popUp.classList.toggle('invis-button');
             } else {
-                console.log('wasnt reloaded');
-                
+                //console.log('wasnt reloaded');   
             }
             break;
         case 'Main':
@@ -119,7 +113,6 @@ function switchToStateFromURLHash() {
             break;
         case 'Settings':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Settings</h3>';
-            /*pageHTML += "<p><input type='text' name='userName' placeholder='Enter your nickname' id='IName'> <button type='button' class='small-button' onclick='storeInfo()'>Save</button></p>";*/
             pageHTML += '<label for="volume">Music</label><input type="range" id="volume" name="volume" min="0" max="1" value="0.1" step="0.1"><label for="volume">Side Effects</label><input type="range" id="volume" name="volume" min="0" max="1" value="0.5" step="0.1">';
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             break;
@@ -130,7 +123,17 @@ function switchToStateFromURLHash() {
             test();
             break;
     }
+
     document.querySelector('.test-wrapper').innerHTML = pageHTML;
+
+    if (isGameHTML) {
+        cancelAnimationFrame(animationID);
+        determineVar();
+        reset();
+        updateLevel(levelNumber, level);
+        tick();
+        isGameHTML = false;
+    }
 }
 
 // устанавливает в закладке УРЛа новое состояние приложения
@@ -169,12 +172,6 @@ function switchToRecordsPage() {
 // переключаемся в состояние, которое сейчас прописано в закладке УРЛ
 switchToStateFromURLHash();
 
-function include(url) {
-    let script = document.createElement('script');
-    script.src = url;
-    document.querySelectorAll('script')[4].after(script);
-    //document.querySelector('body').append(script);
-}
 function lounchMusic(){
     if(!isMusicLoded) {
         clickSoundInit(moneyAudio);
@@ -248,7 +245,7 @@ function lockGetReady(callresult) {
         };
         scoreTable.push(info);
         scoreTable.sort(byField('score'));
-        console.log(scoreTable);
+        //console.log(scoreTable);
         $.ajax( {
                 url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
                 data : { f : 'UPDATE', n : stringName,
