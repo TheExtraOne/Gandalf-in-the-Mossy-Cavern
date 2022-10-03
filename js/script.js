@@ -44,6 +44,12 @@ let isJumpPressed;
 let isSpacePressed;
 let lastKey;
 let animationID;
+/*контроль fps */
+let fps;
+let fpsInterval;
+let startTime; 
+let now;
+let elapsed;
 /*картинки для canvas */
 let stayRight = new Image();
 stayRight.src = "img/StayRight.png";
@@ -64,7 +70,7 @@ let greenSlime = new Image();
 greenSlime.src = "img/GreenSlimeTight.png";
 
 let orangeSlime = new Image();
-orangeSlime.src = "img/OrangeSlimeTight.png";
+orangeSlime.src = "img/cssSpritesTest.png";
 
 let platform = new Image();
 platform.src = "img/platform.png";
@@ -163,16 +169,10 @@ function hideButtons() {
     jumpButton.classList.toggle('invis-button');
 }
 
-//reset();
-//updateLevel(levelNumber, level);
-//requestAnimationFrame(tick);
-
-let fps, fpsInterval, startTime, now, elapsed;
-
+//функция для контроля частоты отрисовки, передавать делаемое fps.
 function startAnimating(fps) {
     fpsInterval = 1000 / fps;
     startTime = Date.now();
-    //animationID = requestAnimationFrame(tick);
     tick();
 }
 
