@@ -167,8 +167,25 @@ function hideButtons() {
 //updateLevel(levelNumber, level);
 //requestAnimationFrame(tick);
 
+let fps, fpsInterval, startTime, now, elapsed;
+
+startAnimating(60);
+
+function startAnimating(fps) {
+    fpsInterval = 1000 / fps;
+    startTime = Date.now();
+    animationID = requestAnimationFrame(tick);
+    //tick();
+}
 
 function tick() { 
+    now = Date.now();
+    elapsed = now - startTime;
+
+    if (elapsed < fpsInterval){
+        return;
+    }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     gandalf.accelY = gandalfAccelY;

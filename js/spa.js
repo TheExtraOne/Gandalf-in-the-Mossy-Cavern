@@ -132,7 +132,8 @@ function switchToStateFromURLHash() {
         determineVar();
         reset();
         updateLevel(levelNumber, level);
-        tick();
+        //tick();
+        startAnimating();
         isGameHTML = false;
     }
 }
