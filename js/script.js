@@ -67,7 +67,7 @@ let manaFlower = new Image();
 manaFlower.src = "img/ManaFlower.png";
 
 let greenSlime = new Image();
-greenSlime.src = "img/GreenSlimeTight.png";
+greenSlime.src = "img/greenSlimeShort.png";
 
 let orangeSlime = new Image();
 orangeSlime.src = "img/orangeSlimeShort.png";
