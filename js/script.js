@@ -169,22 +169,22 @@ function hideButtons() {
 
 let fps, fpsInterval, startTime, now, elapsed;
 
-startAnimating(60);
-
 function startAnimating(fps) {
     fpsInterval = 1000 / fps;
     startTime = Date.now();
-    animationID = requestAnimationFrame(tick);
-    //tick();
+    //animationID = requestAnimationFrame(tick);
+    tick();
 }
 
 function tick() { 
+    animationID = requestAnimationFrame(tick);
+
     now = Date.now();
     elapsed = now - startTime;
 
-    if (elapsed < fpsInterval){
-        return;
-    }
+    if (elapsed > fpsInterval){
+
+    startTime = now - (elapsed % fpsInterval);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -384,7 +384,8 @@ function tick() {
     //Счет
     updateScore(manaFlowers, totalScore, gandalf);
     
-    animationID = requestAnimationFrame(tick);
+    //animationID = requestAnimationFrame(tick);
+}
 }
 
 function startMove(event) {
