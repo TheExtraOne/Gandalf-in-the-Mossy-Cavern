@@ -129,10 +129,18 @@ let block = new Image();
 block.src = 'img/SmallBlock.png';
 
 let background = new Image();
-background.src = 'img/Background1.jpg';
+if (isWebP) {
+    background.src = 'img/Background1Web.webp';
+} else {
+    background.src = 'img/Background1.jpg';
+}
 
 let sideBackground = new Image();
-sideBackground.src = 'img/Background2.jpg';
+if (isWebP) {
+    sideBackground.src = 'img/Background2Web.webp';
+} else {
+    sideBackground.src = 'img/Background2.jpg';
+}
 
 let mossSlopes = new Image();
 if (isWebP) {
