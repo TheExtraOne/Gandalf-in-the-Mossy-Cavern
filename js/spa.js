@@ -89,7 +89,7 @@ function switchToStateFromURLHash() {
     let pageHTML = "";
     switch ( SPAState.pagename ) {
         case 'Game':
-            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><input type="text" name="userName" placeholder="Your nickname" id="IName" maxlength="14"> <button type="button" class="small-button" onclick="storeInfo()">Save</button><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
+            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><input type="text" name="userName" placeholder="Your nickname" id="IName" maxlength="12"> <button type="button" class="small-button" onclick="storeInfo()">Save</button><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
 
             isGameHTML = true;
 
@@ -110,7 +110,7 @@ function switchToStateFromURLHash() {
             break;
         case 'Rules':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Rules</h3>';
-            pageHTML += "<div><p>To move the character, use the keys A (left), W (jump) or D (right).</p><p>Also, after collecting 5 mana flowers, you will gain the ability to cast a fireball (press 'Space'), wich can kill your enemies.</p><p>Another option to defeat enemies is to crush them with a jump. But be careful, after that you will be thrown up!</p><p>Points are awarded for collecting mana flowers, defeating enemies and discovering one of the Rings of Power. Once you find the Ring, you will move on to the next level.</p></div>";
+            pageHTML += "<div class='rules'><p>To move the character, use the keys A (left), W (jump) or D (right).</p><p>Also, after collecting 5 mana flowers, you will gain the ability to cast a fireball (press 'Space'), wich can kill your enemies.</p><p>Another option to defeat enemies is to crush them with a jump. But be careful, after that you will be thrown up!</p><p>Points are awarded for collecting mana flowers, defeating enemies and discovering one of the Rings of Power. Once you find the Ring, you will move on to the next level.</p></div>";
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             break;
         case 'Settings':
@@ -217,7 +217,7 @@ function beforeMainMenu(event) {
     popUpYesButton.addEventListener('click', () => {switchToMainPage();popUp2.classList.add('invis-button');}, false);
 
     let popUpNoButton = document.querySelector('.popup-no-button');
-    popUpNoButton.addEventListener('click', () => {popUp2.classList.toggle('invis-button');}, false);
+    popUpNoButton.addEventListener('click', () => {popUp2.classList.add('invis-button');}, false);
 }
 
 function storeInfo() {
