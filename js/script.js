@@ -156,11 +156,6 @@ ring1.src = 'img/smallRing1.png';
 let ring2 = new Image();
 ring2.src = 'img/smallRing2.png';
 
-document.addEventListener('keydown', startMove, false);
-document.addEventListener('touchstart', startMove, false);
-document.addEventListener('keyup', finishMove, false);
-document.addEventListener('touchend', finishMove, false);
-
 function determineVar(){
     manaFlowers = document.querySelector('.mana-flowers');
     totalScore = document.querySelector('.total-score');
@@ -213,6 +208,10 @@ function determineVar(){
     crossContainer.addEventListener('click', hideSideMenu, false);
     openContainer.addEventListener('click', hideSideMenu, false);
     showButtonsButton.addEventListener('click', hideButtons, false);
+    document.addEventListener('keydown', startMove, false);
+    document.addEventListener('touchstart', startMove, false);
+    document.addEventListener('keyup', finishMove, false);
+    document.addEventListener('touchend', finishMove, false);
 }
 
 function hideSideMenu() {

@@ -89,7 +89,7 @@ function switchToStateFromURLHash() {
     let pageHTML = "";
     switch ( SPAState.pagename ) {
         case 'Game':
-            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><input type="text" name="userName" placeholder="Your nickname" id="IName" maxlength="12"> <button type="button" class="small-button" onclick="storeInfo()">Save</button><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
+            pageHTML += '<div class="wrapper-for-game"><div class="wrapper-for-canvas"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><input type="text" name="userName" placeholder="Your nickname" id="IName" maxlength="12"> <button type="button" class="small-button" onclick="storeInfo()">Save</button><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-buttons-and-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div></div>';
 
             isGameHTML = true;
 
@@ -115,12 +115,12 @@ function switchToStateFromURLHash() {
             break;
         case 'Settings':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Settings</h3>';
-            pageHTML += `<label for="volume">Music</label><input type="range" id="volume" name="volume" min="0" max="1" value="${mainAudio.volume}" step="0.1" onchange="musicVolumeChanged()"><label for="volume">Side Effects</label><input type="range" id="volume" name="volume" min="0" max="1" value="${sideEffectsVolume}" step="0.1" onchange="effectsVolumeChanged()">`;
+            pageHTML += `<label for="volume">Music</label><input type="range" id="volume" name="volume" min="0" max="1" value="${mainAudio.volume}" step="0.1" onchange="musicVolumeChanged()"><label for="volumeEffects">Side Effects</label><input type="range" id="volumeEffects" name="volumeEffects" min="0" max="1" value="${sideEffectsVolume}" step="0.1" onchange="effectsVolumeChanged()">`;
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             break;
         case 'Records':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Top-5</h3>';
-            pageHTML += `<div><ol><li>User 1<span>1100</span></li><li>User 2 <span>1000</span></li><li>User 3 <span>820</span></li><li>User 4 <span>600</span></li><li>User 5 <span>200</span></li></ol></div>`;
+            pageHTML += `<div class="scoreTable"><ol><li>User 1<span>1100</span></li><li>User 2 <span>1000</span></li><li>User 3 <span>820</span></li><li>User 4 <span>600</span></li><li>User 5 <span>200</span></li></ol></div>`;
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             test();
             break;
