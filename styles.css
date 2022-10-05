@@ -392,6 +392,7 @@ input[type=text] {
     overflow:hidden;
     position:fixed;
     top:0px;
+    z-index: 100;
 }
 .b-popup .b-popup-content,
 .b-popup2 .b-popup-content2{
