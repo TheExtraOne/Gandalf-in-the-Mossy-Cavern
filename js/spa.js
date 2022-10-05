@@ -89,7 +89,7 @@ function switchToStateFromURLHash() {
     let pageHTML = "";
     switch ( SPAState.pagename ) {
         case 'Game':
-            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><input type="text" name="userName" placeholder="Your nickname" id="IName"> <button type="button" class="small-button" onclick="storeInfo()">Save</button><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
+            pageHTML += '<div class="wrapper-for-game"><div class="side-bar"><div class="points"><p>Level:<br><span class="level-number">1</span></p><p>Mana-flowers:<br><span class="mana-flowers">0</span></p> <p>Total score:<br><span class="total-score">0</span></p></div><div class="buttons-container"><input type="text" name="userName" placeholder="Your nickname" id="IName" maxlength="14"> <button type="button" class="small-button" onclick="storeInfo()">Save</button><button type="button" id="resetButton"><span>Reset</span></button><button type="button" id="menuButton" onclick="beforeMainMenu()"><span>Menu</span></button><button type="button" id="showButtonsButton"><span>Show buttons</span></button></div><div class="cross-container">&#9650;</div></div><div class="wrapper-for-canvas"><div class="open-container invis">&#9650;</div><div class="button-left invis-button">&#9650;</div><div class="button-right invis-button">&#9650;</div><div class="button-jump invis-button">&#9650;</div><div class="button-cast invis-button">&#128293;</div><canvas></canvas></div></div>';
 
             isGameHTML = true;
 
@@ -224,7 +224,7 @@ function storeInfo() {
     if (previousSavedScored === +totalScore.textContent) {
         return;
     }
-    
+
     updatePassword = Math.random();
     $.ajax( {
             url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
