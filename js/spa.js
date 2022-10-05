@@ -4,6 +4,7 @@
 const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
 let updatePassword;
 const stringName='MIHASEWA_GANDALF_SCORE';
+let previousSavedScored = 0;
 //музыка
 let sideEffectsVolume = 0.5;
 const moneyAudio = new Audio();
@@ -133,7 +134,7 @@ function switchToStateFromURLHash() {
         reset();
         updateLevel(levelNumber, level);
         //tick();
-        startAnimating(70);
+        startAnimating(61);
         isGameHTML = false;
     }
 }
@@ -220,6 +221,10 @@ function beforeMainMenu(event) {
 }
 
 function storeInfo() {
+    if (previousSavedScored === +totalScore.textContent) {
+        return;
+    }
+    
     updatePassword = Math.random();
     $.ajax( {
             url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
@@ -240,12 +245,13 @@ function lockGetReady(callresult) {
         function byField(field) {
             return (a, b) => a[field] > b[field] ? -1 : 1;
         }  
-    
         const info = {
             name : (document.getElementById('IName').value === '') ? 'Unknown user' : document.getElementById('IName').value,
             score : +totalScore.textContent
         };
+        previousSavedScored = +totalScore.textContent;
         scoreTable.push(info);
+        //let scoreTable = [];
         scoreTable.sort(byField('score'));
         //console.log(scoreTable);
         $.ajax( {
