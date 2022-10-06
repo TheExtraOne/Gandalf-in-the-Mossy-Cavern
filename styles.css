@@ -74,7 +74,8 @@ body {
     -1px 0 1px #96e4df, 
     0 -1px 1px #96e4df;
 }
-.main-menu-container{
+.main-menu-container,
+.main-menu-container-rules{
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -98,6 +99,7 @@ body {
     padding: 5px 15px;
     overflow: hidden;
 }
+.main-menu-container-rules{width: 700px;}
 .main-menu-container button{
     width: 224px;
     height: 67px;
@@ -105,17 +107,20 @@ body {
     font-size: 29px;
     font-weight: 600;
 }
-.main-menu-container h3{
+.main-menu-container h3,
+.main-menu-container-rules h3{
     font-size: 45px;
     font-weight: 600;
 }
-.main-menu-container div.rules{
-    flex: 0 1 auto;
-    overflow-y: scroll;
+.main-menu-container-rules div.rules{
+    /*flex: 0 1 auto;*/
+    height: 400px;
+    /*overflow-y: scroll;*/
 }
-.main-menu-container div p {
-    margin-bottom: 12px;
-    font-size: 19px;
+.main-menu-container div p,
+.main-menu-container-rules div p {
+    margin-bottom: 15px;
+    font-size: 23px;
 }
 .scoreTable{
     flex: 0 1 70%;
@@ -576,6 +581,13 @@ button span:hover:after {
             -ms-transform: scale(0.8);
                 transform: scale(0.8);
     }
+    .main-menu-container-rules div p {
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+    .main-menu-container-rules div.rules{height: 280px;}
+    .main-menu-container-rules{width: 600px;}
+    .main-menu-container-rules h3{font-size: 40px;}
 }
 @media all and (max-width: 900px){
     .main-menu-container div ol{font-size: 30px;}
@@ -616,10 +628,15 @@ button span:hover:after {
         width: 387px;
     }
     .main-menu-container h3{font-size: 39px;}
-    .main-menu-container div p {
+    .main-menu-container div p{
         margin-bottom: 10px;
         font-size: 18px;
     }
+}
+@media all and (max-width: 630px){
+    .main-menu-container-rules{width: 450px;}
+    .main-menu-container-rules h3{font-size: 40px;}
+    .main-menu-container-rules div.rules{height: 390px;}
 }
 /*@media all and (max-width:720px) {
     .wrapper-for-game{
@@ -639,7 +656,8 @@ button span:hover:after {
     .wrapper-for-main-menu h1{font-size: 60px;}
     .main-menu-container{width: 330px;}
     .main-menu-container h3{font-size: 34px;}
-    .main-menu-container div p {
+    .main-menu-container div p,
+    .main-menu-container-rules div p {
         margin-bottom: 5px;
         font-size: 18px;
     }
@@ -658,11 +676,15 @@ button span:hover:after {
     }
     .wrapper-for-main-menu h1{font-size: 53px;}
     .main-menu-container{width: 315px;}
-    .main-menu-container h3{font-size: 25px;}
-    .main-menu-container div p {
+    .main-menu-container h3,
+    .main-menu-container-rules h3{font-size: 25px;}
+    .main-menu-container div p,
+    .main-menu-container-rules div p {
         margin-bottom: 0px;
         font-size: 15px;
     }
+    .main-menu-container-rules{width: 300px;}
+    .main-menu-container-rules div.rules{height: 350px;}
     .wrapper-for-game{font-size: calc(20px * 0.55);}
     .points{
         font-size: 13px;
@@ -699,7 +721,8 @@ button span:hover:after {
         margin-bottom: 10px;
     }
     .main-menu-container h3 {font-size: 28px;}
-    .main-menu-container div p {
+    .main-menu-container div p,
+    .main-menu-container-rules div p {
         margin-bottom: 5px;
         font-size: 14px;
     }
@@ -716,13 +739,19 @@ button span:hover:after {
     }
 }
 
-
+@media all and (min-height: 1000px){
+    .main-menu-container-rules div.rules{height: 400px;}
+    .main-menu-container-rules{
+        width: 500px;
+        flex: 0 1 50%;
+    }
+}
 @media all and (min-width: 1366px){
     .main-menu-container div p{
-        font-size: 21px;
+        font-size: 23px;
         margin-bottom:15px;
     }
-    .main-menu-container h3{font-size: 35px;}
+    .main-menu-container-rules div.rules{height: 400px;}
 	.wrapper-for-game{
         -webkit-transform: scale(1.1);
             -ms-transform: scale(1.1);
@@ -744,7 +773,9 @@ button span:hover:after {
     }
 }
 @media all and (min-width: 1920px){
-    .main-menu-container div p{font-size: 23px;}
+    .main-menu-container div p,
+    .main-menu-container-rules div p{font-size: 25px;}
+    .main-menu-container-rules div.rules{height: 440px;}
 	.wrapper-for-game{
         -webkit-transform: scale(1.4);
             -ms-transform: scale(1.4);
