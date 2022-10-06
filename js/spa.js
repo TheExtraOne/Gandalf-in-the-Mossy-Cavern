@@ -5,6 +5,7 @@ const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
 let updatePassword;
 const stringName='MIHASEWA_GANDALF_SCORE';
 let previousSavedScored = 0;
+
 //музыка
 let sideEffectsVolume = 0.5;
 const moneyAudio = new Audio();
@@ -71,6 +72,11 @@ let SPAState = {};
 // частей кода в зависимости от формы URLа
 // "роутинг" и есть "контроллер" из MVC - управление приложением через URL
 function switchToStateFromURLHash() {
+
+    window.onbeforeunload = function beforeUserLeave() {
+        return false;
+    };
+
     let URLHash = window.location.hash;
 
     // убираем из закладки УРЛа решётку
@@ -93,9 +99,9 @@ function switchToStateFromURLHash() {
 
             isGameHTML = true;
 
-            window.onbeforeunload = function() {
+            /*window.onbeforeunload = function beforeUserLeave() {
                 return false;
-            };
+            };*/
 
             //Для попапа с запуском музыки, если перезагрузили страницу
             if (performance.navigation.type == 1) {
@@ -136,6 +142,21 @@ function switchToStateFromURLHash() {
         //tick();
         startAnimating(61);
         isGameHTML = false;
+    } else {
+        window.onbeforeunload = null;
+        cancelAnimationFrame(animationID);
+        /*if (audio === mainAudio) {
+            audio.play();
+            return;
+        }
+        audio.pause(); */
+        if (isMusicLoded) {
+            (moneyAudio).pause();
+            (slimeAudio).pause();
+            (victoryAudio).pause();
+            (mainAudio).pause();
+            isMusicLoded = false;
+        }
     }
 }
 
@@ -187,6 +208,7 @@ function lounchMusic(){
 
 function clickSoundInit(audio) {
     if (audio === mainAudio) {
+        audio.currentTime = 0;
         audio.play();
         return;
     }
