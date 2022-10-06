@@ -115,7 +115,7 @@ function switchToStateFromURLHash() {
             }
             break;
         case 'Main':
-            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><button type="button" id="startButton" onclick="switchToGameField(), lounchMusic()"><span>Start</span></button><button type="button" id="rulesButton" onclick="switchToRulesPage()"><span>Rules</span></button><button type="button" id="tableButton" onclick="switchToRecordsPage()"><span>Records</span></button><button type="button" id="settingButton" onclick="switchToSettingsPage()"><span>Settings</span></button></div></div>';
+            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gandalf in the mossy cavern</h1><div class="main-menu-container"><button type="button" id="startButton" onclick="switchToGameField(), lounchMusic()"><span>Start</span></button><button type="button" id="rulesButton" onclick="switchToRulesPage()"><span>Rules</span></button><button type="button" id="tableButton" onclick="switchToRecordsPage()"><span>Records</span></button><button type="button" id="settingButton" onclick="switchToSettingsPage()"><span>Settings</span></button></div></div>';
             break;
         case 'Rules':
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container-rules"><h3>Rules</h3>';
