@@ -757,6 +757,7 @@ button span:hover:after {
             -ms-transform: scale(1.1);
                 transform: scale(1.1);
     }
+    .main-menu-container-rules{width: 750px;}
 }
 @media all and (min-width: 1536px){
 	.wrapper-for-game{
