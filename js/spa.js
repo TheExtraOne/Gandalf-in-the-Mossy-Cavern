@@ -118,17 +118,17 @@ function switchToStateFromURLHash() {
             pageHTML += '<div class="wrapper-for-main-menu"><h1>Gandalf in the mossy cavern</h1><div class="main-menu-container"><button type="button" id="startButton" onclick="switchToGameField(), lounchMusic()"><span>Start</span></button><button type="button" id="rulesButton" onclick="switchToRulesPage()"><span>Rules</span></button><button type="button" id="tableButton" onclick="switchToRecordsPage()"><span>Records</span></button><button type="button" id="settingButton" onclick="switchToSettingsPage()"><span>Settings</span></button></div></div>';
             break;
         case 'Rules':
-            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container-rules"><h3>Rules</h3>';
+            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gandalf in the mossy cavern</h1><div class="main-menu-container-rules"><h3>Rules</h3>';
             pageHTML += "<div class='rules'><p>To move the character, use the keys A (left), W (jump) or D (right).</p><p>Also, after collecting 5 mana flowers, you will gain the ability to cast a fireball (press 'Space'), wich can kill your enemies.</p><p>Another option to defeat enemies is to crush them with a jump. But be careful, after that you will be thrown up!</p><p>Points are awarded for collecting mana flowers, defeating enemies and discovering one of the Rings of Power. Once you find the Ring, you will move on to the next level.</p></div>";
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             break;
         case 'Settings':
-            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Settings</h3>';
+            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gandalf in the mossy cavern</h1><div class="main-menu-container"><h3>Settings</h3>';
             pageHTML += `<label for="volume">Music</label><input type="range" id="volume" name="volume" min="0" max="1" value="${mainAudio.volume}" step="0.1" onchange="musicVolumeChanged()"><label for="volumeEffects">Side Effects</label><input type="range" id="volumeEffects" name="volumeEffects" min="0" max="1" value="${sideEffectsVolume}" step="0.1" onchange="effectsVolumeChanged()">`;
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             break;
         case 'Records':
-            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gangalf in the mossy cavern</h1><div class="main-menu-container"><h3>Top-5</h3>';
+            pageHTML += '<div class="wrapper-for-main-menu"><h1>Gandalf in the mossy cavern</h1><div class="main-menu-container"><h3>Top-5</h3>';
             pageHTML += `<div class="scoreTable"><ol><li>User 1<span>1100</span></li><li>User 2 <span>1000</span></li><li>User 3 <span>820</span></li><li>User 4 <span>600</span></li><li>User 5 <span>200</span></li></ol></div>`;
             pageHTML += '<div class="back-to-main-menu" onclick="switchToMainPage()">X</div></div></div>';
             test();
